@@ -1,0 +1,41 @@
+{
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  "files.associations": {
+    "*.env.example": "properties"
+  },
+
+  "search.exclude": {
+    "**/dist": true,
+    "**/.git": true,
+    "**/.next": true,
+    "**/.turbo": true,
+    "**/.vscode": true,
+    "**/.yarn": true,
+    "**/node_modules": true
+  },
+
+  "cSpell.words": [
+    "Authed",
+    "middlewares",
+    "nestjs",
+    "NEXTAUTH",
+    "nextjs",
+    "runtimes",
+    "superjson",
+    "tailwindcss",
+    "trpc",
+    "TRPC",
+    "turborepo",
+    "vercel"
+  ]
+}
