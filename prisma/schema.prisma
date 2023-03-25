@@ -12,14 +12,14 @@ generator client {
 }
 
 model Post {
-    id        Int       @id @default(autoincrement())
-    title     String    @db.Text
-    content   String    @db.Text
+    id        Int      @id @default(autoincrement())
+    title     String   @db.Text
+    content   String   @db.Text
     authorId  String
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    writtenAt DateTime?
-    published Boolean   @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    writtenAt DateTime @default(now())
+    published Boolean  @default(false)
 
     @@index([authorId])
 }

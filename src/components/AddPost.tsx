@@ -1,9 +1,24 @@
 import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
+import { api } from '~/utils/api'
 
 export function AddPost() {
   const { user } = useUser()
+
   const [isExpanded, setIsExpanded] = useState(false)
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+
+  const ctx = api.useContext()
+
+  const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
+    onSuccess: async () => {
+      await ctx.posts.getAll.invalidate()
+      setIsExpanded(false)
+      setTitle('')
+      setContent('')
+    },
+  })
 
   if (!user) return null
 
@@ -20,11 +35,34 @@ export function AddPost() {
 
       {isExpanded && (
         <>
-          <input className="w-full" placeholder="Title" />
+          <input
+            className="w-full"
+            type="text"
+            placeholder="Title"
+            disabled={isPosting}
+            onChange={(e) => {
+              setTitle(e.target.value)
+            }}
+          />
 
-          <textarea className="h-32 w-full" placeholder="Your post here..." />
+          <textarea
+            className="h-32 w-full"
+            placeholder="Your post here..."
+            disabled={isPosting}
+            onChange={(e) => {
+              setContent(e.target.value)
+            }}
+          />
 
-          <hr className="mt-4 w-40 border border-slate-500 opacity-25" />
+          <div className="flex w-full justify-end">
+            <button
+              className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
+              disabled={isPosting}
+              onClick={() => mutate({ title, content })}
+            >
+              Publish Post
+            </button>
+          </div>
         </>
       )}
     </div>
