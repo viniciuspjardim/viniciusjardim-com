@@ -6,11 +6,11 @@ export function AuthButton() {
   if (!user.isLoaded) {
     return (
       <button
-        className="w-32 rounded border border-slate-500 bg-gray-600/75 p-2 text-white"
+        className="w-32 rounded border border-slate-500 bg-gray-600/75 p-2"
         type="button"
         disabled
       >
-        Loading...
+        ...
       </button>
     )
   }
@@ -18,7 +18,7 @@ export function AuthButton() {
   if (user.isSignedIn) {
     return (
       <SignOutButton>
-        <button className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2 text-white">
+        <button className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2">
           Sign Out
         </button>
       </SignOutButton>
@@ -27,7 +27,7 @@ export function AuthButton() {
 
   return (
     <SignInButton>
-      <button className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2 text-white">
+      <button className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2">
         Sign In
       </button>
     </SignInButton>
