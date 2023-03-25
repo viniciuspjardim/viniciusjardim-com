@@ -1,5 +1,6 @@
 import Head from 'next/head'
 
+import { AuthButton } from '~/components/AuthButton'
 import { Post } from '~/components/Post'
 
 export default function Home() {
@@ -17,23 +18,25 @@ export default function Home() {
             A <span className="text-rose-500">draft</span> blog!
           </h1>
 
+          <AuthButton />
+
           <div>
             <Post
-              title="Abc"
+              title="Post 1"
               body="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur fugit porro libero velit similique assumenda esse, dicta voluptates in nam dolorum tempora, non accusamus ad voluptatibus, obcaecati minima consectetur dolore?"
-              writtenAt={new Date()}
+              writtenAt={new Date(2018, 11, 25)}
             />
 
             <Post
-              title="Abc"
+              title="Post 2"
               body="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur fugit porro libero velit similique assumenda esse, dicta voluptates in nam dolorum tempora, non accusamus ad voluptatibus, obcaecati minima consectetur dolore?"
-              writtenAt={new Date()}
+              writtenAt={new Date(2019, 5, 10)}
             />
 
             <Post
-              title="Abc"
+              title="Post 3"
               body="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur fugit porro libero velit similique assumenda esse, dicta voluptates in nam dolorum tempora, non accusamus ad voluptatibus, obcaecati minima consectetur dolore?"
-              writtenAt={new Date()}
+              writtenAt={new Date(2020, 8, 14)}
             />
           </div>
         </div>
