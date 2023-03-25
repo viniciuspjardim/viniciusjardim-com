@@ -1,0 +1,23 @@
+import { formatDate } from '~/utils/dates'
+
+type PostProps = {
+  title: string
+  body: string
+  writtenAt: Date
+}
+
+export function Post({ title, body, writtenAt }: PostProps) {
+  return (
+    <article className="mb-12 w-full rounded-md bg-slate-900/75 p-8">
+      <h2 className="text-2xl text-rose-500 md:text-4xl">{title}</h2>
+
+      <p className="my-8 text-lg text-white md:text-xl">{body}</p>
+
+      <div className="text-right">
+        <p className="text-sm text-slate-500">{formatDate(writtenAt)}</p>
+
+        <p className="text-md text-rose-500">John Doe</p>
+      </div>
+    </article>
+  )
+}
