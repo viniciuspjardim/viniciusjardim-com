@@ -5,3 +5,8 @@
 body {
   @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#121226] text-white;
 }
+
+input,
+textarea {
+  @apply rounded-sm bg-slate-900/75 py-1 px-2;
+}

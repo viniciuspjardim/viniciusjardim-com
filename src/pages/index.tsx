@@ -1,6 +1,7 @@
 import Head from 'next/head'
 
 import { AuthButton } from '~/components/AuthButton'
+import { AddPost } from '~/components/AddPost'
 import { Post } from '~/components/Post'
 import { api } from '~/utils/api'
 
@@ -22,8 +23,10 @@ export default function Home() {
 
         <AuthButton />
 
-        <main className="w-full max-w-3xl flex-col items-center gap-12 px-4 ">
-          {isLoading && <p>Loading the posts...</p>}
+        <AddPost />
+
+        <main className="w-full max-w-3xl flex-col items-center gap-12 px-4">
+          {isLoading && <p className="text-center">Loading the posts...</p>}
 
           {data?.map((post) => (
             <Post
