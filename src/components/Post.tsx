@@ -11,7 +11,9 @@ export function Post({ title, content, writtenAt }: PostProps) {
     <article className="mb-8 w-full rounded-md bg-slate-900/75 p-8">
       <h2 className="text-2xl text-rose-500 md:text-4xl">{title}</h2>
 
-      <p className="my-8 text-lg md:text-xl">{content}</p>
+      <pre className="my-8 whitespace-pre-wrap text-lg md:text-xl">
+        {content}
+      </pre>
 
       <div className="text-right">
         <p className="text-sm text-slate-500">{formatDate(writtenAt)}</p>
