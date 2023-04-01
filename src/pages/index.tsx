@@ -34,6 +34,8 @@ export default function Home() {
               title={post.title}
               content={post.content}
               writtenAt={post.writtenAt ?? post.createdAt}
+              userName={post.author?.userName ?? 'Unknown'}
+              userImageUrl={post.author?.userImageUrl}
             />
           ))}
         </main>

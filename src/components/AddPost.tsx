@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
+import Image from 'next/image'
+
 import { api } from '~/utils/api'
 
 export function AddPost() {
@@ -34,36 +36,47 @@ export function AddPost() {
       </button>
 
       {isExpanded && (
-        <>
-          <input
-            className="w-full"
-            type="text"
-            placeholder="Title"
-            disabled={isPosting}
-            onChange={(e) => {
-              setTitle(e.target.value)
-            }}
+        <div className="flex w-full space-x-2">
+          <Image
+            className="h-12 w-12 rounded-full"
+            src={user.profileImageUrl}
+            alt={user.username ?? 'unknown user name'}
+            width={48}
+            height={48}
+            quality={100}
           />
 
-          <textarea
-            className="h-32 w-full"
-            placeholder="Your post here..."
-            disabled={isPosting}
-            onChange={(e) => {
-              setContent(e.target.value)
-            }}
-          />
-
-          <div className="flex w-full justify-end">
-            <button
-              className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
+          <div className="flex w-full flex-col space-y-4">
+            <input
+              className="w-full"
+              type="text"
+              placeholder="Title"
               disabled={isPosting}
-              onClick={() => mutate({ title, content })}
-            >
-              Publish Post
-            </button>
+              onChange={(e) => {
+                setTitle(e.target.value)
+              }}
+            />
+
+            <textarea
+              className="h-32 w-full"
+              placeholder="Your post here..."
+              disabled={isPosting}
+              onChange={(e) => {
+                setContent(e.target.value)
+              }}
+            />
+
+            <div className="flex w-full justify-end">
+              <button
+                className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
+                disabled={isPosting}
+                onClick={() => mutate({ title, content })}
+              >
+                Publish Post
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   )
