@@ -39,6 +39,7 @@ export function AddPost() {
           type="text"
           placeholder="Title"
           disabled={isPosting}
+          value={title}
           onChange={(e) => {
             setTitle(e.target.value)
           }}
@@ -48,6 +49,7 @@ export function AddPost() {
           className="h-32 w-full"
           placeholder="Your post here..."
           disabled={isPosting}
+          value={content}
           onChange={(e) => {
             setContent(e.target.value)
           }}
