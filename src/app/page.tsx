@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import 'server-only'
 
-import { Post } from '~/components/Post'
+import { Post } from '~/components/post/Post'
 
 type ResultObject<T> = {
   result: { data: { json: T } }
@@ -56,9 +56,9 @@ export default async function HomePage() {
         A <span className="text-rose-500">draft</span> blog!
       </h1>
 
-      <Link href={'/posts/create'}>Log in</Link>
+      <Link href={'/posts'}>Log in</Link>
 
-      <main className="w-full max-w-3xl flex-col items-center gap-12 px-2">
+      <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
         {posts?.map((post) => (
           <Post
             key={post.id}

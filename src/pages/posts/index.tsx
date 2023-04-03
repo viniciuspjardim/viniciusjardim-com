@@ -2,11 +2,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import { AuthButton } from '~/components/AuthButton'
-import { AddPost } from '~/components/AddPost'
-import { Post } from '~/components/Post'
+import { CreatePostForm } from '~/components/post/CreatePostForm'
+import { PostWithActions } from '~/components/post/PostWithActions'
 import { api } from '~/utils/api'
 
-export default function CreatePostPage() {
+export default function PostsPage() {
   const { data, isLoading } = api.posts.getAll.useQuery()
 
   return (
@@ -22,14 +22,15 @@ export default function CreatePostPage() {
 
         <AuthButton />
 
-        <AddPost />
+        <CreatePostForm />
 
-        <main className="w-full max-w-3xl flex-col items-center gap-12 px-2">
+        <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
           {isLoading && <p className="text-center">Loading the posts...</p>}
 
           {data?.map((post) => (
-            <Post
+            <PostWithActions
               key={post.id}
+              id={post.id}
               title={post.title}
               content={post.content}
               writtenAt={post.writtenAt}

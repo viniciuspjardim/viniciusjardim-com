@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import { api } from '~/utils/api'
 
-export function AddPost() {
+export function CreatePostForm() {
   const { user } = useUser()
 
   const [title, setTitle] = useState('')
