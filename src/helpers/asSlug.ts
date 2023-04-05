@@ -1,5 +1,5 @@
-const before = 'áéíóúâêîôûãõçà'.split('')
-const after = 'aeiouaeiouaoca'.split('')
+const before = 'áéíóúâêîôûãõñçà'.split('')
+const after = 'aeiouaeiouaonca'.split('')
 
 export function asSlug(value: string): string {
   let slug = value.toLocaleLowerCase()
