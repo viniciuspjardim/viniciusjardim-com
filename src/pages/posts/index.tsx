@@ -33,9 +33,10 @@ export default function PostsPage() {
               id={post.id}
               title={post.title}
               content={post.content}
-              writtenAt={post.writtenAt}
               userName={post.author?.userName ?? 'Unknown'}
               userImageUrl={post.author?.userImageUrl}
+              rank={post.rank}
+              writtenAt={post.writtenAt}
             />
           ))}
         </main>

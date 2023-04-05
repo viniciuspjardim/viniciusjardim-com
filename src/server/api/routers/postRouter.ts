@@ -18,7 +18,7 @@ function filterUserFields(user: User) {
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const posts = await ctx.prisma.post.findMany({
-      orderBy: { writtenAt: 'desc' },
+      orderBy: [{ rank: 'desc' }, { writtenAt: 'desc' }],
     })
 
     const users = (
@@ -47,11 +47,29 @@ export const postRouter = createTRPCRouter({
       return post
     }),
 
+  getOneBySlug: publicProcedure
+    .input(z.object({ slug: z.string().min(1).max(200) }))
+    .query(async ({ ctx, input }) => {
+      const post = await ctx.prisma.post.findUnique({
+        where: { slug: input.slug },
+      })
+
+      if (!post) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+      }
+
+      return post
+    }),
+
   create: privateProcedure
     .input(
       z.object({
-        title: z.string().min(1).max(120),
+        title: z.string().min(1).max(200),
+        slug: z.string().min(1).max(200),
         content: z.string().min(1),
+        rank: z.number().optional(),
+        categoryId: z.number(),
+        writtenAt: z.date().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -68,14 +86,18 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        title: z.string().min(1).max(120),
+        title: z.string().min(1).max(200),
+        slug: z.string().min(1).max(200),
         content: z.string().min(1),
+        rank: z.number().optional(),
+        categoryId: z.number(),
+        writtenAt: z.date().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       const post = await ctx.prisma.post.update({
         where: { id: input.id },
-        data: { title: input.title, content: input.content },
+        data: { ...input },
       })
 
       return post

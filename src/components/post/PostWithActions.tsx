@@ -8,18 +8,20 @@ type PostWithActionsProps = {
   id: number
   title: string
   content: string
-  writtenAt: Date
   userName: string
   userImageUrl?: string
+  rank: number
+  writtenAt: Date
 }
 
 export function PostWithActions({
   id,
   title,
   content,
-  writtenAt,
   userName,
   userImageUrl,
+  rank,
+  writtenAt,
 }: PostWithActionsProps) {
   const ctx = api.useContext()
 
@@ -40,6 +42,8 @@ export function PostWithActions({
         content={content}
         userName={userName}
         userImageUrl={userImageUrl}
+        rank={rank}
+        writtenAt={writtenAt}
         closeForm={() => setIsEditing(false)}
       />
     )

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 import { api } from '~/utils/api'
+import { asSlug } from '~/helpers/asSlug'
 
 type EditPostFormProps = {
   id: number
@@ -9,6 +10,8 @@ type EditPostFormProps = {
   content: string
   userName: string
   userImageUrl?: string
+  rank: number
+  writtenAt: Date
   closeForm: () => void
 }
 
@@ -18,10 +21,17 @@ export function EditPostForm({
   content,
   userName,
   userImageUrl,
+  rank,
+  writtenAt,
   closeForm,
 }: EditPostFormProps) {
   const [titleValue, setTitleValue] = useState(title)
+  const [moreOptions, setMoreOptions] = useState(false)
+  const [rankValue, setRankValue] = useState(String(rank))
+  const [writtenAtValue, setWrittenAtValue] = useState(writtenAt.toISOString())
   const [contentValue, setContentValue] = useState(content)
+
+  const slugValue = asSlug(titleValue)
 
   const ctx = api.useContext()
 
@@ -33,59 +43,100 @@ export function EditPostForm({
   })
 
   return (
-    <div className="flex w-full max-w-3xl gap-3 px-2">
-      {userImageUrl && (
-        <Image
-          className="h-12 w-12 rounded-full"
-          src={userImageUrl}
-          alt={userName}
-          width={48}
-          height={48}
-          quality={100}
-        />
+    <div className="flex w-full max-w-3xl flex-col space-y-3 px-2">
+      <div className="flex space-x-3">
+        {userImageUrl && (
+          <Image
+            className="h-12 w-12 rounded-full"
+            src={userImageUrl}
+            alt={userName}
+            width={48}
+            height={48}
+            quality={100}
+          />
+        )}
+
+        <div className="flex w-full flex-col space-y-1">
+          <input
+            type="text"
+            placeholder="Title"
+            disabled={isPosting}
+            value={titleValue}
+            onChange={(e) => {
+              setTitleValue(e.target.value)
+            }}
+          />
+
+          <div className="flex justify-between">
+            <p className="text-sm opacity-40">➡️ {slugValue || 'Post Slug'}</p>
+
+            <button onClick={() => setMoreOptions(!moreOptions)}>
+              {moreOptions ? '-' : '+'} Options
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {moreOptions && (
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <input
+            type="text"
+            placeholder="Rank"
+            disabled={isPosting}
+            value={rankValue}
+            onChange={(e) => {
+              setRankValue(e.target.value)
+            }}
+          />
+
+          <input
+            type="text"
+            placeholder="Written at (YYYY-MM-DD)"
+            disabled={isPosting}
+            value={writtenAtValue}
+            onChange={(e) => {
+              setWrittenAtValue(e.target.value)
+            }}
+          />
+        </div>
       )}
 
-      <div className="flex w-full flex-col space-y-4">
-        <input
-          className="w-full"
-          type="text"
-          placeholder="Title"
+      <textarea
+        className="h-48"
+        placeholder="Write your post here..."
+        disabled={isPosting}
+        value={contentValue}
+        onChange={(e) => {
+          setContentValue(e.target.value)
+        }}
+      />
+
+      <div className="flex justify-end space-x-2">
+        <button
+          className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
           disabled={isPosting}
-          value={titleValue}
-          onChange={(e) => {
-            setTitleValue(e.target.value)
-          }}
-        />
+          onClick={() =>
+            mutate({
+              id,
+              title: titleValue,
+              slug: slugValue,
+              content: contentValue,
+              rank: rankValue ? parseInt(rankValue, 10) : undefined,
+              writtenAt: writtenAtValue ? new Date(writtenAtValue) : undefined,
+              categoryId: 1,
+            })
+          }
+        >
+          Save Post
+        </button>
 
-        <textarea
-          className="h-32 w-full"
-          placeholder="Your post here..."
+        <button
+          className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
           disabled={isPosting}
-          value={contentValue}
-          onChange={(e) => {
-            setContentValue(e.target.value)
-          }}
-        />
-
-        <div className="flex w-full justify-end space-x-2">
-          <button
-            className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
-            disabled={isPosting}
-            onClick={() =>
-              mutate({ id, title: titleValue, content: contentValue })
-            }
-          >
-            Save Post
-          </button>
-
-          <button
-            className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
-            disabled={isPosting}
-            onClick={closeForm}
-          >
-            Cancel
-          </button>
-        </div>
+          onClick={closeForm}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   )
