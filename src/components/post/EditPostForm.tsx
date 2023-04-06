@@ -1,8 +1,16 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/asSlug'
+
+type Inputs = {
+  title: string
+  rank: string
+  writtenAt: string
+  content: string
+}
 
 type EditPostFormProps = {
   id: number
@@ -25,25 +33,46 @@ export function EditPostForm({
   writtenAt,
   closeForm,
 }: EditPostFormProps) {
-  const [titleValue, setTitleValue] = useState(title)
   const [moreOptions, setMoreOptions] = useState(false)
-  const [rankValue, setRankValue] = useState(String(rank))
-  const [writtenAtValue, setWrittenAtValue] = useState(writtenAt.toISOString())
-  const [contentValue, setContentValue] = useState(content)
 
-  const slugValue = asSlug(titleValue)
+  const { register, handleSubmit, watch, reset } = useForm<Inputs>({
+    defaultValues: {
+      title,
+      content,
+      rank: rank.toString(),
+      writtenAt: writtenAt.toISOString(),
+    },
+  })
+
+  const slug = asSlug(watch('title') ?? '')
+
+  const onSubmit: SubmitHandler<Inputs> = (form) => {
+    mutate({
+      id,
+      title: form.title,
+      slug,
+      content: form.content,
+      rank: form.rank ? parseInt(form.rank, 10) : undefined,
+      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
+      categoryId: 1,
+    })
+  }
 
   const ctx = api.useContext()
 
   const { mutate, isLoading: isPosting } = api.posts.update.useMutation({
     onSuccess: async () => {
       await ctx.posts.getAll.invalidate()
+      reset()
       closeForm()
     },
   })
 
   return (
-    <div className="flex w-full max-w-3xl flex-col space-y-3 px-2">
+    <form
+      className="flex w-full max-w-3xl flex-col space-y-3 px-2"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex space-x-3">
         {userImageUrl && (
           <Image
@@ -61,16 +90,13 @@ export function EditPostForm({
             type="text"
             placeholder="Title"
             disabled={isPosting}
-            value={titleValue}
-            onChange={(e) => {
-              setTitleValue(e.target.value)
-            }}
+            {...register('title', { required: true })}
           />
 
           <div className="flex justify-between">
-            <p className="text-sm opacity-40">➡️ {slugValue || 'Post Slug'}</p>
+            <p className="text-sm opacity-40">➡️ {slug || 'Post Slug'}</p>
 
-            <button onClick={() => setMoreOptions(!moreOptions)}>
+            <button type="button" onClick={() => setMoreOptions(!moreOptions)}>
               {moreOptions ? '-' : '+'} Options
             </button>
           </div>
@@ -83,20 +109,14 @@ export function EditPostForm({
             type="text"
             placeholder="Rank"
             disabled={isPosting}
-            value={rankValue}
-            onChange={(e) => {
-              setRankValue(e.target.value)
-            }}
+            {...register('rank')}
           />
 
           <input
             type="text"
             placeholder="Written at (YYYY-MM-DD)"
             disabled={isPosting}
-            value={writtenAtValue}
-            onChange={(e) => {
-              setWrittenAtValue(e.target.value)
-            }}
+            {...register('writtenAt')}
           />
         </div>
       )}
@@ -105,27 +125,14 @@ export function EditPostForm({
         className="h-48"
         placeholder="Write your post here..."
         disabled={isPosting}
-        value={contentValue}
-        onChange={(e) => {
-          setContentValue(e.target.value)
-        }}
+        {...register('content', { required: true })}
       />
 
       <div className="flex justify-end space-x-2">
         <button
           className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
           disabled={isPosting}
-          onClick={() =>
-            mutate({
-              id,
-              title: titleValue,
-              slug: slugValue,
-              content: contentValue,
-              rank: rankValue ? parseInt(rankValue, 10) : undefined,
-              writtenAt: writtenAtValue ? new Date(writtenAtValue) : undefined,
-              categoryId: 1,
-            })
-          }
+          type="submit"
         >
           Save Post
         </button>
@@ -138,6 +145,6 @@ export function EditPostForm({
           Cancel
         </button>
       </div>
-    </div>
+    </form>
   )
 }

@@ -16,14 +16,7 @@ type Inputs = {
 export function CreatePostForm() {
   const { user } = useUser()
   const [moreOptions, setMoreOptions] = useState(false)
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    // formState: { errors },
-  } = useForm<Inputs>()
+  const { register, handleSubmit, watch, reset } = useForm<Inputs>()
 
   const slug = asSlug(watch('title') ?? '')
 
@@ -75,7 +68,7 @@ export function CreatePostForm() {
           <div className="flex justify-between">
             <p className="text-sm opacity-40">➡️ {slug || 'Post Slug'}</p>
 
-            <button onClick={() => setMoreOptions(!moreOptions)}>
+            <button type="button" onClick={() => setMoreOptions(!moreOptions)}>
               {moreOptions ? '-' : '+'} Options
             </button>
           </div>
