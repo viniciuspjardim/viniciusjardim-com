@@ -5,6 +5,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/asSlug'
+import { Button } from '~/components/Button'
 
 type Inputs = {
   title: string
@@ -16,7 +17,13 @@ type Inputs = {
 export function CreatePostForm() {
   const { user } = useUser()
   const [moreOptions, setMoreOptions] = useState(false)
-  const { register, handleSubmit, watch, reset } = useForm<Inputs>()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { isValid },
+  } = useForm<Inputs>()
 
   const slug = asSlug(watch('title') ?? '')
 
@@ -68,7 +75,11 @@ export function CreatePostForm() {
           <div className="flex justify-between">
             <p className="text-sm opacity-40">➡️ {slug || 'Post Slug'}</p>
 
-            <button type="button" onClick={() => setMoreOptions(!moreOptions)}>
+            <button
+              className="opacity-70 transition hover:opacity-100"
+              type="button"
+              onClick={() => setMoreOptions(!moreOptions)}
+            >
               {moreOptions ? '-' : '+'} Options
             </button>
           </div>
@@ -101,13 +112,9 @@ export function CreatePostForm() {
       />
 
       <div className="flex justify-end">
-        <button
-          className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
-          disabled={isPosting}
-          type="submit"
-        >
+        <Button disabled={isPosting || !isValid} type="submit">
           Publish Post
-        </button>
+        </Button>
       </div>
     </form>
   )

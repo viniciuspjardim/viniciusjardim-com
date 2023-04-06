@@ -4,6 +4,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/asSlug'
+import { Button } from '~/components/Button'
 
 type Inputs = {
   title: string
@@ -35,7 +36,13 @@ export function EditPostForm({
 }: EditPostFormProps) {
   const [moreOptions, setMoreOptions] = useState(false)
 
-  const { register, handleSubmit, watch, reset } = useForm<Inputs>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { isValid },
+  } = useForm<Inputs>({
     defaultValues: {
       title,
       content,
@@ -96,7 +103,11 @@ export function EditPostForm({
           <div className="flex justify-between">
             <p className="text-sm opacity-40">➡️ {slug || 'Post Slug'}</p>
 
-            <button type="button" onClick={() => setMoreOptions(!moreOptions)}>
+            <button
+              className="opacity-70 transition hover:opacity-100"
+              type="button"
+              onClick={() => setMoreOptions(!moreOptions)}
+            >
               {moreOptions ? '-' : '+'} Options
             </button>
           </div>
@@ -129,21 +140,13 @@ export function EditPostForm({
       />
 
       <div className="flex justify-end space-x-2">
-        <button
-          className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
-          disabled={isPosting}
-          type="submit"
-        >
+        <Button disabled={isPosting || !isValid} type="submit">
           Save Post
-        </button>
+        </Button>
 
-        <button
-          className="w-32 rounded border border-slate-500 bg-slate-900/75 p-2"
-          disabled={isPosting}
-          onClick={closeForm}
-        >
+        <Button disabled={isPosting} onClick={closeForm}>
           Cancel
-        </button>
+        </Button>
       </div>
     </form>
   )

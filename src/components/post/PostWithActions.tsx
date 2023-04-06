@@ -53,20 +53,26 @@ export function PostWithActions({
       <div className="flex justify-between">
         <h2 className="text-xl text-rose-500 md:text-2xl">{title}</h2>
 
-        <div className="flex space-x-2">
-          <button disabled={isRemovingPost} onClick={() => setIsEditing(true)}>
+        <div className="flex justify-center gap-4">
+          <button
+            className="opacity-70 transition hover:opacity-100"
+            disabled={isRemovingPost}
+            onClick={() => setIsEditing(true)}
+          >
             Edit
           </button>
 
-          <span>|</span>
-
-          <button disabled={isRemovingPost} onClick={() => remove({ id })}>
+          <button
+            className="opacity-70 transition hover:opacity-100"
+            disabled={isRemovingPost}
+            onClick={() => remove({ id })}
+          >
             Remove
           </button>
         </div>
       </div>
 
-      <pre className="text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl">
+      <pre className="text-md my-4 whitespace-pre-wrap font-sans md:my-6 md:text-xl">
         {content}
       </pre>
 
