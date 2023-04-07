@@ -19,9 +19,10 @@ export function Post({
     <article className="w-full rounded-md bg-slate-900/75 p-2 md:p-8">
       <h2 className="text-xl text-rose-500 md:text-2xl">{title}</h2>
 
-      <pre className="text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl">
-        {content}
-      </pre>
+      <div
+        className="ProseMirror text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
 
       <div className="flex justify-end gap-x-2">
         <div className="text-right">
