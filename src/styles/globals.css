@@ -15,6 +15,11 @@ textarea {
   @apply rounded-sm bg-slate-900/75 py-1 px-2;
 }
 
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply pointer-events-none float-left h-0 text-base text-white/50;
+}
+
 .ProseMirror {
   min-height: 12rem;
 }

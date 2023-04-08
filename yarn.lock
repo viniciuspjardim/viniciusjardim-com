@@ -554,6 +554,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-paragraph/-/extension-paragraph-2.0.2.tgz#40ee9e9ac2c06a8bf81a0371e191b328936c85e6"
   integrity sha512-BuiUV8Wh8DjRrNmmk5sIlVlk0V8P4BT2fCB4H7Ar+QDUPKY1g0djB/5g3F70iZh1Z7CiY1ctoL8VQznvtb0KsQ==
 
+"@tiptap/extension-placeholder@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-placeholder/-/extension-placeholder-2.0.2.tgz#c449ad18bada1af815183b3bf7e54cdfd03dfedf"
+  integrity sha512-5D46ONEN4Hcgn9xwWgY0mSUp9DAM/z74P9vZcdChUXxj96L2ngM/nU92qEby0kGCSGoO3ucxJGf/aL8KhGqIxQ==
+
 "@tiptap/extension-strike@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-2.0.2.tgz#7ecfdd2c3bb00b3b66233e77758af85357b96f1c"
