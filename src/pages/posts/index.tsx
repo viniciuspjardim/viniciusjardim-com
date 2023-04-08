@@ -14,7 +14,7 @@ export default function PostsPage() {
       <Head>
         <title>Vinícius Jardim | Create a Post</title>
         <meta name="description" content="Vinícius Jardim's personal site" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
 
       <div className="flex flex-col items-center space-y-8 py-4">
