@@ -23,12 +23,13 @@ export function CreatePostForm() {
     handleSubmit,
     watch,
     reset,
-    formState: { isValid },
+    formState: { isValid: isFormValid },
   } = useForm<Inputs>()
 
   const { Editor, editor } = useEditor('')
 
   const slug = asSlug(watch('title') ?? '')
+  const isValid = isFormValid && !editor?.isEmpty
 
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
