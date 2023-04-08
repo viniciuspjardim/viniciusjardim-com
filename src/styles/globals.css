@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#121226] text-slate-200;
+  @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#121226] text-slate-300/90;
 }
 
 input,
