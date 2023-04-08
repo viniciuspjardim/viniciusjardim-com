@@ -6,32 +6,36 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/asSlug'
 import { Button } from '~/components/Button'
+import { useEditor } from '~/hooks/useEditor'
 
 type Inputs = {
   title: string
   rank: string
   writtenAt: string
-  content: string
 }
 
 export function CreatePostForm() {
   const { user } = useUser()
   const [moreOptions, setMoreOptions] = useState(false)
+
   const {
     register,
     handleSubmit,
     watch,
     reset,
-    formState: { isValid },
+    formState: { isValid: isFormValid },
   } = useForm<Inputs>()
 
+  const { Editor, editor } = useEditor('')
+
   const slug = asSlug(watch('title') ?? '')
+  const isValid = isFormValid && !editor?.isEmpty
 
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
       title: form.title,
       slug,
-      content: form.content,
+      content: editor?.getHTML() ?? '',
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
       categoryId: 1,
@@ -44,6 +48,7 @@ export function CreatePostForm() {
     onSuccess: async () => {
       await ctx.posts.getAll.invalidate()
       reset()
+      editor?.commands.setContent('')
     },
   })
 
@@ -104,12 +109,7 @@ export function CreatePostForm() {
         </div>
       )}
 
-      <textarea
-        className="h-48"
-        placeholder="Write your post here..."
-        disabled={isPosting}
-        {...register('content', { required: true })}
-      />
+      <Editor editor={editor} />
 
       <div className="flex justify-end">
         <Button disabled={isPosting || !isValid} type="submit">

@@ -5,6 +5,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/asSlug'
 import { Button } from '~/components/Button'
+import { useEditor } from '~/hooks/useEditor'
 
 type Inputs = {
   title: string
@@ -41,7 +42,7 @@ export function EditPostForm({
     handleSubmit,
     watch,
     reset,
-    formState: { isValid },
+    formState: { isValid: isFormValid },
   } = useForm<Inputs>({
     defaultValues: {
       title,
@@ -51,14 +52,17 @@ export function EditPostForm({
     },
   })
 
+  const { Editor, editor } = useEditor(content)
+
   const slug = asSlug(watch('title') ?? '')
+  const isValid = isFormValid && !editor?.isEmpty
 
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
       id,
       title: form.title,
       slug,
-      content: form.content,
+      content: editor?.getHTML() ?? '',
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
       categoryId: 1,
@@ -71,6 +75,7 @@ export function EditPostForm({
     onSuccess: async () => {
       await ctx.posts.getAll.invalidate()
       reset()
+      editor?.commands.setContent('')
       closeForm()
     },
   })
@@ -132,12 +137,7 @@ export function EditPostForm({
         </div>
       )}
 
-      <textarea
-        className="h-48"
-        placeholder="Write your post here..."
-        disabled={isPosting}
-        {...register('content', { required: true })}
-      />
+      <Editor editor={editor} />
 
       <div className="flex justify-end space-x-2">
         <Button disabled={isPosting || !isValid} type="submit">

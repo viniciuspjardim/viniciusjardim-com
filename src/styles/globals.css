@@ -7,10 +7,55 @@ html {
 }
 
 body {
-  @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#121226] text-slate-200;
+  @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#121226] text-slate-300/90;
 }
 
 input,
 textarea {
   @apply rounded-sm bg-slate-900/75 py-1 px-2;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply pointer-events-none float-left h-0 text-base text-white/50;
+}
+
+.ProseMirror {
+  min-height: 12rem;
+}
+
+.ProseMirror h1 {
+  @apply mb-6 text-4xl;
+}
+
+.ProseMirror h2 {
+  @apply mb-4 text-3xl;
+}
+
+.ProseMirror h3 {
+  @apply mb-3 text-2xl;
+}
+
+.ProseMirror h4 {
+  @apply mb-2.5 text-xl;
+}
+
+.ProseMirror p {
+  @apply mb-2.5 text-lg;
+}
+
+.ProseMirror code {
+  @apply rounded-sm bg-blue-400/10 px-1 font-mono text-rose-500;
+}
+
+.ProseMirror ul {
+  @apply list-disc pl-5 marker:text-rose-500;
+}
+
+.ProseMirror ul li p {
+  @apply mb-0;
+}
+
+.ProseMirror li {
+  @apply mb-0;
 }
