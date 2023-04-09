@@ -1,0 +1,46 @@
+.blog-post-min-h {
+  min-height: 12rem;
+}
+
+.blog-post {
+  p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    @apply pointer-events-none float-left h-0 text-base text-white/50;
+  }
+
+  h1 {
+    @apply mb-6 text-4xl;
+  }
+
+  h2 {
+    @apply mb-4 text-3xl;
+  }
+
+  h3 {
+    @apply mb-3 text-2xl;
+  }
+
+  h4 {
+    @apply mb-2.5 text-xl;
+  }
+
+  p {
+    @apply mb-2.5 text-lg;
+  }
+
+  code {
+    @apply rounded-sm bg-blue-400/10 px-1 font-mono text-rose-500;
+  }
+
+  ul {
+    @apply list-disc pl-5 marker:text-rose-500;
+
+    li {
+      @apply mb-0;
+
+      p {
+        @apply mb-0;
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ export function Post({
       <h2 className="text-xl text-rose-500 md:text-2xl">{title}</h2>
 
       <div
-        className="ProseMirror text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
+        className="blog-post text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
         dangerouslySetInnerHTML={{ __html: content }}
       />
 

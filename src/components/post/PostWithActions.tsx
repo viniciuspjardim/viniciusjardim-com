@@ -73,7 +73,7 @@ export function PostWithActions({
       </div>
 
       <div
-        className="ProseMirror text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
+        className="blog-post text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
         dangerouslySetInnerHTML={{ __html: content }}
       />
 
