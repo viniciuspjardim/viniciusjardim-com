@@ -82,7 +82,7 @@ export function EditPostForm({
 
   return (
     <form
-      className="flex w-full max-w-3xl flex-col space-y-3 px-2"
+      className="flex w-full max-w-3xl flex-col space-y-3"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex space-x-3">
