@@ -6,7 +6,8 @@ export function useEditor(content: string) {
   const editor = useInitEditor({
     editorProps: {
       attributes: {
-        class: 'focus:outline-none rounded-sm bg-slate-900/75 py-1 px-2',
+        class:
+          'blog-post blog-post-min-h focus:outline-none rounded-sm bg-slate-900/75 py-1 px-2',
       },
     },
     extensions: [

@@ -1,4 +1,5 @@
 import '~/styles/globals.css'
+import '~/styles/post.scss'
 
 export const metadata = {
   title: 'Vinícius Jardim',

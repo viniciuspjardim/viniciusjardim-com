@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { api } from '~/utils/api'
 
 import '~/styles/globals.css'
+import '~/styles/post.scss'
 
 const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
