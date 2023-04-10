@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { sanitizeHtml } from './sanitizeHtml'
 
-describe('asSlug', () => {
+describe('sanitizeHtml', () => {
   it('should allow regular text', () => {
     expect(sanitizeHtml('My post content')).toEqual('My post content')
     expect(sanitizeHtml('My post content\n second line.')).toEqual(

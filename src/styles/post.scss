@@ -28,7 +28,7 @@
     @apply mb-2.5 text-lg;
   }
 
-  code {
+  :not(pre) > code {
     @apply rounded-sm bg-blue-400/10 px-1 font-mono text-rose-500;
   }
 
@@ -41,6 +41,20 @@
       p {
         @apply mb-0;
       }
+    }
+  }
+
+  // Code editor with @tiptap/extension-code-block-lowlight
+
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  pre {
+    @apply rounded-md bg-black/40 p-4 font-mono text-base;
+
+    code {
+      @apply text-white/70;
     }
   }
 }

@@ -7,7 +7,7 @@ export function useEditor(content: string) {
     editorProps: {
       attributes: {
         class:
-          'blog-post blog-post-min-h focus:outline-none rounded-sm bg-slate-900/75 py-1 px-2',
+          'blog-post blog-post-min-h focus:outline-none w-full rounded-md bg-slate-900/75 p-2 md:p-8',
       },
     },
     extensions: [
