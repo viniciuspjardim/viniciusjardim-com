@@ -51,7 +51,7 @@
   }
 
   pre {
-    @apply rounded-md bg-black/40 p-4 font-mono text-base;
+    @apply overflow-y-auto rounded-md bg-black/40 p-4 font-mono text-base;
 
     code {
       @apply text-white/70;
