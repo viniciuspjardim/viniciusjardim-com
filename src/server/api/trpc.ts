@@ -24,10 +24,10 @@ import { prisma } from '~/server/db'
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (opts: CreateNextContextOptions) => {
-  const { req } = opts
+  const { req, res } = opts
   const { userId } = getAuth(req)
 
-  return { prisma, userId }
+  return { prisma, userId, req, res }
 }
 
 /**
@@ -78,7 +78,7 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
     })
   }
 
-  return next({ ctx: { userId: ctx.userId } })
+  return next({ ctx: { ...ctx, userId: ctx.userId } })
 })
 
 export const privateProcedure = t.procedure.use(enforceUserIsAuthed)

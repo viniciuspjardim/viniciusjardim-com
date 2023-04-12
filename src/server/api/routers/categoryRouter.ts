@@ -1,7 +1,10 @@
 import { z } from 'zod'
-import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { privateProcedure } from './../trpc'
 import { TRPCError } from '@trpc/server'
+import {
+  createTRPCRouter,
+  publicProcedure,
+  privateProcedure,
+} from '~/server/api/trpc'
 
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {

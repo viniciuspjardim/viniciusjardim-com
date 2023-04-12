@@ -1,10 +1,13 @@
 import type { User } from '@clerk/nextjs/dist/api'
 import { clerkClient } from '@clerk/nextjs/server'
-import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { TRPCError } from '@trpc/server'
 
-import { privateProcedure } from './../trpc'
-import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
+import {
+  createTRPCRouter,
+  publicProcedure,
+  privateProcedure,
+} from '~/server/api/trpc'
 import { sanitizeHtml } from '~/helpers/sanitizeHtml'
 
 function filterUserFields(user: User) {
