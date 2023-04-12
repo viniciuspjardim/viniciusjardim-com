@@ -15,7 +15,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className="w-28 rounded-sm border border-slate-500 bg-slate-900/75 p-1 opacity-70 transition enabled:hover:opacity-100 disabled:cursor-not-allowed disabled:border-slate-500/30"
+      className="w-28 min-w-fit rounded-sm border border-slate-500 bg-slate-900/75 py-1 px-4 opacity-70 transition enabled:hover:opacity-100 disabled:cursor-not-allowed disabled:border-slate-500/30"
       type={type}
       disabled={disabled}
       onClick={onClick}
