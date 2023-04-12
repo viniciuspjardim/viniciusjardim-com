@@ -34,7 +34,7 @@ export default function ManageCachePage() {
 
         <div className="flex w-full max-w-3xl justify-center px-2">
           <p className="rounded-r-md border-l-4 border-rose-500 bg-slate-900/75 p-4 text-base">
-            <strong>Info:</strong> Please sign in to manage the cache!
+            <strong>Info:</strong> Please sign in to manage the caches.
           </p>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default function ManageCachePage() {
   return (
     <>
       <Head>
-        <title>Vinícius Jardim | Manage Post</title>
+        <title>Vinícius Jardim | Manage Caches</title>
         <meta name="description" content="Vinícius Jardim's personal site" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
