@@ -18,6 +18,9 @@ function Text({ marks = [], children }: TextProps) {
     case 'code':
       return <code>{children}</code>
 
+    case 'strike':
+      return <del>{children}</del>
+
     default:
       return <>{children}</>
   }
