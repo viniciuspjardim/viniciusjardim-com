@@ -8,7 +8,6 @@ import {
   publicProcedure,
   privateProcedure,
 } from '~/server/api/trpc'
-import { sanitizeHtml } from '~/helpers/sanitizeHtml'
 
 function filterUserFields(user: User) {
   return {
@@ -79,10 +78,9 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId
-      const content = sanitizeHtml(input.content)
 
       const post = await ctx.prisma.post.create({
-        data: { ...input, content, authorId },
+        data: { ...input, authorId },
       })
 
       return post
@@ -101,11 +99,9 @@ export const postRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const content = sanitizeHtml(input.content)
-
       const post = await ctx.prisma.post.update({
         where: { id: input.id },
-        data: { ...input, content },
+        data: { ...input },
       })
 
       return post

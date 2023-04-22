@@ -1,6 +1,9 @@
+import type { JSONContent } from '@tiptap/core'
+
 import { useState } from 'react'
 import Image from 'next/image'
 
+import { JsonParser } from './JsonParser'
 import { api } from '~/utils/api'
 import { EditPostForm } from './EditPostForm'
 
@@ -48,6 +51,8 @@ export function PostWithActions({
       />
     )
 
+  const jsonContent = JSON.parse(content) as JSONContent
+
   return (
     <article className="w-full rounded-md bg-slate-900/75 p-2 md:p-8">
       <div className="flex justify-between">
@@ -72,10 +77,7 @@ export function PostWithActions({
         </div>
       </div>
 
-      <div
-        className="blog-post text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      <JsonParser {...jsonContent} />
 
       <div className="flex justify-end gap-x-2">
         <div className="text-right">

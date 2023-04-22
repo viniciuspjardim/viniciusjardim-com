@@ -1,4 +1,7 @@
+import type { JSONContent } from '@tiptap/core'
+
 import Image from 'next/image'
+import { JsonParser } from './JsonParser'
 
 type PostProps = {
   title: string
@@ -15,14 +18,13 @@ export function Post({
   userName,
   userImageUrl,
 }: PostProps) {
+  const jsonContent = JSON.parse(content) as JSONContent
+
   return (
     <article className="w-full rounded-md bg-slate-900/75 p-2 md:p-8">
       <h2 className="text-xl text-rose-500 md:text-2xl">{title}</h2>
 
-      <div
-        className="blog-post text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      <JsonParser {...jsonContent} />
 
       <div className="flex justify-end gap-x-2">
         <div className="text-right">

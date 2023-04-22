@@ -35,7 +35,7 @@ export function CreatePostForm() {
     mutate({
       title: form.title,
       slug,
-      content: editor?.getHTML() ?? '',
+      content: JSON.stringify(editor?.getJSON()) || '',
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
       categoryId: 1,
