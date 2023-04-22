@@ -31,6 +31,7 @@
     "middlewares",
     "NEXTAUTH",
     "nextjs",
+    "prismjs",
     "runtimes",
     "superjson",
     "tailwindcss",

@@ -1,5 +1,7 @@
 import type { JSONContent } from '@tiptap/core'
 
+import Prism from 'prismjs'
+
 type TextProps = {
   marks?: { type: string }[]
   children: React.ReactNode
@@ -15,11 +17,11 @@ function Text({ marks = [], children }: TextProps) {
     case 'italic':
       return <em>{children}</em>
 
-    case 'code':
-      return <code>{children}</code>
-
     case 'strike':
       return <del>{children}</del>
+
+    case 'code':
+      return <code>{children}</code>
 
     default:
       return <>{children}</>
@@ -72,11 +74,16 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
     case 'codeBlock':
       return (
         <pre>
-          <code>
-            {content?.map((item, index) => (
-              <JsonParser key={index} {...item} />
-            ))}
-          </code>
+          <code
+            dangerouslySetInnerHTML={{
+              __html: Prism.highlight(
+                content?.[0]?.text ?? '',
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                Prism.languages.javascript!,
+                'javascript'
+              ),
+            }}
+          />
         </pre>
       )
 
