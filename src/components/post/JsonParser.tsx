@@ -8,6 +8,8 @@ import 'prismjs/components/prism-css'
 import 'prismjs/components/prism-scss'
 import 'prismjs/components/prism-bash'
 
+import { sanitizeHtml } from '~/helpers/sanitizeHtml'
+
 type TextProps = {
   marks?: { type: string }[]
   children: React.ReactNode
@@ -69,7 +71,7 @@ function CodeBlock({
       <code
         className={`language-${language}`}
         dangerouslySetInnerHTML={{
-          __html: Prism.highlight(contentText, gramar, language),
+          __html: sanitizeHtml(Prism.highlight(contentText, gramar, language)),
         }}
       />
     </pre>
