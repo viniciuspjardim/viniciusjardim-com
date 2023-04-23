@@ -1,6 +1,12 @@
 import type { JSONContent } from '@tiptap/core'
 
 import Prism from 'prismjs'
+import 'prismjs/components/prism-typescript'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-json'
+import 'prismjs/components/prism-css'
+import 'prismjs/components/prism-scss'
+import 'prismjs/components/prism-bash'
 
 type TextProps = {
   marks?: { type: string }[]
@@ -39,6 +45,37 @@ function Heading({ level = 1, children }: HeadingProps) {
   return <Hx>{children}</Hx>
 }
 
+type CodeBlockProps = {
+  language?: string
+  contentText?: string
+}
+
+function CodeBlock({
+  language = 'plaintext',
+  contentText = '',
+}: CodeBlockProps) {
+  const gramar = Prism.languages?.[language]
+
+  if (!gramar) {
+    return (
+      <pre>
+        <code>{contentText}</code>
+      </pre>
+    )
+  }
+
+  return (
+    <pre>
+      <code
+        className={`language-${language}`}
+        dangerouslySetInnerHTML={{
+          __html: Prism.highlight(contentText, gramar, language),
+        }}
+      />
+    </pre>
+  )
+}
+
 export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
   switch (type) {
     case 'doc':
@@ -73,18 +110,10 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
 
     case 'codeBlock':
       return (
-        <pre>
-          <code
-            dangerouslySetInnerHTML={{
-              __html: Prism.highlight(
-                content?.[0]?.text ?? '',
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                Prism.languages.javascript!,
-                'javascript'
-              ),
-            }}
-          />
-        </pre>
+        <CodeBlock
+          language={attrs?.language as string}
+          contentText={content?.[0]?.text}
+        />
       )
 
     case 'bulletList':
