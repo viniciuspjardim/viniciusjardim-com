@@ -32,13 +32,6 @@ export default function ManagePostsPage() {
         <title>Vinícius Jardim | Manage Post</title>
         <meta name="description" content="Vinícius Jardim's personal site" />
         <link rel="icon" href="/favicon.svg" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-dark.min.css"
-          integrity="sha512-y6rcKLYkttB9ZUBaz0IsncWFo1VoqISrcMY6J1i6Nb9WB9jRrpll8zjt5e1/naZHyXFoR/1VlH72+2VJ1Uzh7A=="
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
-        />
       </Head>
 
       <div className="flex flex-col items-center space-y-8 py-4">
