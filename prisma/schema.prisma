@@ -1,45 +1,42 @@
-// This is your Prisma schema file, learn more about it in the docs:
-// https://pris.ly/d/prisma-schema
-
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 model Category {
-    id        Int      @id @default(autoincrement())
-    name      String   @db.VarChar(255)
-    slug      String   @unique @db.VarChar(255)
-    rank      Int      @default(5000)
-    posts     Post[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    hidden    Boolean  @default(false)
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
+  rank      Int      @default(5000)
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  hidden    Boolean  @default(false)
 
-    @@index([rank, createdAt])
+  @@index([rank, createdAt])
 }
 
 model Post {
-    id         Int      @id @default(autoincrement())
-    title      String   @db.VarChar(255)
-    slug       String   @unique @db.VarChar(255)
-    content    String   @db.Text
-    authorId   String   @db.VarChar(255)
-    rank       Int      @default(5000)
-    category   Category @relation(fields: [categoryId], references: [id])
-    categoryId Int
-    writtenAt  DateTime @default(now())
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
-    published  Boolean  @default(true)
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(255)
+  slug       String   @unique @db.VarChar(255)
+  content    String   @db.Text
+  authorId   String   @db.VarChar(255)
+  rank       Int      @default(5000)
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  writtenAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  published  Boolean  @default(true)
 
-    @@index([authorId])
-    @@index([rank, writtenAt])
-    @@index([categoryId])
+  @@index([authorId])
+  @@index([rank, writtenAt])
+  @@index([categoryId])
 }
