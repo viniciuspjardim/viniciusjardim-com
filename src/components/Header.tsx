@@ -10,6 +10,7 @@ export function Header() {
         <Link href={'/posts'}>Posts</Link>
         <Link href={'/categories'}>Categories</Link>
         <Link href={'/caches'}>Caches</Link>
+
         <AuthButton />
       </nav>
     </header>

@@ -1,7 +1,7 @@
 import React from 'react'
-import Link from 'next/link'
 import 'server-only'
 
+import { Header } from '~/components/Header'
 import { Post } from '~/components/post/Post'
 
 type ResultObject<T> = {
@@ -52,11 +52,11 @@ export default async function HomePage() {
 
   return (
     <>
+      <Header />
+
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
         A <span className="text-rose-500">draft</span> blog!
       </h1>
-
-      <Link href={'/posts'}>Log in</Link>
 
       <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
         {posts?.map((post) => (

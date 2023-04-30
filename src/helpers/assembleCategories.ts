@@ -2,7 +2,7 @@ export type Category = {
   id: number
   name: string
   slug: string
-  parentId?: number
+  parentId?: number | null
   subcategories: Category[]
 }
 

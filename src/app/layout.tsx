@@ -1,3 +1,5 @@
+import { ClerkProvider } from '@clerk/nextjs/app-beta'
+
 import '~/styles/globals.css'
 import '~/styles/post.scss'
 
@@ -13,9 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col items-center space-y-8 py-4">
-        {children}
-      </body>
+      <ClerkProvider>
+        <body className="flex flex-col items-center space-y-8 py-4">
+          {children}
+        </body>
+      </ClerkProvider>
     </html>
   )
 }
