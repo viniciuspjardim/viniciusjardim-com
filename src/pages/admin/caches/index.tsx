@@ -22,7 +22,7 @@ export default function ManageCachePage() {
   } else if (isError) {
     status = 'error'
   } else if (isSuccess) {
-    status = `cache cleared for ${data.route}`
+    status = `cache cleared for "${data.route}"`
   }
 
   if (!user) {
