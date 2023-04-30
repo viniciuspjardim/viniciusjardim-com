@@ -6,11 +6,18 @@ import {
   privateProcedure,
 } from '~/server/api/trpc'
 
+import { assembleCategories } from '~/helpers/assembleCategories'
+
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const categories = await ctx.prisma.category.findMany({
-      orderBy: { rank: 'desc' },
+    const flatCategories = await ctx.prisma.category.findMany({
+      include: { posts: { select: { title: true, slug: true } } },
+      orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
     })
+
+    const { rootCategories: categories } = assembleCategories(
+      flatCategories.map((category) => ({ ...category, subcategories: [] }))
+    )
 
     return categories
   }),

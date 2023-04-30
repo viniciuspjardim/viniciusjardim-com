@@ -7,8 +7,9 @@ export function Header() {
       <Link href={'/'}>Home</Link>
 
       <nav className="gap4 flex items-center gap-4">
-        <Link href={'/posts'}>Manage Posts</Link>
-        <Link href={'/caches'}>Manage Caches</Link>
+        <Link href={'/posts'}>Posts</Link>
+        <Link href={'/categories'}>Categories</Link>
+        <Link href={'/caches'}>Caches</Link>
         <AuthButton />
       </nav>
     </header>
