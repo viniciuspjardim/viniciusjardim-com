@@ -1,4 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs/app-beta'
+import { dark } from '@clerk/themes'
+
 import { Header } from '~/components/Header'
 
 import '~/styles/globals.css'
@@ -16,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ClerkProvider>
+      <ClerkProvider
+        appearance={{
+          baseTheme: dark,
+        }}
+      >
         <body>
           <Header />
 

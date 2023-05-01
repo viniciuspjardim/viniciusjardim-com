@@ -1,6 +1,7 @@
 import { type AppType } from 'next/app'
 import { Analytics } from '@vercel/analytics/react'
 import { ClerkProvider } from '@clerk/nextjs'
+import { dark } from '@clerk/themes'
 
 import { api } from '~/utils/api'
 
@@ -10,7 +11,12 @@ import '~/styles/post.scss'
 const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
     <>
-      <ClerkProvider {...pageProps}>
+      <ClerkProvider
+        appearance={{
+          baseTheme: dark,
+        }}
+        {...pageProps}
+      >
         <Component {...pageProps} />
       </ClerkProvider>
 
