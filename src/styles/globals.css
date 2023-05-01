@@ -7,10 +7,10 @@ html {
 }
 
 body {
-  @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#121226] text-slate-300/90;
+  @apply min-h-screen bg-gradient-to-b from-[#040308] to-[#101020] text-slate-300/90;
 }
 
 input,
 textarea {
-  @apply rounded-sm bg-slate-900/75 py-1 px-2;
+  @apply rounded-sm border border-slate-800/80 bg-transparent py-1 px-2;
 }
