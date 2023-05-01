@@ -1,7 +1,6 @@
 import React from 'react'
 import 'server-only'
 
-import { Header } from '~/components/Header'
 import { Post } from '~/components/post/Post'
 
 type ResultObject<T> = {
@@ -52,8 +51,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <Header />
-
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
         A <span className="text-rose-500">draft</span> blog!
       </h1>
