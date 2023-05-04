@@ -3,26 +3,29 @@ import { useUser } from '@clerk/nextjs'
 
 import { Header } from '~/components/Header'
 import { Button } from '~/components/Button'
-import { api } from '~/utils/api'
+import { useState } from 'react'
 
 export default function ManageCachePage() {
   const { user } = useUser()
-  const {
-    data,
-    mutate: clearCache,
-    isLoading,
-    isError,
-    isSuccess,
-  } = api.cache.clearCache.useMutation()
+  const [status, setStatus] = useState('')
 
-  let status = 'none'
+  const revalidatePath = async (path: string) => {
+    setStatus('loading...')
 
-  if (isLoading) {
-    status = 'loading'
-  } else if (isError) {
-    status = 'error'
-  } else if (isSuccess) {
-    status = `cache cleared for "${data.route}"`
+    try {
+      const response = await fetch(
+        `/api/revalidate/path?path=${encodeURIComponent(path)}`
+      )
+
+      if (!response.ok) throw new Error(`Failed to revalidate "${path}"`)
+
+      return setStatus(`cache cleared for "${path}"`)
+    } catch (error) {
+      if (error instanceof Error) {
+        return setStatus(error.message || 'error')
+      }
+      return setStatus('error')
+    }
   }
 
   if (!user) {
@@ -57,7 +60,7 @@ export default function ManageCachePage() {
         <h1 className="text-3xl">Manage Caches</h1>
 
         <main className="flex w-full max-w-3xl flex-col items-center space-y-6 px-2">
-          <Button onClick={() => clearCache({ route: '/' })}>
+          <Button onClick={() => revalidatePath('/')}>
             Clear Home Page Cache
           </Button>
 

@@ -26,7 +26,7 @@ type PostType = {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
-const revalidate = 60 * 10 // 10 minutes
+const revalidate = 60 * 60 * 24 // 24 hours
 
 async function fetchPosts() {
   const res = await fetch(`${baseUrl}/api/trpc/posts.getAll`, {
