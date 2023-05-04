@@ -12,6 +12,8 @@ export const cacheRouter = createTRPCRouter({
 
         return { revalidated: true, route: input.route }
       } catch (error) {
+        console.error('clearCache error:', error)
+
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Not able to clear the cache for this route',
