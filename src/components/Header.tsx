@@ -50,8 +50,8 @@ export function Header() {
           </svg>
         </button>
 
-        <div className=" w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-700 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-none md:p-0">
+        <div className="w-full md:block md:w-auto" id="navbar-dropdown">
+          <ul className="mt-4 flex flex-col rounded-lg border border-gray-700 p-4 font-medium md:mt-0 md:flex-row md:items-center md:space-x-8 md:border-none md:p-0">
             {navItems.map((item) => (
               <li key={item.path}>
                 <Link
