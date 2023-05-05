@@ -57,7 +57,7 @@ export function Header() {
                 <Link
                   className="block rounded py-2 pl-3 pr-4 text-white hover:bg-gray-200/10 md:border-0 md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
                   href={item.path}
-                  aria-current="page"
+                  prefetch={false}
                 >
                   {item.title}
                 </Link>
