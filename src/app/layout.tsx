@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import { ClerkProvider } from '@clerk/nextjs/app-beta'
 import { dark } from '@clerk/themes'
 
@@ -28,6 +29,7 @@ export default function RootLayout({
 
           <main className="flex flex-col items-center space-y-8 py-4">
             {children}
+            <Analytics />
           </main>
         </body>
       </ClerkProvider>
