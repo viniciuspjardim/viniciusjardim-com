@@ -1,25 +1,29 @@
-import Head from 'next/head'
 import { useUser } from '@clerk/nextjs'
 
-import { api } from '~/utils/api'
+import { PageHead } from '~/components/PageHead'
 import { Header } from '~/components/Header'
 import { Category } from '~/components/category/Category'
+import { api } from '~/utils/api'
 
-export default function ManageCategoriesPage() {
+const pageName = 'Categories (admin)'
+
+export default function CategoriesAdmin() {
   const { data, isLoading } = api.categories.getAll.useQuery()
   const { user } = useUser()
 
   if (!user) {
     return (
       <>
+        <PageHead page={pageName} />
+
         <Header />
 
         <div className="flex flex-col items-center space-y-8 py-4">
-          <h1 className="text-3xl">Manage Categories</h1>
+          <h1 className="text-3xl">{pageName}</h1>
 
           <div className="flex w-full max-w-3xl justify-center px-2">
             <p className="rounded-r-md border-l-4 border-rose-500 bg-slate-900/75 p-4 text-base">
-              <strong>Info:</strong> Please sign in to manage the categories.
+              <strong>Info:</strong> please sign in to access {pageName}.
             </p>
           </div>
         </div>
@@ -29,16 +33,12 @@ export default function ManageCategoriesPage() {
 
   return (
     <>
-      <Head>
-        <title>Vinícius Jardim | Manage Categories</title>
-        <meta name="description" content="Vinícius Jardim's personal site" />
-        <link rel="icon" href="/favicon.svg" />
-      </Head>
+      <PageHead page={pageName} />
 
       <Header />
 
       <div className="flex flex-col items-center space-y-8 py-4">
-        <h1 className="text-3xl">Manage Categories</h1>
+        <h1 className="text-3xl">{pageName}</h1>
 
         <main className="w-full max-w-3xl flex-col items-center px-2">
           {isLoading && (

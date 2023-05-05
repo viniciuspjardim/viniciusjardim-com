@@ -1,11 +1,13 @@
-import Head from 'next/head'
 import { useUser } from '@clerk/nextjs'
 
+import { PageHead } from '~/components/PageHead'
 import { Header } from '~/components/Header'
 import { Button } from '~/components/Button'
 import { useState } from 'react'
 
-export default function ManageCachePage() {
+const pageName = 'Caches (admin)'
+
+export default function CachesAdmin() {
   const { user } = useUser()
   const [status, setStatus] = useState('')
 
@@ -31,14 +33,16 @@ export default function ManageCachePage() {
   if (!user) {
     return (
       <>
+        <PageHead page={pageName} />
+
         <Header />
 
         <div className="flex flex-col items-center space-y-8 py-4">
-          <h1 className="text-3xl">Manage Caches</h1>
+          <h1 className="text-3xl">{pageName}</h1>
 
           <div className="flex w-full max-w-3xl justify-center px-2">
             <p className="rounded-r-md border-l-4 border-rose-500 bg-slate-900/75 p-4 text-base">
-              <strong>Info:</strong> Please sign in to manage the caches.
+              <strong>Info:</strong> please sign in to access {pageName}.
             </p>
           </div>
         </div>
@@ -48,16 +52,12 @@ export default function ManageCachePage() {
 
   return (
     <>
-      <Head>
-        <title>Vinícius Jardim | Manage Caches</title>
-        <meta name="description" content="Vinícius Jardim's personal site" />
-        <link rel="icon" href="/favicon.svg" />
-      </Head>
+      <PageHead page={pageName} />
 
       <Header />
 
       <div className="flex flex-col items-center space-y-8 py-4">
-        <h1 className="text-3xl">Manage Caches</h1>
+        <h1 className="text-3xl">{pageName}</h1>
 
         <main className="flex w-full max-w-3xl flex-col items-center space-y-6 px-2">
           <Button onClick={() => revalidatePath('/')}>

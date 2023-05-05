@@ -9,7 +9,7 @@ import '~/styles/post.scss'
 
 export const metadata = {
   title: 'Vinícius Jardim',
-  description: 'Vinícius Jardim blog (draft)',
+  description: 'Vinícius Jardim - blog (draft)',
 }
 
 export default function RootLayout({
