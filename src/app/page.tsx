@@ -50,23 +50,17 @@ export default async function HomePage() {
   const posts = await fetchPosts()
 
   return (
-    <>
-      <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-        A <span className="text-rose-500">draft</span> blog!
-      </h1>
-
-      <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
-        {posts?.map((post) => (
-          <Post
-            key={post.id}
-            title={post.title}
-            content={post.content}
-            writtenAt={new Date(post.writtenAt)}
-            userName={post.author?.userName ?? 'Unknown'}
-            userImageUrl={post.author?.userImageUrl}
-          />
-        ))}
-      </main>
-    </>
+    <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
+      {posts?.map((post) => (
+        <Post
+          key={post.id}
+          title={post.title}
+          content={post.content}
+          writtenAt={new Date(post.writtenAt)}
+          userName={post.author?.userName ?? 'Unknown'}
+          userImageUrl={post.author?.userImageUrl}
+        />
+      ))}
+    </main>
   )
 }

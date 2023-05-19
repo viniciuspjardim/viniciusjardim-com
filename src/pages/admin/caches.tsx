@@ -21,7 +21,7 @@ export default function CachesAdmin() {
 
       if (!response.ok) throw new Error(`Failed to revalidate "${path}"`)
 
-      return setStatus(`cache cleared for "${path}"`)
+      return setStatus(`cache cleared for "${path}".`)
     } catch (error) {
       if (error instanceof Error) {
         return setStatus(error.message || 'error')
@@ -41,7 +41,7 @@ export default function CachesAdmin() {
           <h1 className="text-3xl">{pageName}</h1>
 
           <div className="flex w-full max-w-3xl justify-center px-2">
-            <p className="rounded-r-md border-l-4 border-rose-500 bg-slate-900/75 p-4 text-base">
+            <p className="rounded-r-md border-l-4 border-orange-300 bg-slate-900/75 p-4 text-base">
               <strong>Info:</strong> please sign in to access {pageName}.
             </p>
           </div>

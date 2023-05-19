@@ -22,17 +22,16 @@ export function Post({
 
   return (
     <article className="w-full p-2">
-      <h2 className="text-xl text-rose-500 md:text-2xl">{title}</h2>
+      <h2 className="text-2xl font-semibold text-orange-300/80 md:text-4xl">
+        {title}
+      </h2>
 
       <JsonParser {...jsonContent} />
 
       <div className="flex justify-end gap-x-2">
         <div className="text-right">
-          <p className="text-md text-rose-500">{userName}</p>
-
-          <p className="text-sm text-slate-500">
-            {writtenAt.toLocaleDateString()}
-          </p>
+          <p className="text-md font-semibold text-orange-300/80">{userName}</p>
+          <p className="text-sm">{writtenAt.toLocaleDateString()}</p>
         </div>
 
         {userImageUrl && (

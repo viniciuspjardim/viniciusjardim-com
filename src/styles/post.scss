@@ -35,7 +35,7 @@
   }
 
   ul {
-    @apply list-disc pl-5 marker:text-rose-500;
+    @apply list-disc pl-5 marker:text-orange-300/80;
 
     li {
       @apply mb-0;
@@ -109,7 +109,7 @@
   .token.atrule,
   .token.attr-value,
   .token.keyword {
-    @apply text-rose-300/80;
+    @apply text-orange-300/80;
   }
 
   .token.regex,
