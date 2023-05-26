@@ -54,11 +54,11 @@ export default async function HomePage() {
   return (
     <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
       <Link
-        className="flex items-center justify-center gap-2 text-xl text-sky-300 opacity-60 transition-all duration-200 hover:opacity-100"
+        className="flex items-center justify-center gap-2 text-xl text-sky-300 opacity-80 transition-all duration-200 hover:opacity-100"
         href="/p/color-beans"
       >
         <Image src="/icon.png" width={36} height={36} alt="Color Beans logo" />
-        <span>Color Beans (game test)</span>
+        <span>Color Beans (Game)</span>
       </Link>
 
       {posts?.map((post) => (
