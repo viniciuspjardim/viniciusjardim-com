@@ -8,9 +8,11 @@ export const metadata = {
 
 export default function ColorBeansPage() {
   return (
-    <iframe
-      className="h-screen w-screen"
-      src="https://viniciuspjardim.github.io/color-beans-gwt"
-    />
+    <main className="bg-[#040408]">
+      <iframe
+        className="h-screen w-screen"
+        src="https://viniciuspjardim.github.io/color-beans-gwt"
+      />
+    </main>
   )
 }
