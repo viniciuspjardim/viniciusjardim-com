@@ -13,7 +13,6 @@ const config = {
   images: {
     domains: ['images.clerk.dev'],
   },
-
-  experimental: { appDir: true },
 }
+
 export default config
