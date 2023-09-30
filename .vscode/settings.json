@@ -1,20 +1,19 @@
 {
   "files.eol": "\n",
   "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.env.example": "properties"
+  },
 
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
-
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
 
-  "files.associations": {
-    "*.env.example": "properties"
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   },
 
   "search.exclude": {
@@ -27,6 +26,9 @@
     "**/node_modules": true
   },
 
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
   "cSpell.words": [
     "aeiouaeiouaonca",
     "áéíóúâêîôûãõñçà",
@@ -36,6 +38,8 @@
     "NEXTAUTH",
     "nextjs",
     "prismjs",
+    "Puyo",
+    "Robotnik",
     "runtimes",
     "superjson",
     "tailwindcss",
@@ -47,8 +51,5 @@
     "vercel",
     "Vinícius",
     "viniciusjardim"
-  ],
-
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  ]
 }
