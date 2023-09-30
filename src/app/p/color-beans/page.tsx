@@ -1,13 +1,31 @@
 import type { Metadata } from 'next'
+import { env } from '~/env.mjs'
+
+export default function ColorBeansPage() {
+  return (
+    <main className="bg-[#040408]">
+      <iframe
+        className="h-screen w-screen"
+        src="https://viniciuspjardim.github.io/color-beans-gwt"
+      />
+    </main>
+  )
+}
+
+const title = 'Color Beans'
+const description = `Color Beans is a Tetris like game, actually it's a clone of a SEGA game called Puyo Puyo. Link the colors, make combos and defeat the opponents!`
+const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
 
 export const metadata: Metadata = {
-  title: 'Color Beans',
-  description: `A Tetris like game, actually it's a clone of a SEGA game called Puyo Puyo!`,
-  applicationName: 'Color Beans',
-  authors: [{ name: 'Vinícius Jardim', url: 'https://www.viniciusjardim.com' }],
+  title,
+  description,
+  applicationName: title,
+  metadataBase: baseUrl,
+  authors: [{ name: 'Vinícius Jardim', url: baseUrl }],
   keywords: [
-    'Color Beans',
+    title,
     `Dr. Robotnik's Mean Bean Machine`,
+    'puyo',
     'Puyo Puyo',
     'game',
     'puzzle game',
@@ -21,20 +39,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
   openGraph: {
-    title: 'Color Beans',
+    title,
+    description,
     type: 'video.other',
-    description: `A Tetris like game, actually it's a clone of a SEGA game called Puyo Puyo!`,
+    url: '/p/color-beans',
     images: '/color-beans-card.png',
   },
-}
-
-export default function ColorBeansPage() {
-  return (
-    <main className="bg-[#040408]">
-      <iframe
-        className="h-screen w-screen"
-        src="https://viniciuspjardim.github.io/color-beans-gwt"
-      />
-    </main>
-  )
 }
