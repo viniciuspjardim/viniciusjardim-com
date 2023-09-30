@@ -8,5 +8,5 @@ export default withClerkMiddleware(() => {
 // Stop Middleware running on static files
 export const config = {
   matcher:
-    '/((?!_next/image|_next/static|favicon.svg|icon.svg|icon.png|color-beans-card.png|color-beans-icon.png).*)',
+    '/((?!_next/image|_next/static|favicon.svg|favicon.ico|icon.svg|icon.png|color-beans-card.png|color-beans-icon.png).*)',
 }
