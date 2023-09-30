@@ -57,7 +57,12 @@ export default async function HomePage() {
         className="flex items-center justify-center gap-2 text-xl text-sky-300 opacity-80 transition-all duration-200 hover:opacity-100"
         href="/p/color-beans"
       >
-        <Image src="/icon.png" width={36} height={36} alt="Color Beans logo" />
+        <Image
+          src="/color-beans-icon.png"
+          width={36}
+          height={36}
+          alt="Color Beans logo"
+        />
         <span>Color Beans (Game)</span>
       </Link>
 
