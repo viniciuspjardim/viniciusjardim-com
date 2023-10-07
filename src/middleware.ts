@@ -1,13 +1,8 @@
 import { authMiddleware } from '@clerk/nextjs'
 
 export default authMiddleware({
-  publicRoutes: [
-    '/',
-    '/admin/posts',
-    '/admin/categories',
-    '/admin/caches',
-    '/api/trpc/(.*)',
-  ],
+  // TODO: all routes are public, but this will have to change
+  publicRoutes: ['/(.*)'],
 })
 
 export const config = {
