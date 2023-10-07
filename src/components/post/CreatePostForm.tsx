@@ -62,7 +62,7 @@ export function CreatePostForm() {
       <div className="flex space-x-3">
         <Image
           className="h-12 w-12 rounded-full"
-          src={user.profileImageUrl}
+          src={user.imageUrl}
           alt={user.username ?? 'unknown user name'}
           width={48}
           height={48}

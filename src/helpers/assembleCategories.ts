@@ -1,8 +1,10 @@
 export type Category = {
   id: number
-  name: string
   slug: string
-  parentId?: number | null
+  title: string
+  description: string | null
+  keywords: string | null
+  parentId: number | null
   subcategories: Category[]
 }
 

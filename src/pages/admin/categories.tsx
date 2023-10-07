@@ -49,8 +49,8 @@ export default function CategoriesAdmin() {
             <Category
               key={category.id}
               id={category.id}
-              name={category.name}
               slug={category.slug}
+              title={category.title}
               subcategories={category.subcategories}
             />
           ))}

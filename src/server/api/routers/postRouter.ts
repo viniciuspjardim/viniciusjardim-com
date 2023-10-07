@@ -13,7 +13,7 @@ function filterUserFields(user: User) {
   return {
     id: user.id,
     userName: user.username,
-    userImageUrl: user.profileImageUrl,
+    userImageUrl: user.imageUrl,
     firstName: user.firstName,
     lastName: user.lastName,
   }
@@ -68,8 +68,10 @@ export const postRouter = createTRPCRouter({
   create: ownerProcedure
     .input(
       z.object({
-        title: z.string().min(1).max(200),
         slug: z.string().min(1).max(200),
+        title: z.string().min(1).max(200),
+        description: z.string().min(1).max(200).optional(),
+        keywords: z.string().min(1).max(200).optional(),
         content: z.string().min(1),
         rank: z.number().optional(),
         categoryId: z.number(),
@@ -90,8 +92,10 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        title: z.string().min(1).max(200),
         slug: z.string().min(1).max(200),
+        title: z.string().min(1).max(200),
+        description: z.string().min(1).max(200).optional(),
+        keywords: z.string().min(1).max(200).optional(),
         content: z.string().min(1),
         rank: z.number().optional(),
         categoryId: z.number(),

@@ -59,9 +59,12 @@ export const categoryRouter = createTRPCRouter({
   create: ownerProcedure
     .input(
       z.object({
-        name: z.string().min(1).max(200),
         slug: z.string().min(1).max(200),
+        title: z.string().min(1).max(200),
+        description: z.string().min(1).max(200).optional(),
+        keywords: z.string().min(1).max(200).optional(),
         rank: z.number().optional(),
+        parentId: z.number().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -76,9 +79,12 @@ export const categoryRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        name: z.string().min(1).max(200),
         slug: z.string().min(1).max(200),
+        title: z.string().min(1).max(200),
+        description: z.string().min(1).max(200).optional(),
+        keywords: z.string().min(1).max(200).optional(),
         rank: z.number().optional(),
+        parentId: z.number().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

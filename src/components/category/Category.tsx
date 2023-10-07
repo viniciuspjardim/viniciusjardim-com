@@ -1,31 +1,31 @@
 export type CategoryProps = {
   id: number
-  name: string
   slug: string
+  title: string
   subcategories: CategoryProps[]
-  breadCrumbs?: { name: string; slug: string }[]
+  breadCrumbs?: { title: string; slug: string }[]
 }
 
 export function Category({
-  name,
   slug,
+  title,
   subcategories,
   breadCrumbs = [],
 }: CategoryProps) {
-  const crumbs = [...breadCrumbs, { name, slug }]
+  const crumbs = [...breadCrumbs, { title, slug }]
 
   return (
     <>
       <div className="p-2 transition-all duration-200 hover:bg-slate-500/20">
         <div>
-          {name} <span className="opacity-30">({slug})</span>
+          {title} <span className="opacity-30">({slug})</span>
         </div>
 
         <div className="opacity-30">
           {crumbs.map((crumb) => (
             <span key={crumb.slug}>
               {' > '}
-              {crumb.name}
+              {crumb.title}
             </span>
           ))}
         </div>
@@ -40,7 +40,7 @@ export function Category({
               <Category
                 key={subcategory.id}
                 id={subcategory.id}
-                name={subcategory.name}
+                title={subcategory.title}
                 slug={subcategory.slug}
                 subcategories={subcategory.subcategories}
                 breadCrumbs={crumbs}
