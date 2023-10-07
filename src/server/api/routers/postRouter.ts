@@ -6,7 +6,7 @@ import { TRPCError } from '@trpc/server'
 import {
   createTRPCRouter,
   publicProcedure,
-  privateProcedure,
+  ownerProcedure,
 } from '~/server/api/trpc'
 
 function filterUserFields(user: User) {
@@ -65,7 +65,7 @@ export const postRouter = createTRPCRouter({
       return post
     }),
 
-  create: privateProcedure
+  create: ownerProcedure
     .input(
       z.object({
         title: z.string().min(1).max(200),
@@ -86,7 +86,7 @@ export const postRouter = createTRPCRouter({
       return post
     }),
 
-  update: privateProcedure
+  update: ownerProcedure
     .input(
       z.object({
         id: z.number(),
@@ -107,7 +107,7 @@ export const postRouter = createTRPCRouter({
       return post
     }),
 
-  remove: privateProcedure
+  remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const post = await ctx.prisma.post.delete({

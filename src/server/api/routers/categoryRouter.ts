@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server'
 import {
   createTRPCRouter,
   publicProcedure,
-  privateProcedure,
+  ownerProcedure,
 } from '~/server/api/trpc'
 
 import { assembleCategories } from '~/helpers/assembleCategories'
@@ -56,7 +56,7 @@ export const categoryRouter = createTRPCRouter({
       return category
     }),
 
-  create: privateProcedure
+  create: ownerProcedure
     .input(
       z.object({
         name: z.string().min(1).max(200),
@@ -72,7 +72,7 @@ export const categoryRouter = createTRPCRouter({
       return category
     }),
 
-  update: privateProcedure
+  update: ownerProcedure
     .input(
       z.object({
         id: z.number(),
@@ -90,7 +90,7 @@ export const categoryRouter = createTRPCRouter({
       return category
     }),
 
-  remove: privateProcedure
+  remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const category = await ctx.prisma.category.delete({

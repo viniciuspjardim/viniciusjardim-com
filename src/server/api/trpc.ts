@@ -16,6 +16,7 @@
  */
 
 import { prisma } from '~/server/db'
+import { env } from '~/env.mjs'
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -26,8 +27,9 @@ import { prisma } from '~/server/db'
 export const createTRPCContext = (opts: CreateNextContextOptions) => {
   const { req, res } = opts
   const { userId } = getAuth(req)
+  const isSiteOwner = userId === env.SITE_OWNER_USER_ID
 
-  return { prisma, userId, req, res }
+  return { prisma, isSiteOwner, userId, req, res }
 }
 
 /**
@@ -81,4 +83,17 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   return next({ ctx: { ...ctx, userId: ctx.userId } })
 })
 
+const enforceUserIsOwner = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.userId || !ctx.isSiteOwner) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message:
+        'The user must have site owner privileges to access this API endpoint',
+    })
+  }
+
+  return next({ ctx: { ...ctx, userId: ctx.userId } })
+})
+
 export const privateProcedure = t.procedure.use(enforceUserIsAuthed)
+export const ownerProcedure = t.procedure.use(enforceUserIsOwner)

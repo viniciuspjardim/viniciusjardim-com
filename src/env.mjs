@@ -1,19 +1,15 @@
 import { z } from 'zod'
 
-/**
- * Specify your server-side environment variables schema here. This way you can ensure the app isn't
- * built with invalid env vars.
- */
+/** Specify your server-side environment variables schema here */
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
-  DATABASE_URL: z.string().url(),
+
   CLERK_SECRET_KEY: z.string().min(1),
+  DATABASE_URL: z.string().url(),
+  SITE_OWNER_USER_ID: z.string().min(1),
 })
 
-/**
- * Specify your client-side environment variables schema here. This way you can ensure the app isn't
- * built with invalid env vars. To expose them to the client, prefix them with `NEXT_PUBLIC_`.
- */
+/** Specify your client-side environment variables schema here */
 const client = z.object({
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
   NEXT_PUBLIC_SITE_URL: z.string().url(),
@@ -27,9 +23,13 @@ const client = z.object({
  */
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
-  DATABASE_URL: process.env.DATABASE_URL,
-  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
 
+  // Private variables (accessible in the server only)
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+  DATABASE_URL: process.env.DATABASE_URL,
+  SITE_OWNER_USER_ID: process.env.SITE_OWNER_USER_ID,
+
+  // Public variables (accessible also in the browser)
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
     process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
