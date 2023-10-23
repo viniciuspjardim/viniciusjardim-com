@@ -10,7 +10,7 @@ import { assembleCategories } from '~/helpers/assembleCategories'
 
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const flatCategories = await ctx.prisma.category.findMany({
+    const flatCategories = await ctx.db.category.findMany({
       include: { posts: { select: { title: true, slug: true } } },
       orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
     })
@@ -25,7 +25,7 @@ export const categoryRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const category = await ctx.prisma.category.findUnique({
+      const category = await ctx.db.category.findUnique({
         where: { id: input.id },
       })
 
@@ -42,7 +42,7 @@ export const categoryRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ ctx, input }) => {
-      const category = await ctx.prisma.category.findUnique({
+      const category = await ctx.db.category.findUnique({
         where: { slug: input.slug },
       })
 
@@ -68,7 +68,7 @@ export const categoryRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.prisma.category.create({
+      const category = await ctx.db.category.create({
         data: { ...input },
       })
 
@@ -88,7 +88,7 @@ export const categoryRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.prisma.category.update({
+      const category = await ctx.db.category.update({
         where: { id: input.id },
         data: { ...input },
       })
@@ -99,7 +99,7 @@ export const categoryRouter = createTRPCRouter({
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.prisma.category.delete({
+      const category = await ctx.db.category.delete({
         where: { id: input.id },
       })
 

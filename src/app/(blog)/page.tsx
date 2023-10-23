@@ -4,52 +4,10 @@ import React from 'react'
 import 'server-only'
 
 import { Post } from '~/components/post/Post'
-
-type ResultObject<T> = {
-  result: { data: { json: T } }
-}
-
-type PostType = {
-  id: number
-  title: string
-  content: string
-  authorId: string
-  createdAt: string
-  updatedAt: string
-  writtenAt: string
-  published: boolean
-  author: {
-    id: string
-    userName: string
-    userImageUrl: string
-    firstName: string | null
-    lastName: string | null
-  }
-}
-
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
-const revalidate = 60 * 60 * 24 // 24 hours
-
-async function fetchPosts() {
-  const res = await fetch(`${baseUrl}/api/trpc/posts.getAll`, {
-    next: { revalidate },
-  })
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch posts data')
-  }
-
-  const {
-    result: {
-      data: { json: posts },
-    },
-  } = (await res.json()) as ResultObject<PostType[]>
-
-  return posts
-}
+import { api } from '~/trpc/server'
 
 export default async function HomePage() {
-  const posts = await fetchPosts()
+  const posts = await api.posts.getAll.query()
 
   return (
     <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
