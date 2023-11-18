@@ -34,6 +34,11 @@
   }
 }
 
+input,
+textarea {
+  @apply rounded-sm border border-slate-800/80 bg-transparent px-2 py-1;
+}
+
 @layer base {
   * {
     @apply border-border;
