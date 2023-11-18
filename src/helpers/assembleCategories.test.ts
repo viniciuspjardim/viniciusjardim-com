@@ -5,27 +5,37 @@ describe('assembleCategories', () => {
   const flatCategories: Category[] = [
     {
       id: 1,
-      name: 'Default',
       slug: 'default',
+      title: 'Default',
+      description: null,
+      keywords: null,
+      parentId: null,
       subcategories: [],
     },
     {
       id: 2,
-      name: 'Coding',
       slug: 'coding',
+      title: 'Coding',
+      description: null,
+      keywords: null,
+      parentId: null,
       subcategories: [],
     },
     {
       id: 3,
-      name: 'JavaScript',
       slug: 'javascript',
+      title: 'JavaScript',
+      description: null,
+      keywords: null,
       parentId: 2,
       subcategories: [],
     },
     {
       id: 4,
-      name: 'TypeScript',
       slug: 'typescript',
+      title: 'TypeScript',
+      description: null,
+      keywords: null,
       parentId: 2,
       subcategories: [],
     },
@@ -37,13 +47,13 @@ describe('assembleCategories', () => {
     expect(rootCategories.length).toEqual(2)
     expect(index.size).toEqual(4)
 
-    expect(rootCategories[0]?.name).toEqual('Default')
+    expect(rootCategories[0]?.title).toEqual('Default')
     expect(rootCategories[0]?.subcategories).toEqual([])
 
-    expect(rootCategories[1]?.name).toEqual('Coding')
+    expect(rootCategories[1]?.title).toEqual('Coding')
     expect(rootCategories[1]?.subcategories.length).toEqual(2)
 
-    expect(rootCategories[1]?.subcategories[0]?.name).toEqual('JavaScript')
-    expect(rootCategories[1]?.subcategories[1]?.name).toEqual('TypeScript')
+    expect(rootCategories[1]?.subcategories[0]?.title).toEqual('JavaScript')
+    expect(rootCategories[1]?.subcategories[1]?.title).toEqual('TypeScript')
   })
 })

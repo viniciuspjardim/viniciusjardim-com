@@ -26,7 +26,7 @@ export function PostWithActions({
   rank,
   writtenAt,
 }: PostWithActionsProps) {
-  const ctx = api.useContext()
+  const ctx = api.useUtils()
 
   const [isEditing, setIsEditing] = useState(false)
 

@@ -5,7 +5,6 @@ export function asSlug(value: string): string {
   let slug = value.toLocaleLowerCase()
 
   before.forEach((letter, index) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     slug = slug.replaceAll(letter, after[index]!)
   })
 
