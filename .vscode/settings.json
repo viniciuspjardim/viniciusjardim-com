@@ -35,6 +35,7 @@
     "atrule",
     "authed",
     "clsx",
+    "esnext",
     "lucide",
     "middlewares",
     "NEXTAUTH",

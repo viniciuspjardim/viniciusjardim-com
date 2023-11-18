@@ -8,6 +8,14 @@
  * use are documented accordingly near the end.
  */
 
+import { type NextRequest } from 'next/server'
+import { initTRPC, TRPCError } from '@trpc/server'
+import superjson from 'superjson'
+import { ZodError } from 'zod'
+import { getAuth } from '@clerk/nextjs/server'
+import { db } from '~/server/db'
+import { env } from '~/env.mjs'
+
 /**
  * 1. Context
  *
@@ -15,21 +23,34 @@
  * access things when processing a request, like the database, the session, etc.
  */
 
-import { prisma } from '~/server/db'
-import { env } from '~/env.mjs'
+interface CreateContextOptions {
+  headers: Headers
+  isSiteOwner: boolean
+  userId: string | null
+  req: NextRequest
+}
 
-/**
- * This is the actual context you will use in your router. It will be used to process every request
- * that goes through your tRPC endpoint.
- *
- * @see https://trpc.io/docs/context
- */
-export const createTRPCContext = (opts: CreateNextContextOptions) => {
-  const { req, res } = opts
+export const createInnerTRPCContext = (opts: CreateContextOptions) => {
+  return {
+    headers: opts.headers,
+    db,
+    isSiteOwner: opts.isSiteOwner,
+    userId: opts.userId,
+    req: opts.req,
+  }
+}
+
+export const createTRPCContext = (opts: { req: NextRequest }) => {
+  const { req } = opts
   const { userId } = getAuth(req)
   const isSiteOwner = userId === env.SITE_OWNER_USER_ID
 
-  return { prisma, isSiteOwner, userId, req, res }
+  return createInnerTRPCContext({
+    headers: opts.req.headers,
+    isSiteOwner,
+    userId,
+    req,
+  })
 }
 
 /**
@@ -37,15 +58,18 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
  *
  * This is where the tRPC API is initialized, connecting the context and transformer.
  */
-import { initTRPC, TRPCError } from '@trpc/server'
-import superjson from 'superjson'
-import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
-import { getAuth } from '@clerk/nextjs/server'
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
-  errorFormatter({ shape }) {
-    return shape
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    }
   },
 })
 

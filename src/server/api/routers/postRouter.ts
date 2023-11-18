@@ -21,7 +21,7 @@ function filterUserFields(user: User) {
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.prisma.post.findMany({
+    const posts = await ctx.db.post.findMany({
       orderBy: [{ rank: 'desc' }, { writtenAt: 'desc' }],
     })
 
@@ -40,7 +40,7 @@ export const postRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.findUnique({
+      const post = await ctx.db.post.findUnique({
         where: { id: input.id },
       })
 
@@ -54,7 +54,7 @@ export const postRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.findUnique({
+      const post = await ctx.db.post.findUnique({
         where: { slug: input.slug },
       })
 
@@ -81,7 +81,7 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId
 
-      const post = await ctx.prisma.post.create({
+      const post = await ctx.db.post.create({
         data: { ...input, authorId },
       })
 
@@ -103,7 +103,7 @@ export const postRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.update({
+      const post = await ctx.db.post.update({
         where: { id: input.id },
         data: { ...input },
       })
@@ -114,7 +114,7 @@ export const postRouter = createTRPCRouter({
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.delete({
+      const post = await ctx.db.post.delete({
         where: { id: input.id },
       })
 
