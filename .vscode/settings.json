@@ -40,7 +40,6 @@
     "esnext",
     "lucide",
     "middlewares",
-    "NEXTAUTH",
     "nextjs",
     "prismjs",
     "puyo",
@@ -52,10 +51,9 @@
     "tanstack",
     "tiptap",
     "trpc",
-    "TRPC",
-    "turborepo",
+    "uploadthing",
     "vercel",
-    "Vinícius",
+    "vinícius",
     "viniciusjardim"
   ]
 }

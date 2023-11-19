@@ -8,6 +8,8 @@ export const env = createEnv({
     CLERK_SECRET_KEY: z.string().min(1),
     DATABASE_URL: z.string().url(),
     SITE_OWNER_USER_ID: z.string().min(1),
+    UPLOADTHING_APP_ID: z.string().min(1),
+    UPLOADTHING_SECRET: z.string().min(1),
   },
 
   /** Specify your client-side environment variables schema here */
@@ -27,6 +29,8 @@ export const env = createEnv({
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
     SITE_OWNER_USER_ID: process.env.SITE_OWNER_USER_ID,
+    UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
+    UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
 
     // Public variables (accessible also in the browser)
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
