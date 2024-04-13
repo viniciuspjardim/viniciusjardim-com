@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
-    "test": "vitest",
+    "test": "bun test",
     "lint": "next lint",
     "db:studio": "prisma studio",
     "db:push": "prisma db push"
