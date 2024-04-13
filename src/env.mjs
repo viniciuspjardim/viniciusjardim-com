@@ -6,7 +6,8 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(['development', 'test', 'production']),
     CLERK_SECRET_KEY: z.string().min(1),
-    DATABASE_URL: z.string().url(),
+    PG_PRISMA_URL: z.string().min(1),
+    PG_URL_NON_POOLING: z.string().min(1),
     SITE_OWNER_USER_ID: z.string().min(1),
     UPLOADTHING_APP_ID: z.string().min(1),
     UPLOADTHING_SECRET: z.string().min(1),
@@ -27,7 +28,8 @@ export const env = createEnv({
 
     // Private variables (accessible in the server only)
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-    DATABASE_URL: process.env.DATABASE_URL,
+    PG_PRISMA_URL: process.env.PG_PRISMA_URL,
+    PG_URL_NON_POOLING: process.env.PG_URL_NON_POOLING,
     SITE_OWNER_USER_ID: process.env.SITE_OWNER_USER_ID,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
