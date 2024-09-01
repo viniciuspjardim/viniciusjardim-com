@@ -8,14 +8,7 @@ export function Header() {
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 py-1.5 md:h-16 md:px-10 md:py-2">
         <Link href="/" className="flex items-center gap-4">
           <Image
-            className="md:hidden"
-            src="/logo.svg"
-            width={108}
-            height={36}
-            alt="Vinícius Jardim Home"
-          />
-          <Image
-            className="hidden md:block"
+            className="h-9 w-[108px] md:h-12 md:w-36"
             src="/logo.svg"
             width={144}
             height={48}
