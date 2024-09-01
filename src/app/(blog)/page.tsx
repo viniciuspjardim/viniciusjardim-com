@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import 'server-only'
 
-import { Post } from '~/components/post/Post'
+import { Post } from '~/components/post/post-2'
 import { api } from '~/trpc/server'
 
 export default async function HomePage() {

@@ -8,7 +8,7 @@ import 'prismjs/components/prism-css'
 import 'prismjs/components/prism-scss'
 import 'prismjs/components/prism-bash'
 
-import { sanitizeHtml } from '~/helpers/sanitizeHtml'
+import { sanitizeHtml } from '~/helpers/sanitize-html'
 
 type TextProps = {
   marks?: { type: string }[]
@@ -83,9 +83,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
     case 'doc':
       return (
         <div className="blog-post text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl">
-          {content?.map((item, index) => (
-            <JsonParser key={index} {...item} />
-          ))}
+          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </div>
       )
 
@@ -95,18 +93,14 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
     case 'heading':
       return (
         <Heading level={attrs?.level as number | undefined}>
-          {content?.map((item, index) => (
-            <JsonParser key={index} {...item} />
-          ))}
+          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </Heading>
       )
 
     case 'paragraph':
       return (
         <p>
-          {content?.map((item, index) => (
-            <JsonParser key={index} {...item} />
-          ))}
+          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </p>
       )
 
@@ -121,18 +115,14 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
     case 'bulletList':
       return (
         <ul>
-          {content?.map((item, index) => (
-            <JsonParser key={index} {...item} />
-          ))}
+          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </ul>
       )
 
     case 'listItem':
       return (
         <li>
-          {content?.map((item, index) => (
-            <JsonParser key={index} {...item} />
-          ))}
+          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </li>
       )
 

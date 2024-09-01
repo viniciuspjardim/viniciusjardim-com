@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'bun:test'
-import { sanitizeHtml } from './sanitizeHtml'
+import { sanitizeHtml } from './sanitize-html'
 
 describe('sanitizeHtml', () => {
   it('should allow regular text', () => {

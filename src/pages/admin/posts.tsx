@@ -1,9 +1,9 @@
 import { useUser } from '@clerk/nextjs'
 
-import { PageHead } from '~/components/PageHead'
-import { Header } from '~/components/Header'
-import { CreatePostForm } from '~/components/post/CreatePostForm'
-import { PostWithActions } from '~/components/post/PostWithActions'
+import { PageHead } from '~/components/page-head'
+import { Navbar } from '~/components/navbar'
+import { CreatePostForm } from '~/components/post/create-post-form'
+import { PostWithActions } from '~/components/post/post-with-actions'
 import { api } from '~/utils/api'
 
 const pageName = 'Posts (admin)'
@@ -17,7 +17,7 @@ export default function PostsAdmin() {
       <>
         <PageHead page={pageName} />
 
-        <Header />
+        <Navbar />
 
         <div className="flex flex-col items-center space-y-8 py-4">
           <h1 className="text-3xl">{pageName}</h1>
@@ -36,7 +36,7 @@ export default function PostsAdmin() {
     <>
       <PageHead page={pageName} />
 
-      <Header />
+      <Navbar />
 
       <div className="flex flex-col items-center space-y-8 py-4">
         <h1 className="text-3xl">{pageName}</h1>

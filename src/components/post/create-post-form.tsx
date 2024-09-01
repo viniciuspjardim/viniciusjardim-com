@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { api } from '~/utils/api'
-import { asSlug } from '~/helpers/asSlug'
-import { Button } from '~/components/Button'
+import { asSlug } from '~/helpers/as-slug'
+import { Button } from '~/components/button-2'
 import { useEditor } from '~/hooks/useEditor'
 
 type Inputs = {

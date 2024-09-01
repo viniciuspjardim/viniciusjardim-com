@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { AuthButton } from '~/components/AuthButton'
+import { AuthButton } from '~/components/auth-button'
 
-export function Header() {
+export function Navbar() {
   return (
     <nav className="w-full border-b border-gray-900">
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4 py-1.5 md:h-16 md:px-10 md:py-2">

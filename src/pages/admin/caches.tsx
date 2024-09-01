@@ -1,8 +1,8 @@
 import { useUser } from '@clerk/nextjs'
 
 import { PageHead } from '~/components/PageHead'
-import { Header } from '~/components/Header'
-import { Button } from '~/components/Button'
+import { Navbar } from '~/components/navbar'
+import { Button } from '~/components/button-2'
 import { useState } from 'react'
 
 const pageName = 'Caches (admin)'
@@ -35,7 +35,7 @@ export default function CachesAdmin() {
       <>
         <PageHead page={pageName} />
 
-        <Header />
+        <Navbar />
 
         <div className="flex flex-col items-center space-y-8 py-4">
           <h1 className="text-3xl">{pageName}</h1>
@@ -54,7 +54,7 @@ export default function CachesAdmin() {
     <>
       <PageHead page={pageName} />
 
-      <Header />
+      <Navbar />
 
       <div className="flex flex-col items-center space-y-8 py-4">
         <h1 className="text-3xl">{pageName}</h1>

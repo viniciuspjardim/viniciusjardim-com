@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'bun:test'
-import { asSlug } from './asSlug'
+import { asSlug } from './as-slug'
 
 describe('asSlug', () => {
   it('should convert text to slug', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'bun:test'
-import { assembleCategories, type Category } from './assembleCategories'
+import { assembleCategories, type Category } from './assemble-categories'
 
 describe('assembleCategories', () => {
   const flatCategories: Category[] = [

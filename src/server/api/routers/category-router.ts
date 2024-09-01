@@ -6,7 +6,7 @@ import {
   ownerProcedure,
 } from '~/server/api/trpc'
 
-import { assembleCategories } from '~/helpers/assembleCategories'
+import { assembleCategories } from '~/helpers/assemble-categories'
 
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {

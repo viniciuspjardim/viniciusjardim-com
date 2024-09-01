@@ -1,7 +1,7 @@
 import type { JSONContent } from '@tiptap/core'
 
 import Image from 'next/image'
-import { JsonParser } from './JsonParser'
+import { JsonParser } from './json-parser'
 
 type PostProps = {
   title: string

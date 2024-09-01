@@ -3,9 +3,9 @@ import type { JSONContent } from '@tiptap/core'
 import { useState } from 'react'
 import Image from 'next/image'
 
-import { JsonParser } from './JsonParser'
+import { JsonParser } from './json-parser'
 import { api } from '~/utils/api'
-import { EditPostForm } from './EditPostForm'
+import { EditPostForm } from './edit-post-form'
 
 type PostWithActionsProps = {
   id: number

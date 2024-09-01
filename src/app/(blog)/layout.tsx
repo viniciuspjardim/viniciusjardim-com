@@ -1,7 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 
-import { Header } from '~/components/Header'
+import { Navbar } from '~/components/navbar'
 
 import '~/styles/post.scss'
 
@@ -18,7 +18,7 @@ export default function BlogLayout({
         }}
       >
         <body>
-          <Header />
+          <Navbar />
           {children}
         </body>
       </ClerkProvider>

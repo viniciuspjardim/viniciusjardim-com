@@ -1,8 +1,8 @@
 import { useUser } from '@clerk/nextjs'
 
-import { PageHead } from '~/components/PageHead'
-import { Header } from '~/components/Header'
-import { Category } from '~/components/category/Category'
+import { PageHead } from '~/components/page-head'
+import { Navbar } from '~/components/navbar'
+import { Category } from '~/components/category/category-2'
 import { api } from '~/utils/api'
 
 const pageName = 'Categories (admin)'
@@ -16,7 +16,7 @@ export default function CategoriesAdmin() {
       <>
         <PageHead page={pageName} />
 
-        <Header />
+        <Navbar />
 
         <div className="flex flex-col items-center space-y-8 py-4">
           <h1 className="text-3xl">{pageName}</h1>
@@ -35,7 +35,7 @@ export default function CategoriesAdmin() {
     <>
       <PageHead page={pageName} />
 
-      <Header />
+      <Navbar />
 
       <div className="flex flex-col items-center space-y-8 py-4">
         <h1 className="text-3xl">{pageName}</h1>
