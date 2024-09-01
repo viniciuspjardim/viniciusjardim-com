@@ -63,7 +63,7 @@ export function CreatePostForm() {
         <Image
           className="h-12 w-12 rounded-full"
           src={user.imageUrl}
-          alt={user.username ?? 'unknown user name'}
+          alt={user.username ? `${user.username} avatar` : 'unknown user name'}
           width={48}
           height={48}
           quality={100}

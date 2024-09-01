@@ -12,7 +12,7 @@ export function Navbar() {
             src="/logo.svg"
             width={144}
             height={48}
-            alt="Vinícius Jardim Home"
+            alt="Vinícius Jardim home"
           />
         </Link>
 
