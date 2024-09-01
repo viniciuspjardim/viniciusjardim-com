@@ -11,7 +11,7 @@ export default function BlogLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <ClerkProvider
         appearance={{
           baseTheme: dark,

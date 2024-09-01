@@ -21,7 +21,7 @@ export default function CategoriesAdmin() {
         <div className="flex flex-col items-center space-y-8 py-4">
           <h1 className="text-3xl">{pageName}</h1>
 
-          <div className="flex w-full max-w-3xl justify-center px-2">
+          <div className="flex w-full max-w-6xl justify-center px-4 md:px-10">
             <p className="rounded-r-md border-l-4 border-orange-300 bg-slate-900/75 p-4 text-base">
               <strong>Info:</strong> please sign in to access {pageName}.
             </p>
@@ -40,7 +40,7 @@ export default function CategoriesAdmin() {
       <div className="flex flex-col items-center space-y-8 py-4">
         <h1 className="text-3xl">{pageName}</h1>
 
-        <main className="w-full max-w-3xl flex-col items-center px-2">
+        <main className="w-full max-w-6xl flex-col items-center px-4 md:px-10">
           {isLoading && (
             <p className="text-center">Loading the categories...</p>
           )}
