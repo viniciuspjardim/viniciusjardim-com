@@ -1,8 +1,8 @@
 import { useUser } from '@clerk/nextjs'
 
-import { PageHead } from '~/components/PageHead'
+import { PageHead } from '~/components/page-head'
 import { Navbar } from '~/components/navbar'
-import { Button } from '~/components/button-2'
+import { Button } from '~/components/button'
 import { useState } from 'react'
 
 const pageName = 'Caches (admin)'

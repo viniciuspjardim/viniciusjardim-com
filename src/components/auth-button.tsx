@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser, useClerk, SignInButton } from '@clerk/nextjs'
-import { Button } from '~/components/button-2'
+import { Button } from '~/components/button'
 
 export function AuthButton() {
   const user = useUser()

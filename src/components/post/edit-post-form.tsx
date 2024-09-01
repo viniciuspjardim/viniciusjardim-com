@@ -4,8 +4,8 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
-import { Button } from '~/components/button-2'
-import { useEditor } from '~/hooks/useEditor'
+import { Button } from '~/components/button'
+import { useEditor } from '~/hooks/use-editor'
 
 type Inputs = {
   title: string

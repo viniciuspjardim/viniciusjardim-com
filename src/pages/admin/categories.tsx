@@ -2,7 +2,7 @@ import { useUser } from '@clerk/nextjs'
 
 import { PageHead } from '~/components/page-head'
 import { Navbar } from '~/components/navbar'
-import { Category } from '~/components/category/category-2'
+import { Category } from '~/components/category/category'
 import { api } from '~/utils/api'
 
 const pageName = 'Categories (admin)'
