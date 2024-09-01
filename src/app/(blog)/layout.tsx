@@ -19,10 +19,7 @@ export default function BlogLayout({
       >
         <body>
           <Header />
-
-          <main className="flex flex-col items-center space-y-8 py-4">
-            {children}
-          </main>
+          {children}
         </body>
       </ClerkProvider>
     </html>

@@ -10,9 +10,9 @@ export default async function HomePage() {
   const posts = await api.posts.getAll.query()
 
   return (
-    <main className="w-full max-w-3xl flex-col items-center space-y-6 px-2">
+    <main className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 md:px-10">
       <Link
-        className="flex items-center justify-center gap-2 text-xl text-sky-300 opacity-80 transition-all duration-200 hover:opacity-100"
+        className="my-12 flex items-center justify-center gap-4 rounded-xl border border-gray-900 px-8 py-4 text-xl"
         href="/p/color-beans"
       >
         <Image
@@ -21,19 +21,21 @@ export default async function HomePage() {
           height={36}
           alt="Color Beans logo"
         />
-        <span>Color Beans (Game)</span>
+        <span>Play Color Beans</span>
       </Link>
 
-      {posts?.map((post) => (
-        <Post
-          key={post.id}
-          title={post.title}
-          content={post.content}
-          writtenAt={new Date(post.writtenAt)}
-          userName={post.author?.userName ?? 'Unknown'}
-          userImageUrl={post.author?.userImageUrl}
-        />
-      ))}
+      <div className="w-full space-y-24 pb-12">
+        {posts?.map((post) => (
+          <Post
+            key={post.id}
+            title={post.title}
+            content={post.content}
+            writtenAt={new Date(post.writtenAt)}
+            userName={post.author?.userName ?? 'Unknown'}
+            userImageUrl={post.author?.userImageUrl}
+          />
+        ))}
+      </div>
     </main>
   )
 }

@@ -56,7 +56,7 @@ export function PostWithActions({
   return (
     <article className="w-full p-2">
       <div className="flex justify-between">
-        <h2 className="text-2xl font-semibold text-orange-300/80 md:text-4xl">
+        <h2 className="text-2xl font-semibold text-rose-800 md:text-4xl">
           {title}
         </h2>
 
@@ -83,7 +83,7 @@ export function PostWithActions({
 
       <div className="flex justify-end gap-x-2">
         <div className="text-right">
-          <p className="text-md font-semibold text-orange-300/80">{userName}</p>
+          <p className="text-md font-semibold text-rose-800">{userName}</p>
           <p className="text-sm">{writtenAt.toLocaleDateString()}</p>
         </div>
 
