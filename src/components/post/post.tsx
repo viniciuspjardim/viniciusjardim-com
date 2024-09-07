@@ -21,7 +21,7 @@ export function Post({
   const jsonContent = JSON.parse(content) as JSONContent
 
   return (
-    <article className="w-full p-2">
+    <article className="w-full">
       <h2 className="text-2xl font-semibold text-rose-800 md:text-4xl">
         {title}
       </h2>

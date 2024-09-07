@@ -9,7 +9,7 @@ export function useEditor(content: string) {
     editorProps: {
       attributes: {
         class:
-          'blog-post blog-post-min-h focus:outline-none w-full border border-slate-800/80 p-2',
+          'blog-post blog-post-min-h focus:outline-none w-full border border-neutral-800 p-2',
       },
     },
     extensions: [

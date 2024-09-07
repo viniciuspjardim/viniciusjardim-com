@@ -4,11 +4,11 @@
 
 input,
 textarea {
-  @apply rounded-sm border border-slate-800/80 bg-transparent px-2 py-1;
+  @apply rounded-sm border border-neutral-800 bg-transparent px-2 py-1;
 }
 
 @layer base {
   body {
-    @apply bg-black font-light text-gray-300;
+    @apply bg-black font-light text-neutral-300;
   }
 }

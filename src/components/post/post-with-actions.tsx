@@ -54,7 +54,7 @@ export function PostWithActions({
   const jsonContent = JSON.parse(content) as JSONContent
 
   return (
-    <article className="w-full p-2">
+    <article className="w-full">
       <div className="flex justify-between">
         <h2 className="text-2xl font-semibold text-rose-800 md:text-4xl">
           {title}
