@@ -4,6 +4,7 @@ import { MenuIcon, XIcon } from 'lucide-react'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 
 import { AuthButton } from '~/components/auth-button'
+import { WidthContainer } from '~/components/width-container'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
@@ -22,7 +23,7 @@ import {
 export function Navbar() {
   return (
     <nav className="w-full border-b border-neutral-800">
-      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-2 px-4 py-1.5 md:h-16 md:px-10 md:py-2">
+      <WidthContainer className="flex h-12 items-center justify-between gap-4 py-1.5 md:h-16 md:py-2">
         <Link
           className="flex items-center gap-4 rounded-md transition-all hover:brightness-125"
           href="/"
@@ -105,7 +106,7 @@ export function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </div>
+      </WidthContainer>
     </nav>
   )
 }

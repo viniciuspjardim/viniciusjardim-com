@@ -16,7 +16,7 @@ export function Category({
 
   return (
     <>
-      <div className="p-2 transition-all duration-200 hover:bg-slate-500/20">
+      <div className="transition-all duration-200 hover:bg-slate-500/20">
         <div>
           {title} <span className="opacity-30">({slug})</span>
         </div>

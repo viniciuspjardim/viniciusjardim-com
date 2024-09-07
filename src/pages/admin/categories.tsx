@@ -3,9 +3,10 @@ import { useUser } from '@clerk/nextjs'
 import { PageHead } from '~/components/page-head'
 import { Navbar } from '~/components/navbar'
 import { Category } from '~/components/category/category'
+import { WidthContainer } from '~/components/width-container'
 import { api } from '~/utils/api'
 
-const pageName = 'Categories (admin)'
+const pageName = 'Categories'
 
 export default function CategoriesAdmin() {
   const { data, isLoading } = api.categories.getAll.useQuery()
@@ -15,18 +16,14 @@ export default function CategoriesAdmin() {
     return (
       <>
         <PageHead page={pageName} />
-
         <Navbar />
-
-        <div className="flex flex-col items-center space-y-8 py-4">
+        <WidthContainer className="space-y-8 py-12">
           <h1 className="text-3xl">{pageName}</h1>
 
-          <div className="flex w-full max-w-6xl justify-center px-4 md:px-10">
-            <p className="rounded-r-md border-l-4 border-orange-300 bg-slate-900/75 p-4 text-base">
-              <strong>Info:</strong> please sign in to access {pageName}.
-            </p>
-          </div>
-        </div>
+          <p className="rounded-r-md border-l-4 border-rose-600 bg-neutral-900 p-4 text-base">
+            <strong>Info:</strong> please sign in to access {pageName}.
+          </p>
+        </WidthContainer>
       </>
     )
   }
@@ -34,28 +31,22 @@ export default function CategoriesAdmin() {
   return (
     <>
       <PageHead page={pageName} />
-
       <Navbar />
-
-      <div className="flex flex-col items-center space-y-8 py-4">
+      <WidthContainer className="space-y-8 py-12">
         <h1 className="text-3xl">{pageName}</h1>
 
-        <main className="w-full max-w-6xl flex-col items-center px-4 md:px-10">
-          {isLoading && (
-            <p className="text-center">Loading the categories...</p>
-          )}
+        {isLoading && <p>Loading...</p>}
 
-          {data?.map((category) => (
-            <Category
-              key={category.id}
-              id={category.id}
-              slug={category.slug}
-              title={category.title}
-              subcategories={category.subcategories}
-            />
-          ))}
-        </main>
-      </div>
+        {data?.map((category) => (
+          <Category
+            key={category.id}
+            id={category.id}
+            slug={category.slug}
+            title={category.title}
+            subcategories={category.subcategories}
+          />
+        ))}
+      </WidthContainer>
     </>
   )
 }

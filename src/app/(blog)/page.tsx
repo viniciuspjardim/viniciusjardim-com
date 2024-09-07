@@ -4,13 +4,14 @@ import React from 'react'
 import 'server-only'
 
 import { Post } from '~/components/post/post'
+import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 
 export default async function HomePage() {
   const posts = await api.posts.getAll.query()
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 md:px-10">
+    <WidthContainer className="flex w-full flex-col items-center">
       <Link
         className="my-12 flex w-full items-center justify-center gap-6 rounded-2xl border border-neutral-900 bg-neutral-950 px-8 py-4 text-xl transition-all hover:border-neutral-800 hover:bg-neutral-900 sm:w-auto"
         href="/p/color-beans"
@@ -36,6 +37,6 @@ export default async function HomePage() {
           />
         ))}
       </div>
-    </main>
+    </WidthContainer>
   )
 }
