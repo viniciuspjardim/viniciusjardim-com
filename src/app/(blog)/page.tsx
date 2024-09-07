@@ -12,7 +12,7 @@ export default async function HomePage() {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 md:px-10">
       <Link
-        className="my-12 flex w-full items-center justify-center gap-6 rounded-2xl border border-gray-900 bg-gray-950 px-8 py-4 text-xl transition-all hover:bg-gray-900/60 sm:w-auto"
+        className="my-12 flex w-full items-center justify-center gap-6 rounded-2xl border border-neutral-900 bg-neutral-950 px-8 py-4 text-xl transition-all hover:border-neutral-800 hover:bg-neutral-900 sm:w-auto"
         href="/p/color-beans"
       >
         <Image
