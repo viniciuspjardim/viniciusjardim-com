@@ -38,11 +38,11 @@ export function Navbar() {
 
         <div className="flex items-center justify-center gap-4">
           <a
-            className="flex space-x-2 rounded-md p-2 transition-all hover:bg-neutral-800 hover:text-white"
+            className="flex h-9 items-center space-x-2 rounded-md px-2 text-sm font-medium transition-all hover:bg-neutral-800 hover:text-white"
             href="https://github.com/viniciuspjardim"
             target="_blank"
           >
-            <GitHubLogoIcon className="h-6 w-6" />
+            <GitHubLogoIcon className="size-5" />
             <span className="hidden md:block">GitHub</span>
           </a>
 
@@ -50,7 +50,7 @@ export function Navbar() {
 
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button className="group p-2 hover:text-white" variant="ghost">
+              <Button className="group px-2 py-0" variant="ghost" size="sm">
                 <MenuIcon className="group-data-[state=open]:hidden" />
                 <XIcon className="group-data-[state=closed]:hidden" />
               </Button>
