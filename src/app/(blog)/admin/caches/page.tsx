@@ -1,7 +1,7 @@
+'use client'
+
 import { useUser } from '@clerk/nextjs'
 
-import { PageHead } from '~/components/page-head'
-import { Navbar } from '~/components/navbar'
 import { Button } from '~/components/button'
 import { WidthContainer } from '~/components/width-container'
 import { useState } from 'react'
@@ -33,35 +33,25 @@ export default function CachesAdmin() {
 
   if (!user) {
     return (
-      <>
-        <PageHead page={pageName} />
-        <Navbar />
-        <WidthContainer className="space-y-8 py-12">
-          <h1 className="text-3xl">{pageName}</h1>
+      <WidthContainer className="space-y-8 py-12">
+        <h1 className="text-3xl">{pageName}</h1>
 
-          <p className="rounded-r-md border-l-4 border-rose-600 bg-neutral-900 p-4 text-base">
-            <strong>Info:</strong> please sign in to access {pageName}.
-          </p>
-        </WidthContainer>
-      </>
+        <p className="rounded-r-md border-l-4 border-rose-600 bg-neutral-900 p-4 text-base">
+          <strong>Info:</strong> please sign in to access {pageName}.
+        </p>
+      </WidthContainer>
     )
   }
 
   return (
-    <>
-      <PageHead page={pageName} />
-      <Navbar />
-      <WidthContainer className="space-y-8 py-12">
-        <h1 className="text-3xl">{pageName}</h1>
+    <WidthContainer className="space-y-8 py-12">
+      <h1 className="text-3xl">{pageName}</h1>
 
-        <Button onClick={() => revalidatePath('/')}>
-          Clear Home Page Cache
-        </Button>
+      <Button onClick={() => revalidatePath('/')}>Clear Home Page Cache</Button>
 
-        <p className="rounded-r-md border-l-4 border-emerald-600 bg-neutral-900 p-4 text-base">
-          <strong>Info:</strong> {status}
-        </p>
-      </WidthContainer>
-    </>
+      <p className="rounded-r-md border-l-4 border-emerald-600 bg-neutral-900 p-4 text-base">
+        <strong>Info:</strong> {status}
+      </p>
+    </WidthContainer>
   )
 }

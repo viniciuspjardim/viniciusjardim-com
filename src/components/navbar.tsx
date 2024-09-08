@@ -15,8 +15,13 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import { api } from '~/trpc/server'
 
-export function Navbar() {
+export async function Navbar() {
+  const categories = await api.categories.getAll.query()
+
+  // FIXME: fix dropdown menu links being clickable only in the text
+
   return (
     <nav className="w-full border-b border-neutral-800">
       <WidthContainer className="flex h-12 items-center justify-between gap-4 py-1.5 md:h-16 md:py-2">
@@ -52,8 +57,18 @@ export function Navbar() {
                 <XIcon className="group-data-[state=closed]:hidden" />
               </Button>
             </DropdownMenuTrigger>
-
             <DropdownMenuContent className="mt-6 w-64" align="end">
+              <DropdownMenuGroup>
+                {categories?.map((category) => (
+                  <DropdownMenuItem key={category.id}>
+                    <Link href={`/categories/${category.slug}`}>
+                      {category.title}
+                    </Link>
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Link href="/admin/posts">Posts</Link>
@@ -67,7 +82,12 @@ export function Navbar() {
                   <Link href="/admin/caches">Caches</Link>
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/admin/upload">Upload</Link>
+                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                </DropdownMenuItem>
               </DropdownMenuGroup>
+
               <DropdownMenuSeparator className="md:hidden" />
               <DropdownMenuItem className="md:hidden">
                 <AuthButton className="w-full" />

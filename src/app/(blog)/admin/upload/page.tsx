@@ -3,7 +3,7 @@
 import React from 'react'
 import { UploadButton } from '~/utils/uploadthing'
 
-const pageName = 'Upload Test (admin)'
+const pageName = 'Upload'
 
 export default function UploadPage() {
   return (
