@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react'
+import { WidthContainer } from '~/components/width-container'
 import { UploadButton } from '~/utils/uploadthing'
 
 const pageName = 'Upload'
 
-export default function UploadPage() {
+export default function UploadAdmin() {
   return (
-    <div className="flex flex-col items-center space-y-8 py-4">
+    <WidthContainer className="space-y-8 py-12">
       <h1 className="text-3xl">{pageName}</h1>
 
       <UploadButton
@@ -19,6 +19,6 @@ export default function UploadPage() {
           console.log('Error:', error.message)
         }}
       />
-    </div>
+    </WidthContainer>
   )
 }
