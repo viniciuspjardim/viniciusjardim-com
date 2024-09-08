@@ -20,8 +20,6 @@ import { api } from '~/trpc/server'
 export async function Navbar() {
   const categories = await api.categories.getAll.query()
 
-  // FIXME: fix dropdown menu links being clickable only in the text
-
   return (
     <nav className="w-full border-b border-neutral-800">
       <WidthContainer className="flex h-12 items-center justify-between gap-4 py-1.5 md:h-16 md:py-2">
@@ -57,34 +55,47 @@ export async function Navbar() {
                 <XIcon className="group-data-[state=closed]:hidden" />
               </Button>
             </DropdownMenuTrigger>
+
             <DropdownMenuContent className="mt-6 w-64" align="end">
               <DropdownMenuGroup>
                 {categories?.map((category) => (
-                  <DropdownMenuItem key={category.id}>
-                    <Link href={`/categories/${category.slug}`}>
-                      {category.title}
+                  <DropdownMenuItem key={category.id} asChild>
+                    <Link
+                      className="cursor-pointer"
+                      href={`/categories/${category.slug}`}
+                    >
+                      <span>{category.title}</span>
+                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </Link>
-                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>
+
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Link href="/admin/posts">Posts</Link>
-                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                <DropdownMenuItem asChild>
+                  <Link className="cursor-pointer" href="/admin/posts">
+                    <span>Posts</span>
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/admin/categories">Categories</Link>
-                  <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
+                <DropdownMenuItem asChild>
+                  <Link className="cursor-pointer" href="/admin/categories">
+                    <span>Categories</span>
+                    <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/admin/caches">Caches</Link>
-                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                <DropdownMenuItem asChild>
+                  <Link className="cursor-pointer" href="/admin/caches">
+                    <span>Caches</span>
+                    <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/admin/upload">Upload</Link>
-                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                <DropdownMenuItem asChild>
+                  <Link className="cursor-pointer" href="/admin/upload">
+                    <span>Upload</span>
+                    <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
 
