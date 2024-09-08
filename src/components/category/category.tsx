@@ -16,15 +16,15 @@ export function Category({
 
   return (
     <>
-      <div className="transition-all duration-200 hover:bg-neutral-950">
+      <div className="rounded-xl py-2 transition-all hover:bg-neutral-950">
         <div>
-          {title} <span className="opacity-30">({slug})</span>
+          {title} <span className="opacity-40">({slug})</span>
         </div>
 
-        <div className="opacity-30">
+        <div className="text-sm opacity-40">
           {crumbs.map((crumb) => (
             <span key={crumb.slug}>
-              {' > '}
+              {' • '}
               {crumb.title}
             </span>
           ))}
@@ -32,8 +32,8 @@ export function Category({
       </div>
 
       {subcategories.length > 0 && (
-        <div className="flex pl-4">
-          <div className="border-l-2 border-l-white/10" />
+        <div className="flex">
+          <div className="border-l border-neutral-800 pr-4" />
 
           <div className="flex-1">
             {subcategories.map((subcategory) => (

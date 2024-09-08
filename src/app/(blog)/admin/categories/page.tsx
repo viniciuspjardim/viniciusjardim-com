@@ -30,15 +30,17 @@ export default function CategoriesAdmin() {
 
       {isLoading && <p>Loading...</p>}
 
-      {data?.map((category) => (
-        <Category
-          key={category.id}
-          id={category.id}
-          slug={category.slug}
-          title={category.title}
-          subcategories={category.subcategories}
-        />
-      ))}
+      <div>
+        {data?.map((category) => (
+          <Category
+            key={category.id}
+            id={category.id}
+            slug={category.slug}
+            title={category.title}
+            subcategories={category.subcategories}
+          />
+        ))}
+      </div>
     </WidthContainer>
   )
 }
