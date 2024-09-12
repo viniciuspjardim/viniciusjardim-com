@@ -10,6 +10,7 @@ import { useEditor } from '~/hooks/use-editor'
 type Inputs = {
   title: string
   rank: string
+  categoryId: string
   writtenAt: string
   content: string
 }
@@ -21,6 +22,7 @@ type EditPostFormProps = {
   userName: string
   userImageUrl?: string
   rank: number
+  categoryId: number
   writtenAt: Date
   closeForm: () => void
 }
@@ -32,10 +34,13 @@ export function EditPostForm({
   userName,
   userImageUrl,
   rank,
+  categoryId,
   writtenAt,
   closeForm,
 }: EditPostFormProps) {
   const [moreOptions, setMoreOptions] = useState(false)
+  const { data: categoriesData, isLoading: categoriesLoading } =
+    api.categories.getAllFlat.useQuery()
 
   const {
     register,
@@ -48,6 +53,7 @@ export function EditPostForm({
       title,
       content,
       rank: rank.toString(),
+      categoryId: categoryId.toString(),
       writtenAt: writtenAt.toISOString(),
     },
   })
@@ -65,7 +71,7 @@ export function EditPostForm({
       content: JSON.stringify(editor?.getJSON()) || '',
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
-      categoryId: 1,
+      categoryId: parseInt(form.categoryId, 10),
     })
   }
 
@@ -134,6 +140,15 @@ export function EditPostForm({
             disabled={isPosting}
             {...register('writtenAt')}
           />
+
+          <select {...register('categoryId')}>
+            {categoriesLoading && <option>Loading...</option>}
+            {categoriesData?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.title}
+              </option>
+            ))}
+          </select>
         </div>
       )}
 

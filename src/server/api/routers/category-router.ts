@@ -22,6 +22,15 @@ export const categoryRouter = createTRPCRouter({
     return categories
   }),
 
+  getAllFlat: publicProcedure.query(async ({ ctx }) => {
+    const flatCategories = await ctx.db.category.findMany({
+      include: { posts: { select: { title: true, slug: true } } },
+      orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
+    })
+
+    return flatCategories
+  }),
+
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {

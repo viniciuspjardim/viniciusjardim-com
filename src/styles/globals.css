@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 input,
+select,
 textarea {
   @apply rounded-sm border border-neutral-800 bg-transparent px-2 py-1;
 }

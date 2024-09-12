@@ -42,6 +42,7 @@ export default function PostsAdmin() {
           userName={post.author?.userName ?? 'Unknown'}
           userImageUrl={post.author?.userImageUrl}
           rank={post.rank}
+          categoryId={post.categoryId}
           writtenAt={post.writtenAt}
         />
       ))}

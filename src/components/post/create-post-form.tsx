@@ -11,12 +11,15 @@ import { useEditor } from '~/hooks/use-editor'
 type Inputs = {
   title: string
   rank: string
+  categoryId: string
   writtenAt: string
 }
 
 export function CreatePostForm() {
   const { user } = useUser()
   const [moreOptions, setMoreOptions] = useState(false)
+  const { data: categoriesData, isLoading: categoriesLoading } =
+    api.categories.getAllFlat.useQuery()
 
   const {
     register,
@@ -38,7 +41,7 @@ export function CreatePostForm() {
       content: JSON.stringify(editor?.getJSON()) || '',
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
-      categoryId: 1,
+      categoryId: parseInt(form.categoryId, 10),
     })
   }
 
@@ -106,6 +109,15 @@ export function CreatePostForm() {
             disabled={isPosting}
             {...register('writtenAt')}
           />
+
+          <select {...register('categoryId')}>
+            {categoriesLoading && <option>Loading...</option>}
+            {categoriesData?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.title}
+              </option>
+            ))}
+          </select>
         </div>
       )}
 

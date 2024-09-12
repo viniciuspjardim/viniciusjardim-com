@@ -14,6 +14,7 @@ type PostWithActionsProps = {
   userName: string
   userImageUrl?: string
   rank: number
+  categoryId: number
   writtenAt: Date
 }
 
@@ -24,6 +25,7 @@ export function PostWithActions({
   userName,
   userImageUrl,
   rank,
+  categoryId,
   writtenAt,
 }: PostWithActionsProps) {
   const ctx = api.useUtils()
@@ -46,6 +48,7 @@ export function PostWithActions({
         userName={userName}
         userImageUrl={userImageUrl}
         rank={rank}
+        categoryId={categoryId}
         writtenAt={writtenAt}
         closeForm={() => setIsEditing(false)}
       />
