@@ -48,7 +48,22 @@ export const postRouter = createTRPCRouter({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
       }
 
-      return post
+      try {
+        const user = await clerkClient.users.getUser(post.authorId)
+
+        return { ...post, author: filterUserFields(user) }
+      } catch (error) {
+        return {
+          ...post,
+          author: {
+            id: post.authorId,
+            userName: null,
+            userImageUrl: null,
+            firstName: null,
+            lastName: null,
+          },
+        }
+      }
     }),
 
   getOneBySlug: publicProcedure
@@ -62,7 +77,22 @@ export const postRouter = createTRPCRouter({
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
       }
 
-      return post
+      try {
+        const user = await clerkClient.users.getUser(post.authorId)
+
+        return { ...post, author: filterUserFields(user) }
+      } catch (error) {
+        return {
+          ...post,
+          author: {
+            id: post.authorId,
+            userName: null,
+            userImageUrl: null,
+            firstName: null,
+            lastName: null,
+          },
+        }
+      }
     }),
 
   create: ownerProcedure

@@ -84,7 +84,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
   switch (type) {
     case 'doc':
       return (
-        <div className="blog-post text-md my-4 whitespace-pre-wrap md:my-6 md:text-xl">
+        <div className="blog-post text-md whitespace-pre-wrap md:text-xl">
           {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </div>
       )

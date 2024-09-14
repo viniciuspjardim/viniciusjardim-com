@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import 'server-only'
 
 import { Post } from '~/components/post/post'
@@ -11,20 +9,7 @@ export default async function HomePage() {
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">
-      <Link
-        className="my-12 flex w-full items-center justify-center gap-6 rounded-2xl border border-neutral-900 bg-neutral-950 px-8 py-4 text-xl transition-all hover:border-neutral-800 hover:bg-neutral-900 sm:w-auto"
-        href="/p/color-beans"
-      >
-        <Image
-          src="/color-beans-2-icon.png"
-          width={42}
-          height={42}
-          alt="Color Beans logo"
-        />
-        <span>Play Color Beans</span>
-      </Link>
-
-      <div className="w-full space-y-12 pb-12">
+      <div className="w-full space-y-12 py-12">
         {posts?.map((post) => (
           <Post
             key={post.id}
