@@ -113,6 +113,15 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
           contentText={content?.[0]?.text}
         />
       )
+    case 'image':
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={attrs?.src as string}
+          alt={attrs?.alt as string}
+          className="w-full"
+        />
+      )
 
     case 'bulletList':
       return (
