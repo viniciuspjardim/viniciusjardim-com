@@ -26,7 +26,7 @@ export default function PostsAdmin() {
   }
 
   return (
-    <WidthContainer className="space-y-8 py-12">
+    <WidthContainer className="space-y-12 py-12">
       <h1 className="text-3xl">{pageName}</h1>
 
       <CreatePostForm />
@@ -37,6 +37,7 @@ export default function PostsAdmin() {
         <PostWithActions
           key={post.id}
           id={post.id}
+          slug={post.slug}
           title={post.title}
           content={post.content}
           userName={post.author?.userName ?? 'Unknown'}

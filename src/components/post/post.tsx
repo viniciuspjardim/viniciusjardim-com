@@ -1,8 +1,9 @@
 import type { JSONContent } from '@tiptap/core'
 
 import Image from 'next/image'
-import { JsonParser } from './json-parser'
 import Link from 'next/link'
+
+import { JsonParser } from './json-parser'
 
 type PostProps = {
   slug: string

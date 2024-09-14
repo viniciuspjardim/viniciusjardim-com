@@ -2,6 +2,7 @@ import type { JSONContent } from '@tiptap/core'
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { JsonParser } from './json-parser'
 import { api } from '~/utils/api'
@@ -9,6 +10,7 @@ import { EditPostForm } from './edit-post-form'
 
 type PostWithActionsProps = {
   id: number
+  slug: string
   title: string
   content: string
   userName: string
@@ -20,6 +22,7 @@ type PostWithActionsProps = {
 
 export function PostWithActions({
   id,
+  slug,
   title,
   content,
   userName,
@@ -57,11 +60,16 @@ export function PostWithActions({
   const jsonContent = JSON.parse(content) as JSONContent
 
   return (
-    <article className="w-full">
+    <article className="w-full space-y-4">
       <div className="flex justify-between">
-        <h2 className="text-2xl font-semibold text-rose-800 md:text-4xl">
-          {title}
-        </h2>
+        <Link
+          className="decoration-rose-800 hover:underline"
+          href={`/posts/${slug}`}
+        >
+          <h2 className="text-2xl font-bold text-neutral-300 md:text-4xl">
+            {title}
+          </h2>
+        </Link>
 
         <div className="flex justify-center gap-4">
           <button
@@ -82,25 +90,25 @@ export function PostWithActions({
         </div>
       </div>
 
-      <JsonParser {...jsonContent} />
-
-      <div className="flex justify-end gap-x-2">
-        <div className="text-right">
-          <p className="text-md font-semibold text-rose-800">{userName}</p>
-          <p className="text-sm">{writtenAt.toLocaleDateString()}</p>
-        </div>
-
+      <div className="flex gap-3">
         {userImageUrl && (
           <Image
-            className="h-12 w-12 rounded-full"
+            className="mt-1 h-10 w-10 rounded-full"
             src={userImageUrl}
             alt={userName}
-            width={48}
-            height={48}
+            width={40}
+            height={40}
             quality={100}
           />
         )}
+
+        <div>
+          <p className="text-md font-semibold text-rose-800">{userName}</p>
+          <p className="text-sm">{writtenAt.toLocaleDateString()}</p>
+        </div>
       </div>
+
+      <JsonParser {...jsonContent} />
     </article>
   )
 }
