@@ -11,7 +11,7 @@ export default function BlogLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="gutter-stable dark">
       <ClerkProvider
         appearance={{
           baseTheme: dark,

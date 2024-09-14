@@ -12,4 +12,8 @@ textarea {
   body {
     @apply bg-black font-light text-neutral-300;
   }
+
+  .gutter-stable {
+    scrollbar-gutter: stable both-edges;
+  }
 }
