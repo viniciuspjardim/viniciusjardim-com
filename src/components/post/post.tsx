@@ -27,7 +27,7 @@ export function Post({
     <article className="w-full space-y-4">
       <Link
         className="decoration-rose-800 hover:underline"
-        href={`posts/${slug}`}
+        href={`/posts/${slug}`}
       >
         <h2 className="text-2xl font-bold text-neutral-300 md:text-4xl">
           {title}
