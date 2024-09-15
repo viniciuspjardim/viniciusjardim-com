@@ -36,7 +36,7 @@ export function AuthButton({ className }: { className?: string }) {
   }
 
   return (
-    <SignInButton>
+    <SignInButton mode="modal">
       <Button className={cn('w-24', className)} variant="outline" size="sm">
         Sign In
       </Button>
