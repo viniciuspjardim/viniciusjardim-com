@@ -1,6 +1,6 @@
 # viniciusjardim.com
 
-<img src="public/favicon.svg" alt="viniciusjardim.com logo" width="72" height="72" style="margin-bottom: 1rem; border: solid 2px #a3a3a3; border-radius: 100%;">
+<img src="public/favicon-2.svg" alt="viniciusjardim.com logo" width="72" height="72">
 
 I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excuse to write some code outside of work! I will share my thoughts about programming and other topics there.
 
