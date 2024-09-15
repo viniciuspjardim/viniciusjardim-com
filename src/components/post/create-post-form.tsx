@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
+import { ImageIcon } from 'lucide-react'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
-import { Button } from '~/components/button'
+import { Button } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
 
 type Inputs = {
@@ -33,6 +34,14 @@ export function CreatePostForm() {
 
   const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !editor?.isEmpty
+
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor?.chain().focus().setImage({ src: url }).run()
+    }
+  }, [editor])
 
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
@@ -121,10 +130,20 @@ export function CreatePostForm() {
         </div>
       )}
 
+      <div>
+        <Button className="p-1" variant="outline" size="sm" onClick={addImage}>
+          <ImageIcon />
+        </Button>
+      </div>
+
       <Editor editor={editor} />
 
       <div className="flex justify-end">
-        <Button disabled={isPosting || !isValid} type="submit">
+        <Button
+          variant="outline"
+          disabled={isPosting || !isValid}
+          type="submit"
+        >
           Publish Post
         </Button>
       </div>

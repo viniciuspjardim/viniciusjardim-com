@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
+import { ImageIcon } from 'lucide-react'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
@@ -161,17 +162,23 @@ export function EditPostForm({
       )}
 
       <div>
-        <Button onClick={addImage}>Add Image</Button>
+        <Button className="p-1" variant="outline" size="sm" onClick={addImage}>
+          <ImageIcon />
+        </Button>
       </div>
 
       <Editor editor={editor} />
 
       <div className="flex justify-end space-x-2">
-        <Button disabled={isPosting || !isValid} type="submit">
+        <Button
+          variant="outline"
+          disabled={isPosting || !isValid}
+          type="submit"
+        >
           Save Post
         </Button>
 
-        <Button disabled={isPosting} onClick={closeForm}>
+        <Button variant="outline" disabled={isPosting} onClick={closeForm}>
           Cancel
         </Button>
       </div>
