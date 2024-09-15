@@ -6,7 +6,7 @@ I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excus
 
 See you later! 🚀
 
-## Tasks
+### Tasks
 
 - [x] Create and display posts
   - [x] Add title, slug, Tiptap editor
