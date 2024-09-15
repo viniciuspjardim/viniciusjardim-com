@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
-import { Button } from '~/components/button'
+import { Button } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
 
 type Inputs = {
@@ -62,6 +62,14 @@ export function EditPostForm({
 
   const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !editor?.isEmpty
+
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor?.chain().focus().setImage({ src: url }).run()
+    }
+  }, [editor])
 
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
@@ -151,6 +159,10 @@ export function EditPostForm({
           </select>
         </div>
       )}
+
+      <div>
+        <Button onClick={addImage}>Add Image</Button>
+      </div>
 
       <Editor editor={editor} />
 

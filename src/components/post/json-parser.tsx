@@ -117,9 +117,10 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          className="rounded-2xl"
+          loading="lazy"
           src={attrs?.src as string}
           alt={attrs?.alt as string}
-          className="w-full"
         />
       )
 
