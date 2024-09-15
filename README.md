@@ -1,10 +1,12 @@
+<img src="public/favicon.svg" alt="viniciusjardim.com logo" width="72" height="72">
+
 # viniciusjardim.com
 
-I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excuse to write some code outside of work! I will share my thoughts about programming and other topics here.
+I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excuse to write some code outside of work! I will share my thoughts about programming and other topics there.
 
 See you later! 🚀
 
-### Tasks
+## Tasks
 
 - [x] Create and display posts
   - [x] Add title, slug, Tiptap editor
@@ -13,9 +15,9 @@ See you later! 🚀
   - [x] Display posts in the home page
   - [x] Create post JSON parser as a recursive component
   - [x] Display post in `/posts/:slug`
-- [ ] Upload and view image on the post form and post component
-  - [ ] Add modal to paste the image URL, alt, size, etc
-  - [ ] Allow to paste and upload image with `Ctrl` + `V`
+- [ ] Upload and view images on the post
+  - [ ] Add modal to paste the image `href`, `alt`, size, classes, etc
+  - [ ] Functionality to paste and upload image with `Ctrl` + `V`
   - [x] Display image on post
 - [ ] Manage files from UploadThing in the admin upload page
   - [x] Upload new file
