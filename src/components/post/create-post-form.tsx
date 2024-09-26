@@ -6,14 +6,27 @@ import { ImageIcon } from 'lucide-react'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
-import { Button } from '~/components/ui/button'
+import { Button, type ButtonProps } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
+
+import { cn } from '~/helpers/cn'
 
 type Inputs = {
   title: string
   rank: string
   categoryId: string
   writtenAt: string
+}
+
+export function EditorButton(props: ButtonProps) {
+  return (
+    <Button
+      className={cn('p-1', props.className)}
+      variant="outline"
+      size="sm"
+      {...props}
+    />
+  )
 }
 
 export function CreatePostForm() {
@@ -34,14 +47,6 @@ export function CreatePostForm() {
 
   const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !editor?.isEmpty
-
-  const addImage = useCallback(() => {
-    const url = window.prompt('URL')
-
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run()
-    }
-  }, [editor])
 
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
@@ -64,7 +69,15 @@ export function CreatePostForm() {
     },
   })
 
-  if (!user) return null
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor?.chain().focus().setImage({ src: url }).run()
+    }
+  }, [editor])
+
+  if (!user || !editor) return null
 
   return (
     <form
@@ -130,10 +143,162 @@ export function CreatePostForm() {
         </div>
       )}
 
-      <div>
-        <Button className="p-1" variant="outline" size="sm" onClick={addImage}>
+      <div className="flex flex-wrap items-center gap-2">
+        <EditorButton onClick={addImage}>
           <ImageIcon />
-        </Button>
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('bold') ? 'dark:border-rose-950' : ''}
+          onClick={() => editor.chain().focus().toggleBold().run()}
+        >
+          Bold
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('italic') ? 'dark:border-rose-950' : ''}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+        >
+          Italic
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('strike') ? 'dark:border-rose-950' : ''}
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+        >
+          Strike
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('code') ? 'dark:border-rose-950' : ''}
+          onClick={() => editor.chain().focus().toggleCode().run()}
+        >
+          Code
+        </EditorButton>
+        <EditorButton
+          onClick={() => editor.chain().focus().unsetAllMarks().run()}
+        >
+          Clear marks
+        </EditorButton>
+        <EditorButton onClick={() => editor.chain().focus().clearNodes().run()}>
+          Clear nodes
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('paragraph') ? 'dark:border-rose-950' : ''}
+          onClick={() => editor.chain().focus().setParagraph().run()}
+        >
+          Paragraph
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('heading', { level: 1 })
+              ? 'dark:border-rose-950'
+              : ''
+          }
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 1 }).run()
+          }
+        >
+          H1
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('heading', { level: 2 })
+              ? 'dark:border-rose-950'
+              : ''
+          }
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 2 }).run()
+          }
+        >
+          H2
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('heading', { level: 3 })
+              ? 'dark:border-rose-950'
+              : ''
+          }
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
+        >
+          H3
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('heading', { level: 4 })
+              ? 'dark:border-rose-950'
+              : ''
+          }
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 4 }).run()
+          }
+        >
+          H4
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('heading', { level: 5 })
+              ? 'dark:border-rose-950'
+              : ''
+          }
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 5 }).run()
+          }
+        >
+          H5
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('heading', { level: 6 })
+              ? 'dark:border-rose-950'
+              : ''
+          }
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 6 }).run()
+          }
+        >
+          H6
+        </EditorButton>
+        <EditorButton
+          className={
+            editor.isActive('bulletList') ? 'dark:border-rose-950' : ''
+          }
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+        >
+          Bullet list
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('orderedList') ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        >
+          Ordered list
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('codeBlock') ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        >
+          Code block
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('blockquote') ? 'is-active' : ''}
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        >
+          Blockquote
+        </EditorButton>
+        <EditorButton
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        >
+          Horizontal rule
+        </EditorButton>
+        <EditorButton
+          onClick={() => editor.chain().focus().setHardBreak().run()}
+        >
+          Hard break
+        </EditorButton>
+        <EditorButton onClick={() => editor.chain().focus().undo().run()}>
+          Undo
+        </EditorButton>
+        <EditorButton onClick={() => editor.chain().focus().redo().run()}>
+          Redo
+        </EditorButton>
       </div>
 
       <Editor editor={editor} />
