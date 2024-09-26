@@ -10,6 +10,9 @@ See you later! 🚀
 
 - [x] Create and display posts
   - [x] Add title, slug, Tiptap editor
+  - [x] Add buttons to control Tiptap editor functions (eg. bold, italic, H1, code, etc.)
+  - [ ] Replace editor buttons text with their icons
+  - [ ] Refactor code to only have one editor component
   - [x] Add code syntax highlight with Prism
   - [x] Post create, edit form, and remove button
   - [x] Display posts in the home page

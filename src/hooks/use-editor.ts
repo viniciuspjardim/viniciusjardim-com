@@ -7,6 +7,7 @@ import Image from '@tiptap/extension-image'
 
 export function useEditor(content: string) {
   const editor = useInitEditor({
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class:

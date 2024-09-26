@@ -24,6 +24,7 @@ export function EditorButton(props: ButtonProps) {
       className={cn('p-1', props.className)}
       variant="outline"
       size="sm"
+      type="button"
       {...props}
     />
   )
