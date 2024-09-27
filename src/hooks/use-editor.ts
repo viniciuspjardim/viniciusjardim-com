@@ -19,9 +19,7 @@ export function useEditor(content: string) {
       Placeholder.configure({ placeholder: 'Write your post here...' }),
       Image,
     ],
-    content: JSON.parse(
-      content || '{ "type": "doc", "content:": [] }'
-    ) as JSONContent,
+    content: content ? (JSON.parse(content) as JSONContent) : null,
   })
 
   return { Editor: EditorContent, editor }
