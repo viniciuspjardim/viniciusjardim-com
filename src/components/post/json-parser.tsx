@@ -13,7 +13,7 @@ import 'prismjs/components/prism-bash'
 import { sanitizeHtml } from '~/helpers/sanitize-html'
 
 type TextProps = {
-  marks?: { type: string }[]
+  marks?: { type: string; attrs?: Record<string, unknown> }[]
   children: React.ReactNode
 }
 
@@ -33,6 +33,14 @@ function Text({ marks = [], children }: TextProps) {
     case 'code':
       return <code>{children}</code>
 
+    case 'link':
+      if (typeof mark?.attrs?.href === 'string') {
+        return (
+          <a href={mark.attrs.href} target="_blank">
+            {children}
+          </a>
+        )
+      }
     default:
       return <>{children}</>
   }

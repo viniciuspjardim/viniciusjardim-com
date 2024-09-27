@@ -109,6 +109,26 @@ export function EditPostForm({
     }
   }, [editor])
 
+  const setLink = useCallback(() => {
+    const previousUrl = editor?.getAttributes('link').href as string | undefined
+    const url = window.prompt('URL', previousUrl)
+
+    if (url === null) {
+      return
+    }
+
+    if (url === '') {
+      editor?.chain().focus().extendMarkRange('link').unsetLink().run()
+      return
+    }
+
+    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+  }, [editor])
+
+  if (!editor) {
+    return null
+  }
+
   if (!editor) return null
 
   return (
@@ -204,6 +224,18 @@ export function EditPostForm({
           onClick={() => editor.chain().focus().toggleCode().run()}
         >
           Code
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('link') ? 'dark:border-rose-950' : ''}
+          onClick={setLink}
+        >
+          Set link
+        </EditorButton>
+        <EditorButton
+          onClick={() => editor.chain().focus().unsetLink().run()}
+          disabled={!editor.isActive('link')}
+        >
+          Unset link
         </EditorButton>
         <EditorButton
           onClick={() => editor.chain().focus().unsetAllMarks().run()}
