@@ -49,6 +49,16 @@ export function CreatePostForm() {
   const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !editor?.isEmpty
 
+  const ctx = api.useUtils()
+
+  const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
+    onSuccess: async () => {
+      await ctx.posts.getAll.invalidate()
+      reset()
+      editor?.commands.setContent('')
+    },
+  })
+
   const onSubmit: SubmitHandler<Inputs> = (form) => {
     mutate({
       title: form.title,
@@ -59,16 +69,6 @@ export function CreatePostForm() {
       categoryId: parseInt(form.categoryId, 10),
     })
   }
-
-  const ctx = api.useUtils()
-
-  const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
-    onSuccess: async () => {
-      await ctx.posts.getAll.invalidate()
-      reset()
-      editor?.commands.setContent('')
-    },
-  })
 
   const addImage = useCallback(() => {
     const url = window.prompt('URL')
