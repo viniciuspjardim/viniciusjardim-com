@@ -2,20 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "debug server-side",
+      "name": "server debug",
       "type": "node-terminal",
       "request": "launch",
       "command": "bun run dev"
     },
     {
-      "name": "debug client-side",
+      "name": "client debug",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
     },
     {
-      "name": "debug full stack",
+      "name": "full stack debug",
       "type": "node-terminal",
       "request": "launch",
       "command": "bun run dev",
