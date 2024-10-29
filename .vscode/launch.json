@@ -5,24 +5,39 @@
       "name": "server debug",
       "type": "node-terminal",
       "request": "launch",
-      "command": "bun run dev"
+      "command": "bun run dev",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "/turbopack/[project]/*": "${webRoot}/*"
+      }
     },
     {
       "name": "client debug",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "/turbopack/[project]/*": "${webRoot}/*"
+      }
     },
     {
       "name": "full stack debug",
       "type": "node-terminal",
       "request": "launch",
       "command": "bun run dev",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "/turbopack/[project]/*": "${webRoot}/*"
+      },
       "serverReadyAction": {
+        "action": "debugWithChrome",
+        "killOnServerStop": true,
         "pattern": "- Local:.+(https?://.+)",
         "uriFormat": "%s",
-        "action": "debugWithChrome"
+        "webRoot": "${workspaceFolder}"
       }
     }
   ]
