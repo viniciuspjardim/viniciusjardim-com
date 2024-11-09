@@ -4,11 +4,11 @@ import { Post } from '~/components/post/post'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 
-export default async function HomePage({
-  params: { slug },
-}: {
-  params: { slug: string }
-}) {
+type Params = Promise<{ slug: string }>
+
+export default async function HomePage(props: { params: Params }) {
+  const params = await props.params
+  const slug = params.slug
   const post = await api.posts.getOneBySlug.query({ slug })
 
   return (

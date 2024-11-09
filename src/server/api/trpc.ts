@@ -14,7 +14,7 @@ import superjson from 'superjson'
 import { ZodError } from 'zod'
 import { getAuth } from '@clerk/nextjs/server'
 import { db } from '~/server/db'
-import { env } from '~/env.mjs'
+import { env } from '~/env.js'
 
 /**
  * 1. Context
@@ -72,6 +72,13 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
     }
   },
 })
+
+/**
+ * Create a server-side caller.
+ *
+ * @see https://trpc.io/docs/server/server-side-calls
+ */
+export const createCallerFactory = t.createCallerFactory
 
 /**
  * 3. Router and Procedure (the important bit)
