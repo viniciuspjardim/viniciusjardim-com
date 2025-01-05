@@ -10,18 +10,24 @@ See you later! 🚀
 
 - [x] Create and display posts
   - [x] Add title, slug, Tiptap editor
+  - [x] Add code syntax highlight with Prism
+  - [x] Post create, edit form, and remove functionality
+  - [x] Display posts in the home page
+  - [x] Display post in `/posts/:slug`
+  - [x] Display image on the post
+  - [x] Display videos on the post
+- [x] Blog text editor
+  - [x] Create post JSON parser as a recursive component
   - [x] Add buttons to control Tiptap editor functions (eg. bold, italic, H1, code, etc.)
+  - [ ] Use a modal to pass additional properties to the post element (eg. image `alt`)
+  - [x] Add image support
+    - [ ] Pass props to the image to control size, `alt`, and alignment
+  - [x] Add video support
+    - [ ] Pass props to the video to control size, video controls, and alignment
+  - [ ] Allow editing codeblocks language, image props and video props
   - [ ] Replace editor buttons text with their icons
   - [ ] Refactor code to only have one editor component
-  - [x] Add code syntax highlight with Prism
-  - [x] Post create, edit form, and remove button
-  - [x] Display posts in the home page
-  - [x] Create post JSON parser as a recursive component
-  - [x] Display post in `/posts/:slug`
-- [ ] Upload and view images on the post
-  - [ ] Add modal to paste the image `href`, `alt`, size, classes, etc
-  - [ ] Functionality to paste and upload image with `Ctrl` + `V`
-  - [x] Display image on post
+  - [ ] Add upload files button on the editor
 - [ ] Manage files from UploadThing in the admin upload page
   - [x] Upload new file
   - [ ] List files

@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { ImageIcon } from 'lucide-react'
+import { ImageIcon, VideoIcon } from 'lucide-react'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
@@ -75,6 +75,14 @@ export function CreatePostForm() {
 
     if (url) {
       editor?.chain().focus().setImage({ src: url }).run()
+    }
+  }, [editor])
+
+  const addVideo = useCallback(() => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor?.chain().focus().setVideo(url).run()
     }
   }, [editor])
 
@@ -167,6 +175,9 @@ export function CreatePostForm() {
       <div className="flex flex-wrap items-center gap-2">
         <EditorButton onClick={addImage}>
           <ImageIcon />
+        </EditorButton>
+        <EditorButton onClick={addVideo}>
+          <VideoIcon />
         </EditorButton>
         <EditorButton
           className={editor.isActive('bold') ? 'dark:border-rose-950' : ''}

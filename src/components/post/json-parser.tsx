@@ -131,7 +131,10 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
           alt={attrs?.alt as string}
         />
       )
-
+    case 'video':
+      return (
+        <video className="rounded-2xl" src={attrs?.src as string} controls />
+      )
     case 'bulletList':
       return (
         <ul>
