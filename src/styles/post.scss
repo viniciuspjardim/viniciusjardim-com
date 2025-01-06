@@ -3,6 +3,8 @@
 }
 
 .blog-post {
+  @apply text-lg;
+
   p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     @apply pointer-events-none float-left h-0 text-white/50;
