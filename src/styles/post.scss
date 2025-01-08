@@ -31,11 +31,7 @@
   }
 
   a {
-    @apply font-semibold text-rose-700 underline underline-offset-2 transition-all;
-
-    &:hover {
-      @apply text-rose-600;
-    }
+    @apply font-semibold text-white underline decoration-rose-800 underline-offset-4 transition-all hover:text-rose-800;
   }
 
   :not(pre) > code {
