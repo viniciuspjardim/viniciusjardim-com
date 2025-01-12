@@ -43,11 +43,8 @@ export function EditPostForm(props: EditPostFormProps) {
     content: props.content,
     rank: props.rank.toString(),
     categoryId: props.categoryId.toString(),
-    writtenAt: props.writtenAt.toISOString().substring(0, 10),
+    writtenAt: props.writtenAt.toISOString(),
   }
-
-  const { data: categoriesData, isLoading: categoriesLoading } =
-    api.categories.getAllFlat.useQuery()
 
   const extraActions = (
     <Button variant="outline" type="button" onClick={closeForm}>
@@ -64,8 +61,6 @@ export function EditPostForm(props: EditPostFormProps) {
       submitButtonLabel="Save Post"
       isPosting={isPosting}
       extraActions={extraActions}
-      categoriesData={categoriesData}
-      categoriesLoading={categoriesLoading}
     />
   )
 }

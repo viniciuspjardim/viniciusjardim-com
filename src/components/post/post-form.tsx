@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { ImageIcon, VideoIcon } from 'lucide-react'
 
+import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
 import { cn } from '~/helpers/cn'
 import { Button, type ButtonProps } from '~/components/ui/button'
@@ -22,14 +23,13 @@ export interface PostFormInputs {
 }
 
 export interface PostFormProps {
-  defaultValues: Partial<PostFormInputs>
+  defaultValues?: Partial<PostFormInputs>
   userName?: string
   userImageUrl?: string
   submitButtonLabel: string
   onSubmit: (form: PostFormInputs, editorJson: string) => Promise<Post>
   isPosting: boolean
   extraActions?: ReactNode
-  categoriesData?: { id: number; title: string }[]
   categoriesLoading?: boolean
 }
 
@@ -53,10 +53,10 @@ export function PostForm({
   onSubmit,
   isPosting,
   extraActions,
-  categoriesData,
-  categoriesLoading,
 }: PostFormProps) {
   const [moreOptions, setMoreOptions] = useState(false)
+  const { data: categoriesData, isLoading: categoriesLoading } =
+    api.categories.getAllFlat.useQuery()
 
   const {
     register,
@@ -66,15 +66,15 @@ export function PostForm({
     formState: { isValid: isFormValid },
   } = useForm<PostFormInputs>({
     defaultValues: {
-      title: defaultValues.title ?? '',
-      rank: defaultValues.rank ?? '',
-      categoryId: defaultValues.categoryId ?? '',
-      writtenAt: defaultValues.writtenAt ?? '',
-      content: defaultValues.content ?? '',
+      title: defaultValues?.title ?? '',
+      rank: defaultValues?.rank ?? '',
+      categoryId: defaultValues?.categoryId ?? '',
+      writtenAt: defaultValues?.writtenAt ?? '',
+      content: defaultValues?.content ?? '',
     },
   })
 
-  const { Editor, editor } = useEditor(defaultValues.content ?? '')
+  const { Editor, editor } = useEditor(defaultValues?.content ?? '')
 
   const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !editor?.isEmpty

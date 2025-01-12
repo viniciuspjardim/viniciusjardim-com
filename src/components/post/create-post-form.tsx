@@ -27,27 +27,13 @@ export function CreatePostForm() {
 
   if (!user) return null
 
-  const defaultValues = {
-    title: '',
-    rank: '',
-    categoryId: '',
-    writtenAt: '',
-    content: '',
-  }
-
-  const { data: categoriesData, isLoading: categoriesLoading } =
-    api.categories.getAllFlat.useQuery()
-
   return (
     <PostForm
-      defaultValues={defaultValues}
       userName={user.username || 'Anonymous'}
       userImageUrl={user.imageUrl}
       onSubmit={handleSubmit}
       submitButtonLabel="Publish Post"
       isPosting={isPosting}
-      categoriesData={categoriesData}
-      categoriesLoading={categoriesLoading}
     />
   )
 }
