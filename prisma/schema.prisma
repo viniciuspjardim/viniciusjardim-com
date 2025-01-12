@@ -47,3 +47,31 @@ model Post {
   @@index([rank, writtenAt])
   @@index([categoryId])
 }
+
+enum LogType {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model PostLog {
+  logId       Int       @id @default(autoincrement())
+  logType     LogType
+  logTime     DateTime  @default(now())
+  id          Int
+  slug        String?   @db.VarChar(255)
+  title       String?   @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  keywords    String?   @db.VarChar(255)
+  content     String?   @db.Text
+  rank        Int?
+  authorId    String?   @db.VarChar(255)
+  categoryId  Int?
+  writtenAt   DateTime?
+  createdAt   DateTime?
+  updatedAt   DateTime?
+  published   Boolean?
+
+  @@index([id, logTime])
+  @@index([logTime])
+}

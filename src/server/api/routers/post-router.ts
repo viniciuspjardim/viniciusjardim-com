@@ -111,11 +111,20 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId
 
-      const post = await ctx.db.post.create({
-        data: { ...input, authorId },
-      })
+      return ctx.db.$transaction(async (tx) => {
+        const post = await tx.post.create({
+          data: { ...input, authorId },
+        })
 
-      return post
+        await tx.postLog.create({
+          data: {
+            ...post,
+            logType: 'CREATE',
+          },
+        })
+
+        return post
+      })
     }),
 
   update: ownerProcedure
@@ -133,21 +142,39 @@ export const postRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.db.post.update({
-        where: { id: input.id },
-        data: { ...input },
-      })
+      return ctx.db.$transaction(async (tx) => {
+        const post = await ctx.db.post.update({
+          where: { id: input.id },
+          data: { ...input },
+        })
 
-      return post
+        await tx.postLog.create({
+          data: {
+            ...post,
+            logType: 'UPDATE',
+          },
+        })
+
+        return post
+      })
     }),
 
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.db.post.delete({
-        where: { id: input.id },
-      })
+      return ctx.db.$transaction(async (tx) => {
+        const post = await ctx.db.post.delete({
+          where: { id: input.id },
+        })
 
-      return post
+        await tx.postLog.create({
+          data: {
+            ...post,
+            logType: 'DELETE',
+          },
+        })
+
+        return post
+      })
     }),
 })

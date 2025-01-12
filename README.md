@@ -37,3 +37,6 @@ See you later! 🚀
   - [ ] Add metadata on the post page
   - [ ] Create post card component with image, title and description
   - [ ] Replace post in the homepage with the post card
+- [ ] Log create, update, and delete operations on log tables
+  - [x] Create PostLog
+  - [ ] Create CategoryLog
