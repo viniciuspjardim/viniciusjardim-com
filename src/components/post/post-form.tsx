@@ -1,7 +1,7 @@
 import type { inferRouterOutputs } from '@trpc/server'
 import type { AppRouter } from '~/server/api/root'
 
-import { useState, useCallback, type ReactNode } from 'react'
+import { useCallback, type ReactNode } from 'react'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { ImageIcon, VideoIcon } from 'lucide-react'
@@ -54,7 +54,6 @@ export function PostForm({
   isPosting,
   extraActions,
 }: PostFormProps) {
-  const [moreOptions, setMoreOptions] = useState(false)
   const { data: categoriesData, isLoading: categoriesLoading } =
     api.categories.getAllFlat.useQuery()
 
@@ -68,7 +67,7 @@ export function PostForm({
     defaultValues: {
       title: defaultValues?.title ?? '',
       rank: defaultValues?.rank ?? '',
-      categoryId: defaultValues?.categoryId ?? '',
+      categoryId: defaultValues?.categoryId ?? '1',
       writtenAt: defaultValues?.writtenAt ?? '',
       content: defaultValues?.content ?? '',
     },
@@ -155,44 +154,39 @@ export function PostForm({
 
           <div className="flex justify-between">
             <p className="text-sm opacity-40">➡️ {slug || 'Post Slug'}</p>
-
-            <button
-              className="opacity-70 transition hover:opacity-100"
-              type="button"
-              onClick={() => setMoreOptions(!moreOptions)}
-            >
-              {moreOptions ? '-' : '+'} Options
-            </button>
           </div>
         </div>
       </div>
 
-      {moreOptions && (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          <input
-            type="text"
-            placeholder="Rank"
-            disabled={isPosting}
-            {...register('rank')}
-          />
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <input
+          type="text"
+          placeholder="Rank"
+          disabled={isPosting}
+          {...register('rank')}
+        />
 
-          <input
-            type="text"
-            placeholder="Written at (YYYY-MM-DD)"
-            disabled={isPosting}
-            {...register('writtenAt')}
-          />
+        <input
+          type="text"
+          placeholder="Written at (YYYY-MM-DD)"
+          disabled={isPosting}
+          {...register('writtenAt')}
+        />
 
+        {categoriesLoading && (
+          <div className="h-[30px] text-gray-600">Categories loading...</div>
+        )}
+
+        {categoriesData && (
           <select {...register('categoryId')}>
-            {categoriesLoading && <option>Loading...</option>}
-            {categoriesData?.map((category) => (
+            {categoriesData.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.title}
               </option>
             ))}
           </select>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Editor toolbar */}
       <div className="flex flex-wrap items-center gap-2">
