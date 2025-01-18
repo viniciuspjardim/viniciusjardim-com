@@ -21,3 +21,9 @@ textarea {
     scrollbar-gutter: stable both-edges;
   }
 }
+
+/* This fixes alert-dialog component causing horizontal shift when opened */
+html body[data-scroll-locked] {
+  --removed-body-scroll-bar-size: 0 !important;
+  margin-right: 0 !important;
+}
