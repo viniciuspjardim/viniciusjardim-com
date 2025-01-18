@@ -1,11 +1,13 @@
 import 'server-only'
 
 import type { Metadata } from 'next'
+import type { JSONContent } from '@tiptap/core'
 
 import { env } from '~/env.mjs'
 import { Post } from '~/components/post/post'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
+import { findPostNode } from '~/helpers/find-post-node'
 
 export default async function PostPage({
   params: { slug },
@@ -47,6 +49,12 @@ export async function generateMetadata({
     authorName = post.author.userName
   }
 
+  const imageNode = findPostNode(
+    JSON.parse(post.content) as JSONContent,
+    'image'
+  )
+  const imageUrl = imageNode?.attrs?.src as string | undefined
+
   return {
     title: post.title,
     description: post.description,
@@ -54,11 +62,19 @@ export async function generateMetadata({
     metadataBase: baseUrl,
     keywords: post.keywords,
     authors: { name: authorName, url: baseUrl },
+    ...(imageUrl
+      ? {
+          twitter: {
+            card: 'summary_large_image',
+          },
+        }
+      : undefined),
     openGraph: {
       title: post.title,
       description: post.description ?? undefined,
       type: 'article',
       url: `/posts/${post.slug}`,
+      images: imageUrl,
     },
   }
 }
