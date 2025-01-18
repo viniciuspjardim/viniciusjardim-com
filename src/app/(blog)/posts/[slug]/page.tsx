@@ -50,8 +50,15 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    applicationName: 'Vinícius Jardim Blog',
     metadataBase: baseUrl,
     keywords: post.keywords,
     authors: { name: authorName, url: baseUrl },
+    openGraph: {
+      title: post.title,
+      description: post.description ?? undefined,
+      type: 'article',
+      url: `/posts/${post.slug}`,
+    },
   }
 }
