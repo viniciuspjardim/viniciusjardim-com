@@ -17,6 +17,8 @@ type Post = inferRouterOutputs<AppRouter>['posts']['create']
 
 export interface PostFormInputs {
   title: string
+  description: string | null
+  keywords: string | null
   rank: string
   categoryId: string
   writtenAt: string
@@ -67,6 +69,8 @@ export function PostForm({
   } = useForm<PostFormInputs>({
     defaultValues: {
       title: defaultValues?.title ?? '',
+      description: defaultValues?.description ?? '',
+      keywords: defaultValues?.keywords ?? '',
       rank: defaultValues?.rank ?? '',
       categoryId: defaultValues?.categoryId ?? '1',
       writtenAt: defaultValues?.writtenAt ?? '',
@@ -172,6 +176,20 @@ export function PostForm({
           </div>
         </div>
       </div>
+
+      <input
+        type="text"
+        placeholder="Description"
+        disabled={isPosting}
+        {...register('description')}
+      />
+
+      <input
+        type="text"
+        placeholder="Keywords"
+        disabled={isPosting}
+        {...register('keywords')}
+      />
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <input

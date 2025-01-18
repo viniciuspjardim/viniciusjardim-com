@@ -16,8 +16,10 @@ export function CreatePostForm() {
 
   async function handleSubmit(form: PostFormInputs, editorJson: string) {
     return mutateAsync({
-      title: form.title,
       slug: asSlug(form.title),
+      title: form.title,
+      description: form.description || undefined,
+      keywords: form.keywords || undefined,
       content: editorJson,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,

@@ -39,6 +39,8 @@ export default function PostsAdmin() {
           id={post.id}
           slug={post.slug}
           title={post.title}
+          description={post.description}
+          keywords={post.keywords}
           content={post.content}
           userName={post.author?.userName ?? 'Unknown'}
           userImageUrl={post.author?.userImageUrl}

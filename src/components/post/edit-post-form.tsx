@@ -6,6 +6,8 @@ import { PostForm, type PostFormInputs } from './post-form'
 type EditPostFormProps = {
   id: number
   title: string
+  description: string | null
+  keywords: string | null
   content: string
   userName: string
   userImageUrl?: string
@@ -29,8 +31,10 @@ export function EditPostForm(props: EditPostFormProps) {
   async function handleSubmit(form: PostFormInputs, editorJson: string) {
     return mutateAsync({
       id,
-      title: form.title,
       slug: asSlug(form.title),
+      title: form.title,
+      description: form.description || undefined,
+      keywords: form.keywords || undefined,
       content: editorJson,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
@@ -40,6 +44,8 @@ export function EditPostForm(props: EditPostFormProps) {
 
   const defaultValues = {
     title: props.title,
+    description: props.description,
+    keywords: props.keywords,
     content: props.content,
     rank: props.rank.toString(),
     categoryId: props.categoryId.toString(),

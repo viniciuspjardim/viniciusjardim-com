@@ -18,11 +18,12 @@ export default async function PostPage({
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">
-      <div className="w-full space-y-12 py-12">
+      <div className="w-full space-y-12 py-16">
         <Post
           key={post.id}
           slug={post.slug}
           title={post.title}
+          description={post.description}
           content={post.content}
           writtenAt={new Date(post.writtenAt)}
           userName={post.author?.userName ?? 'Unknown'}

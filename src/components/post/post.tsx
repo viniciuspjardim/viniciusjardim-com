@@ -8,6 +8,7 @@ import { JsonParser } from './json-parser'
 type PostProps = {
   slug: string
   title: string
+  description: string | null
   content: string
   writtenAt: Date
   userName: string
@@ -17,6 +18,7 @@ type PostProps = {
 export function Post({
   slug,
   title,
+  description,
   content,
   writtenAt,
   userName,
@@ -25,17 +27,23 @@ export function Post({
   const jsonContent = JSON.parse(content) as JSONContent
 
   return (
-    <article className="w-full space-y-4">
-      <Link
-        className="decoration-rose-800 underline-offset-4 hover:underline"
-        href={`/posts/${slug}`}
-      >
-        <h2 className="text-2xl font-bold text-neutral-300 md:text-4xl">
-          {title}
-        </h2>
-      </Link>
+    <article className="w-full space-y-6">
+      <div className="space-y-2">
+        <Link
+          className="decoration-rose-800 underline-offset-4 hover:underline"
+          href={`/posts/${slug}`}
+        >
+          <h2 className="text-balance text-4xl font-bold text-neutral-300 md:text-5xl">
+            {title}
+          </h2>
+        </Link>
 
-      <div className="flex gap-3">
+        {description && (
+          <p className="text-xl text-neutral-400 md:text-2xl">{description}</p>
+        )}
+      </div>
+
+      <div className="mb-12 flex gap-3 border-y border-dashed border-neutral-800 py-3">
         {userImageUrl && (
           <Image
             className="mt-1 h-10 w-10 rounded-full"
@@ -53,7 +61,7 @@ export function Post({
         </div>
       </div>
 
-      <JsonParser className="" {...jsonContent} />
+      <JsonParser {...jsonContent} />
     </article>
   )
 }

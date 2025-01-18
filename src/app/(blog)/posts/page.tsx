@@ -15,6 +15,7 @@ export default async function HomePage() {
             key={post.id}
             slug={post.slug}
             title={post.title}
+            description={post.description}
             content={post.content}
             writtenAt={new Date(post.writtenAt)}
             userName={post.author?.userName ?? 'Unknown'}

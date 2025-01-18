@@ -26,6 +26,8 @@ type PostWithActionsProps = {
   id: number
   slug: string
   title: string
+  description: string | null
+  keywords: string | null
   content: string
   userName: string
   userImageUrl?: string
@@ -38,6 +40,8 @@ export function PostWithActions({
   id,
   slug,
   title,
+  description,
+  keywords,
   content,
   userName,
   userImageUrl,
@@ -62,6 +66,8 @@ export function PostWithActions({
       <EditPostForm
         id={id}
         title={title}
+        description={description}
+        keywords={keywords}
         content={content}
         userName={userName}
         userImageUrl={userImageUrl}

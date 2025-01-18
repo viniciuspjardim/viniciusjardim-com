@@ -12,7 +12,7 @@ export default async function HomePage() {
   return (
     <WidthContainer className="flex w-full flex-col items-center">
       <Link
-        className="my-12 flex w-full items-center justify-center gap-6 rounded-2xl border border-neutral-900 bg-neutral-950 px-8 py-4 text-xl transition-all hover:border-neutral-800 hover:bg-neutral-900 sm:w-auto"
+        className="my-16 flex w-full items-center justify-center gap-6 rounded-2xl border border-neutral-900 bg-neutral-950 px-8 py-4 text-xl transition-all hover:border-neutral-800 hover:bg-neutral-900 sm:w-auto"
         href="/p/color-beans"
       >
         <Image
@@ -30,6 +30,7 @@ export default async function HomePage() {
             key={post.id}
             slug={post.slug}
             title={post.title}
+            description={post.description}
             content={post.content}
             writtenAt={new Date(post.writtenAt)}
             userName={post.author?.userName ?? 'Unknown'}
