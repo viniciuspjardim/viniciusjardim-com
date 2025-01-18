@@ -11,6 +11,7 @@ import { asSlug } from '~/helpers/as-slug'
 import { cn } from '~/helpers/cn'
 import { Button, type ButtonProps } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
+import { useToast } from '~/hooks/use-toast'
 
 type Post = inferRouterOutputs<AppRouter>['posts']['create']
 
@@ -74,6 +75,7 @@ export function PostForm({
   })
 
   const { Editor, editor } = useEditor(defaultValues?.content ?? '')
+  const { toast } = useToast()
 
   const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !editor?.isEmpty
@@ -85,9 +87,22 @@ export function PostForm({
       await onSubmit(formData, editorJson)
       reset()
       editor?.commands.setContent('')
+
+      toast({
+        description: defaultValues ? 'Changes saved!' : 'Post published!',
+      })
     } catch (error) {
-      // TODO: display error toast
-      console.error(error)
+      let description = 'There was a problem with your request.'
+
+      if (error instanceof Error && error.message.includes('`slug`')) {
+        description = 'There is already a post with the same slug.'
+      }
+
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong.',
+        description,
+      })
     }
   }
 
