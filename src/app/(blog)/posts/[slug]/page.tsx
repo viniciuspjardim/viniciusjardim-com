@@ -1,10 +1,13 @@
 import 'server-only'
 
+import type { Metadata } from 'next'
+
+import { env } from '~/env.mjs'
 import { Post } from '~/components/post/post'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 
-export default async function HomePage({
+export default async function PostPage({
   params: { slug },
 }: {
   params: { slug: string }
@@ -26,4 +29,29 @@ export default async function HomePage({
       </div>
     </WidthContainer>
   )
+}
+
+export async function generateMetadata({
+  params: { slug },
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const post = await api.posts.getOneBySlug.query({ slug })
+  const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
+
+  let authorName = 'Vinícius Jardim'
+
+  if (post.author?.firstName && post.author?.lastName) {
+    authorName = `${post.author.firstName} ${post.author.lastName}`
+  } else if (post.author?.userName) {
+    authorName = post.author.userName
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    metadataBase: baseUrl,
+    keywords: post.keywords,
+    authors: { name: authorName, url: baseUrl },
+  }
 }
