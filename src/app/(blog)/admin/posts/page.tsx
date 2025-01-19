@@ -33,22 +33,24 @@ export default function PostsAdmin() {
 
       {isLoading && <p>Loading...</p>}
 
-      {data?.map((post) => (
-        <PostWithActions
-          key={post.id}
-          id={post.id}
-          slug={post.slug}
-          title={post.title}
-          description={post.description}
-          keywords={post.keywords}
-          content={post.content}
-          userName={post.author?.userName ?? 'Unknown'}
-          userImageUrl={post.author?.userImageUrl}
-          rank={post.rank}
-          categoryId={post.categoryId}
-          writtenAt={post.writtenAt}
-        />
-      ))}
+      <div className="divide-y divide-neutral-800 rounded-lg border border-neutral-800">
+        {data?.map((post) => (
+          <PostWithActions
+            key={post.id}
+            id={post.id}
+            slug={post.slug}
+            title={post.title}
+            description={post.description}
+            keywords={post.keywords}
+            content={post.content}
+            userName={post.author?.userName ?? 'Unknown'}
+            userImageUrl={post.author?.userImageUrl}
+            rank={post.rank}
+            categoryId={post.categoryId}
+            writtenAt={post.writtenAt}
+          />
+        ))}
+      </div>
     </WidthContainer>
   )
 }
