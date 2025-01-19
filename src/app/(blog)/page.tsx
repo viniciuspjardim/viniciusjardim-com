@@ -33,6 +33,9 @@ export default async function HomePage() {
             title={post.title}
             description={post.description}
             content={post.content}
+            writtenAt={new Date(post.writtenAt)}
+            userName={post.author?.userName ?? 'Unknown'}
+            userImageUrl={post.author?.userImageUrl}
           />
         ))}
       </div>

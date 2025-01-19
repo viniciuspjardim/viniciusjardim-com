@@ -1,0 +1,79 @@
+import Image from 'next/image'
+import { Clock3Icon } from 'lucide-react'
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { formatDateDistance, formatDateTime } from '~/helpers/dates'
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '~/components/ui/popover'
+
+import { cn } from '~/helpers/cn'
+
+const publishDetailsVariants = cva('mb-12 flex gap-3', {
+  variants: {
+    variant: {
+      default: '',
+      outline: 'py-3 border-y border-dashed border-neutral-800',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+export interface PublishDetailsProps
+  extends VariantProps<typeof publishDetailsVariants> {
+  className?: string
+  writtenAt: Date
+  userName: string
+  userImageUrl?: string | null
+}
+
+const PublishDetails = ({
+  className,
+  variant,
+  writtenAt,
+  userName,
+  userImageUrl,
+}: PublishDetailsProps) => {
+  return (
+    <div className={cn(publishDetailsVariants({ variant, className }))}>
+      {userImageUrl && (
+        <Image
+          className="mt-1 h-10 w-10 rounded-full"
+          src={userImageUrl}
+          alt={userName}
+          width={40}
+          height={40}
+          quality={100}
+        />
+      )}
+
+      <div>
+        <span className="text-md block font-semibold text-rose-800">
+          {userName}
+        </span>
+
+        <Popover>
+          <PopoverTrigger>
+            <span className="inline-flex items-center gap-1 text-sm text-neutral-500 transition-colors hover:text-neutral-400">
+              <Clock3Icon className="size-3.5" />
+              {formatDateDistance(writtenAt)}
+            </span>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto py-2 text-sm">
+            <span className="text-neutral-500">Published on</span>{' '}
+            <span className="text-neutral-300">
+              {formatDateTime(writtenAt)}
+            </span>
+          </PopoverContent>
+        </Popover>
+      </div>
+    </div>
+  )
+}
+PublishDetails.displayName = 'PublishDetails'
+
+export { PublishDetails, publishDetailsVariants }

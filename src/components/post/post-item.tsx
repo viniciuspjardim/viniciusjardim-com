@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { JSONContent } from '@tiptap/core'
+import { PublishDetails } from './publish-details'
 import { findPostNode } from '~/helpers/find-post-node'
 
 type PostItemProps = {
@@ -7,9 +8,20 @@ type PostItemProps = {
   title: string
   description: string | null
   content: string
+  writtenAt: Date
+  userName: string
+  userImageUrl?: string | null
 }
 
-export function PostItem({ slug, title, description, content }: PostItemProps) {
+export function PostItem({
+  slug,
+  title,
+  description,
+  content,
+  writtenAt,
+  userName,
+  userImageUrl,
+}: PostItemProps) {
   const imageNode = findPostNode(JSON.parse(content) as JSONContent, 'image')
   const imageUrl = imageNode?.attrs?.src as string | undefined
 
@@ -34,6 +46,11 @@ export function PostItem({ slug, title, description, content }: PostItemProps) {
         {description && (
           <h3 className="text-xl text-neutral-400">{description}</h3>
         )}
+        <PublishDetails
+          writtenAt={writtenAt}
+          userName={userName}
+          userImageUrl={userImageUrl}
+        />
       </div>
     </Link>
   )

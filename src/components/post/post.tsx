@@ -1,8 +1,7 @@
 import type { JSONContent } from '@tiptap/core'
 
-import Image from 'next/image'
-
 import { JsonParser } from './json-parser'
+import { PublishDetails } from './publish-details'
 
 type PostProps = {
   title: string
@@ -37,23 +36,12 @@ export function Post({
         )}
       </div>
 
-      <div className="mb-12 flex gap-3 border-y border-dashed border-neutral-800 py-3">
-        {userImageUrl && (
-          <Image
-            className="mt-1 h-10 w-10 rounded-full"
-            src={userImageUrl}
-            alt={userName}
-            width={40}
-            height={40}
-            quality={100}
-          />
-        )}
-
-        <div>
-          <p className="text-md font-semibold text-rose-800">{userName}</p>
-          <p className="text-sm">{writtenAt.toLocaleDateString()}</p>
-        </div>
-      </div>
+      <PublishDetails
+        variant="outline"
+        writtenAt={writtenAt}
+        userName={userName}
+        userImageUrl={userImageUrl}
+      />
 
       <JsonParser {...jsonContent} />
     </article>
