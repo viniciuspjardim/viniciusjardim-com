@@ -21,7 +21,6 @@ export default async function PostPage({
       <div className="w-full space-y-12 py-16">
         <Post
           key={post.id}
-          slug={post.slug}
           title={post.title}
           description={post.description}
           content={post.content}

@@ -1,12 +1,10 @@
 import type { JSONContent } from '@tiptap/core'
 
 import Image from 'next/image'
-import Link from 'next/link'
 
 import { JsonParser } from './json-parser'
 
 type PostProps = {
-  slug: string
   title: string
   description: string | null
   content: string
@@ -16,7 +14,6 @@ type PostProps = {
 }
 
 export function Post({
-  slug,
   title,
   description,
   content,
@@ -29,17 +26,14 @@ export function Post({
   return (
     <article className="w-full space-y-6">
       <div className="space-y-2">
-        <Link
-          className="decoration-rose-800 underline-offset-4 hover:underline"
-          href={`/posts/${slug}`}
-        >
-          <h2 className="text-balance text-4xl font-bold text-neutral-300 md:text-5xl">
-            {title}
-          </h2>
-        </Link>
+        <h1 className="text-balance text-4xl font-bold text-neutral-300 md:text-5xl">
+          {title}
+        </h1>
 
         {description && (
-          <p className="text-xl text-neutral-400 md:text-2xl">{description}</p>
+          <h2 className="text-xl text-neutral-400 md:text-2xl">
+            {description}
+          </h2>
         )}
       </div>
 

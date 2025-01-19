@@ -1,8 +1,9 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import 'server-only'
 
-import { Post } from '~/components/post/post'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import { PostItem } from '~/components/post/post-item'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 
@@ -26,15 +27,12 @@ export default async function HomePage() {
 
       <div className="w-full space-y-12 pb-12">
         {posts?.map((post) => (
-          <Post
+          <PostItem
             key={post.id}
             slug={post.slug}
             title={post.title}
             description={post.description}
             content={post.content}
-            writtenAt={new Date(post.writtenAt)}
-            userName={post.author?.userName ?? 'Unknown'}
-            userImageUrl={post.author?.userImageUrl}
           />
         ))}
       </div>

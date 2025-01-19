@@ -13,7 +13,6 @@ export default async function HomePage() {
         {posts?.map((post) => (
           <Post
             key={post.id}
-            slug={post.slug}
             title={post.title}
             description={post.description}
             content={post.content}
