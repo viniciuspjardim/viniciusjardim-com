@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { PostCard } from '~/components/post/post-card'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
+import { formatAuthorName } from '~/helpers/format-author-name'
 
 export default async function HomePage() {
   const posts = await api.posts.getAll.query()
@@ -25,7 +26,7 @@ export default async function HomePage() {
         <span>Play Color Beans</span>
       </Link>
 
-      <div className="divide-y divide-dashed divide-neutral-800">
+      <div className="mb-16 divide-y divide-dashed divide-neutral-800">
         {posts?.map((post) => (
           <PostCard
             key={post.id}
@@ -34,7 +35,7 @@ export default async function HomePage() {
             description={post.description}
             content={post.content}
             writtenAt={new Date(post.writtenAt)}
-            userName={post.author?.userName ?? 'Unknown'}
+            userName={formatAuthorName(post.author)}
             userImageUrl={post.author?.userImageUrl}
           />
         ))}

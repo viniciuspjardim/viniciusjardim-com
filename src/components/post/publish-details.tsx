@@ -10,6 +10,7 @@ import {
 } from '~/components/ui/popover'
 
 import { cn } from '~/helpers/cn'
+import { authorFallback } from '~/helpers/format-author-name'
 
 const publishDetailsVariants = cva('mb-12 flex gap-3', {
   variants: {
@@ -38,6 +39,8 @@ const PublishDetails = ({
   userName,
   userImageUrl,
 }: PublishDetailsProps) => {
+  const hasUserName = userName !== authorFallback
+
   return (
     <div className={cn(publishDetailsVariants({ variant, className }))}>
       {userImageUrl && (
@@ -52,7 +55,9 @@ const PublishDetails = ({
       )}
 
       <div>
-        <span className="text-md block font-semibold text-rose-800">
+        <span
+          className={`text-md block font-semibold ${hasUserName ? 'text-rose-800' : 'text-neutral-500'} `}
+        >
           {userName}
         </span>
 

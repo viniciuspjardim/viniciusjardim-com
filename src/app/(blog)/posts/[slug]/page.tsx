@@ -8,6 +8,7 @@ import { Post } from '~/components/post/post'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 import { findPostNode } from '~/helpers/find-post-node'
+import { formatAuthorName } from '~/helpers/format-author-name'
 
 export default async function PostPage({
   params: { slug },
@@ -24,7 +25,7 @@ export default async function PostPage({
         description={post.description}
         content={post.content}
         writtenAt={new Date(post.writtenAt)}
-        userName={post.author?.userName ?? 'Unknown'}
+        userName={formatAuthorName(post.author)}
         userImageUrl={post.author?.userImageUrl}
       />
     </WidthContainer>
@@ -39,14 +40,6 @@ export async function generateMetadata({
   const post = await api.posts.getOneBySlug.query({ slug })
   const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
 
-  let authorName = 'Vinícius Jardim'
-
-  if (post.author?.firstName && post.author?.lastName) {
-    authorName = `${post.author.firstName} ${post.author.lastName}`
-  } else if (post.author?.userName) {
-    authorName = post.author.userName
-  }
-
   const imageNode = findPostNode(
     JSON.parse(post.content) as JSONContent,
     'image'
@@ -59,7 +52,7 @@ export async function generateMetadata({
     applicationName: 'Vinícius Jardim Blog',
     metadataBase: baseUrl,
     keywords: post.keywords,
-    authors: { name: authorName, url: baseUrl },
+    authors: { name: formatAuthorName(post.author), url: baseUrl },
     ...(imageUrl
       ? {
           twitter: {

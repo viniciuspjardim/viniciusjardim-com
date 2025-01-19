@@ -6,6 +6,7 @@ import { CreatePostForm } from '~/components/post/create-post-form'
 import { PostWithActions } from '~/components/post/post-with-actions'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/utils/api'
+import { formatAuthorName } from '~/helpers/format-author-name'
 
 const pageName = 'Posts'
 
@@ -44,7 +45,7 @@ export default function PostsAdmin() {
               description={post.description}
               keywords={post.keywords}
               content={post.content}
-              userName={post.author?.userName ?? 'Unknown'}
+              userName={formatAuthorName(post.author)}
               userImageUrl={post.author?.userImageUrl}
               rank={post.rank}
               categoryId={post.categoryId}
