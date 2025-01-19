@@ -17,18 +17,16 @@ export default async function PostPage({
   const post = await api.posts.getOneBySlug.query({ slug })
 
   return (
-    <WidthContainer className="flex w-full flex-col items-center">
-      <div className="w-full space-y-12 py-16">
-        <Post
-          key={post.id}
-          title={post.title}
-          description={post.description}
-          content={post.content}
-          writtenAt={new Date(post.writtenAt)}
-          userName={post.author?.userName ?? 'Unknown'}
-          userImageUrl={post.author?.userImageUrl}
-        />
-      </div>
+    <WidthContainer className="w-full py-16">
+      <Post
+        key={post.id}
+        title={post.title}
+        description={post.description}
+        content={post.content}
+        writtenAt={new Date(post.writtenAt)}
+        userName={post.author?.userName ?? 'Unknown'}
+        userImageUrl={post.author?.userImageUrl}
+      />
     </WidthContainer>
   )
 }

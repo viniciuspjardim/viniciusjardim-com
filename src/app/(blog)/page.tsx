@@ -25,7 +25,7 @@ export default async function HomePage() {
         <span>Play Color Beans</span>
       </Link>
 
-      <div className="w-full space-y-12 pb-12">
+      <div className="divide-y divide-dashed divide-neutral-800">
         {posts?.map((post) => (
           <PostItem
             key={post.id}

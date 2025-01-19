@@ -27,7 +27,7 @@ export function PostItem({
 
   return (
     <Link
-      className="group flex w-full flex-col items-start justify-between gap-3 transition-colors md:flex-row"
+      className="group flex w-full flex-col items-start justify-between gap-3 py-10 first:pt-0 last:pb-0 md:flex-row"
       href={`/posts/${slug}`}
     >
       {imageUrl && (
@@ -40,11 +40,13 @@ export function PostItem({
         />
       )}
       <div className="space-y-2">
-        <h2 className="decoration text-balance text-3xl font-bold text-neutral-300 decoration-rose-800 underline-offset-4 group-hover:underline">
+        <h2 className="text-balance text-3xl font-bold text-neutral-300 transition-colors group-hover:text-neutral-100">
           {title}
         </h2>
         {description && (
-          <h3 className="text-xl text-neutral-400">{description}</h3>
+          <h3 className="text-xl text-neutral-400 transition-colors group-hover:text-neutral-300">
+            {description}
+          </h3>
         )}
         <PublishDetails
           writtenAt={writtenAt}

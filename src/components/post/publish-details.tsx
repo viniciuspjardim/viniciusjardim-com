@@ -15,7 +15,7 @@ const publishDetailsVariants = cva('mb-12 flex gap-3', {
   variants: {
     variant: {
       default: '',
-      outline: 'py-3 border-y border-dashed border-neutral-800',
+      outline: 'py-2 border-y border-dashed border-neutral-800',
     },
   },
   defaultVariants: {
