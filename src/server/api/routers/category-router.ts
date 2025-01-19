@@ -15,9 +15,7 @@ export const categoryRouter = createTRPCRouter({
       orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
     })
 
-    const { rootCategories: categories } = assembleCategories(
-      flatCategories.map((category) => ({ ...category, subcategories: [] }))
-    )
+    const { rootCategories: categories } = assembleCategories(flatCategories)
 
     return categories
   }),

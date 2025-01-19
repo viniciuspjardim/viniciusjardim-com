@@ -9,6 +9,7 @@ import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 import { findPostNode } from '~/helpers/find-post-node'
 import { formatAuthorName } from '~/helpers/format-author-name'
+import { PostBreadcrumb } from '~/components/ui/breadcrumb'
 
 export default async function PostPage({
   params: { slug },
@@ -16,9 +17,11 @@ export default async function PostPage({
   params: { slug: string }
 }) {
   const post = await api.posts.getOneBySlug.query({ slug })
+  const categories = await api.categories.getAllFlat.query()
 
   return (
     <WidthContainer className="w-full py-16">
+      <PostBreadcrumb categories={categories} categoryId={post.categoryId} />
       <Post
         key={post.id}
         title={post.title}

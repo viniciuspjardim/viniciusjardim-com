@@ -8,13 +8,26 @@ export type Category = {
   subcategories: Category[]
 }
 
-export function assembleCategories(flatCategories: Category[]) {
-  const index = new Map<number, Category>()
-  flatCategories.forEach((category) => index.set(category.id, category))
+export type FlatCategory = Omit<Category, 'subcategories'>
 
+export const withSubcategory = (flatCategory: FlatCategory): Category => {
+  const subcategories: Category[] = []
+  return { ...flatCategory, subcategories }
+}
+
+export function indexCategories<T extends { id: number }>(categories: T[]) {
+  const index = new Map<number, T>()
+  categories.forEach((category) => index.set(category.id, category))
+
+  return index
+}
+
+export function assembleCategories(flatCategories: FlatCategory[]) {
+  const categories = flatCategories.map(withSubcategory)
+  const index = indexCategories(categories)
   const rootCategories: Category[] = []
 
-  flatCategories.forEach((category) => {
+  categories.forEach((category) => {
     if (!category.parentId) {
       rootCategories.push(category)
       return
@@ -25,4 +38,21 @@ export function assembleCategories(flatCategories: Category[]) {
   })
 
   return { rootCategories, index }
+}
+
+export function getCategoriesBreadcrumbs(
+  flatCategories: FlatCategory[],
+  categoryId: number
+) {
+  const index = indexCategories(flatCategories)
+  const breadcrumbs: FlatCategory[] = []
+
+  let currentCategory = index.get(categoryId)
+
+  while (currentCategory) {
+    breadcrumbs.unshift(currentCategory)
+    currentCategory = index.get(currentCategory.parentId!)
+  }
+
+  return breadcrumbs
 }
