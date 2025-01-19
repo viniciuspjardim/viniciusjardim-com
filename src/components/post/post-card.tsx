@@ -3,7 +3,7 @@ import type { JSONContent } from '@tiptap/core'
 import { PublishDetails } from './publish-details'
 import { findPostNode } from '~/helpers/find-post-node'
 
-type PostItemProps = {
+type PostCardProps = {
   slug: string
   title: string
   description: string | null
@@ -13,7 +13,7 @@ type PostItemProps = {
   userImageUrl?: string | null
 }
 
-export function PostItem({
+export function PostCard({
   slug,
   title,
   description,
@@ -21,7 +21,7 @@ export function PostItem({
   writtenAt,
   userName,
   userImageUrl,
-}: PostItemProps) {
+}: PostCardProps) {
   const imageNode = findPostNode(JSON.parse(content) as JSONContent, 'image')
   const imageUrl = imageNode?.attrs?.src as string | undefined
 

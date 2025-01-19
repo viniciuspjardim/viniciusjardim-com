@@ -3,7 +3,7 @@ import 'server-only'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { PostItem } from '~/components/post/post-item'
+import { PostCard } from '~/components/post/post-card'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
 
@@ -27,7 +27,7 @@ export default async function HomePage() {
 
       <div className="divide-y divide-dashed divide-neutral-800">
         {posts?.map((post) => (
-          <PostItem
+          <PostCard
             key={post.id}
             slug={post.slug}
             title={post.title}
