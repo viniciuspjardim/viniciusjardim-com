@@ -130,7 +130,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          className="rounded-2xl"
+          className="rounded-md"
           loading="lazy"
           src={attrs?.src as string}
           alt={attrs?.alt as string}
@@ -138,7 +138,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
       )
     case 'video':
       return (
-        <video className="rounded-2xl" src={attrs?.src as string} controls />
+        <video className="rounded-md" src={attrs?.src as string} controls />
       )
     case 'bulletList':
       return (
