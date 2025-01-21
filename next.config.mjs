@@ -10,6 +10,13 @@ const config = {
 
   images: {
     domains: ['images.clerk.dev', 'img.clerk.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'oyd5i68yhz.ufs.sh',
+        pathname: '/f/*',
+      },
+    ],
   },
 }
 

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { JSONContent } from '@tiptap/core'
 import { PublishDetails } from './publish-details'
 import { findPostNode } from '~/helpers/find-post-node'
@@ -24,6 +25,7 @@ export function PostCard({
 }: PostCardProps) {
   const imageNode = findPostNode(JSON.parse(content) as JSONContent, 'image')
   const imageUrl = imageNode?.attrs?.src as string | undefined
+  const alt = imageNode?.attrs?.alt as string | undefined
 
   return (
     <Link
@@ -31,15 +33,26 @@ export function PostCard({
       href={`/posts/${slug}`}
     >
       {imageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          className="w-full rounded-md md:w-80"
-          loading="lazy"
-          src={imageUrl}
-          alt={imageNode?.attrs?.alt as string}
-        />
+        <>
+          <Image
+            className="w-full rounded-md bg-neutral-950 md:hidden"
+            src={imageUrl}
+            alt={alt ?? ''}
+            width={768}
+            height={404}
+            quality={90}
+          />
+          <Image
+            className="hidden rounded-md bg-neutral-950 md:block md:h-[10.5rem] md:w-80"
+            src={imageUrl}
+            alt={alt ?? ''}
+            width={320}
+            height={168}
+            quality={90}
+          />
+        </>
       )}
-      <div className="space-y-2">
+      <div className="shrink space-y-2">
         <h2 className="text-balance text-3xl font-bold text-neutral-300 transition-colors group-hover:text-neutral-100">
           {title}
         </h2>
