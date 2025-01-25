@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { JSONContent } from '@tiptap/core'
 
 import Prism from 'prismjs'
@@ -128,17 +129,28 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
       )
     case 'image':
       return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          className="rounded-md"
-          loading="lazy"
-          src={attrs?.src as string}
-          alt={attrs?.alt as string}
-        />
+        <div className="py-2">
+          <Image
+            className="rounded-md bg-neutral-950"
+            src={attrs?.src as string}
+            alt={attrs?.alt as string}
+            width={768}
+            height={404}
+            quality={90}
+          />
+        </div>
       )
     case 'video':
       return (
-        <video className="rounded-md" src={attrs?.src as string} controls />
+        <div className="py-2">
+          <video
+            className="rounded-md bg-neutral-950"
+            src={attrs?.src as string}
+            controls
+            width={768}
+            height={404}
+          />
+        </div>
       )
     case 'bulletList':
       return (

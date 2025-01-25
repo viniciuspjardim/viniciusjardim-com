@@ -35,19 +35,11 @@ export function PostCard({
       {imageUrl && (
         <>
           <Image
-            className="w-full rounded-md bg-neutral-950 md:hidden"
+            className="w-full rounded-md bg-neutral-950 md:h-[10.5rem] md:w-80"
             src={imageUrl}
             alt={alt ?? ''}
             width={768}
             height={404}
-            quality={90}
-          />
-          <Image
-            className="hidden rounded-md bg-neutral-950 md:block md:h-[10.5rem] md:w-80"
-            src={imageUrl}
-            alt={alt ?? ''}
-            width={320}
-            height={168}
             quality={90}
           />
         </>
