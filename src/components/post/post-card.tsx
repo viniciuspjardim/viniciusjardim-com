@@ -45,11 +45,11 @@ export function PostCard({
         </>
       )}
       <div className="shrink space-y-2">
-        <h2 className="text-balance text-3xl font-bold text-neutral-300 transition-colors group-hover:text-neutral-100">
+        <h2 className="text-balance text-3xl font-bold text-neutral-300 transition-colors group-hover:text-neutral-200">
           {title}
         </h2>
         {description && (
-          <h3 className="text-xl text-neutral-400 transition-colors group-hover:text-neutral-300">
+          <h3 className="text-xl text-neutral-400 transition-colors">
             {description}
           </h3>
         )}

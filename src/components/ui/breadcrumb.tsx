@@ -134,7 +134,11 @@ const PostBreadcrumb = ({ categories, categoryId }: PostBreadcrumbProps) => {
         {breadcrumbs.map((crumb) => (
           <>
             <BreadcrumbSeparator />
-            <BreadcrumbItem key={crumb.id}>{crumb.title}</BreadcrumbItem>
+            <BreadcrumbItem key={crumb.id}>
+              <BreadcrumbLink asChild>
+                <Link href={`/categories/${crumb.slug}`}>{crumb.title}</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
           </>
         ))}
       </BreadcrumbList>

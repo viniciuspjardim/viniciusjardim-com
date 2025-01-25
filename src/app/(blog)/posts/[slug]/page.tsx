@@ -16,8 +16,10 @@ export default async function PostPage({
 }: {
   params: { slug: string }
 }) {
-  const post = await api.posts.getOneBySlug.query({ slug })
-  const categories = await api.categories.getAllFlat.query()
+  const [categories, post] = await Promise.all([
+    api.categories.getAllFlat.query(),
+    api.posts.getOneBySlug.query({ slug }),
+  ])
 
   return (
     <WidthContainer className="w-full py-16">
