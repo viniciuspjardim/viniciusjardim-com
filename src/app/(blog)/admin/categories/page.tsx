@@ -2,13 +2,13 @@
 
 import { useUser } from '@clerk/nextjs'
 
-import { Category } from '~/components/category/category'
+import { CategoriesList } from '~/components/category/categories-list'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/utils/api'
 
 const pageName = 'Categories'
 
-export default function CategoriesAdmin() {
+export default function CategoriesAdminPage() {
   const { data, isLoading } = api.categories.getAll.useQuery()
   const { user } = useUser()
 
@@ -32,7 +32,7 @@ export default function CategoriesAdmin() {
 
       <div>
         {data?.map((category) => (
-          <Category
+          <CategoriesList
             key={category.id}
             id={category.id}
             slug={category.slug}

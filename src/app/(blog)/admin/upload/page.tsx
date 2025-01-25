@@ -7,7 +7,7 @@ import { UploadButton } from '~/utils/uploadthing'
 
 const pageName = 'Upload'
 
-export default function UploadAdmin() {
+export default function UploadAdminPage() {
   const { user } = useUser()
 
   if (!user) {

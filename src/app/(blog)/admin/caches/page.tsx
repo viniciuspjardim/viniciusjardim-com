@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const pageName = 'Caches'
 
-export default function CachesAdmin() {
+export default function CachesAdminPage() {
   const { user } = useUser()
   const [status, setStatus] = useState('')
 

@@ -1,17 +1,17 @@
-export type CategoryProps = {
+export type CategoriesListProps = {
   id: number
   slug: string
   title: string
-  subcategories: CategoryProps[]
+  subcategories: CategoriesListProps[]
   breadCrumbs?: { title: string; slug: string }[]
 }
 
-export function Category({
+export function CategoriesList({
   slug,
   title,
   subcategories,
   breadCrumbs = [],
-}: CategoryProps) {
+}: CategoriesListProps) {
   const crumbs = [...breadCrumbs, { title, slug }]
 
   return (
@@ -37,7 +37,7 @@ export function Category({
 
           <div className="flex-1">
             {subcategories.map((subcategory) => (
-              <Category
+              <CategoriesList
                 key={subcategory.id}
                 id={subcategory.id}
                 title={subcategory.title}

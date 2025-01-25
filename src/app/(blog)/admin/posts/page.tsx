@@ -10,7 +10,7 @@ import { formatAuthorName } from '~/helpers/format-author-name'
 
 const pageName = 'Posts'
 
-export default function PostsAdmin() {
+export default function PostsAdminPage() {
   const { data, isLoading } = api.posts.getAll.useQuery()
   const { user } = useUser()
 
