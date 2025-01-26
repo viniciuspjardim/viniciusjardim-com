@@ -4,17 +4,10 @@ import { MenuIcon, XIcon } from 'lucide-react'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 
 import { AuthButton } from '~/components/auth-button'
+import { NavbarMenu } from '~/components/navbar-menu'
 import { WidthContainer } from '~/components/width-container'
 import { Button } from '~/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { api } from '~/trpc/server'
 
 export async function Navbar() {
@@ -56,59 +49,7 @@ export async function Navbar() {
               </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="mt-6 w-64" align="end">
-              <DropdownMenuGroup>
-                <DropdownMenuLabel>Categories</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link className="cursor-pointer" href={`/categories`}>
-                    <span>All</span>
-                  </Link>
-                </DropdownMenuItem>
-                {categories?.map((category) => (
-                  <DropdownMenuItem key={category.id} asChild>
-                    <Link
-                      className="cursor-pointer"
-                      href={`/categories/${category.slug}`}
-                    >
-                      <span>{category.title}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuGroup>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuGroup>
-                <DropdownMenuLabel>Admin</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link className="cursor-pointer" href="/admin/posts">
-                    <span>Posts</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link className="cursor-pointer" href="/admin/categories">
-                    <span>Categories</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link className="cursor-pointer" href="/admin/caches">
-                    <span>Caches</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link className="cursor-pointer" href="/admin/upload">
-                    <span>Upload</span>
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-
-              <DropdownMenuSeparator className="md:hidden" />
-              <DropdownMenuItem className="md:hidden">
-                <AuthButton className="w-full" />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
+            <NavbarMenu categories={categories} />
           </DropdownMenu>
         </div>
       </WidthContainer>
