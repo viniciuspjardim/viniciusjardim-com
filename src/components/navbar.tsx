@@ -13,7 +13,6 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { api } from '~/trpc/server'
@@ -64,7 +63,6 @@ export async function Navbar() {
                 <DropdownMenuItem asChild>
                   <Link className="cursor-pointer" href={`/categories`}>
                     <span>All</span>
-                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
                 {categories?.map((category) => (
@@ -74,36 +72,34 @@ export async function Navbar() {
                       href={`/categories/${category.slug}`}
                     >
                       <span>{category.title}</span>
-                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>
 
               <DropdownMenuSeparator />
+
               <DropdownMenuGroup>
+                <DropdownMenuLabel>Admin</DropdownMenuLabel>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link className="cursor-pointer" href="/admin/posts">
                     <span>Posts</span>
-                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link className="cursor-pointer" href="/admin/categories">
                     <span>Categories</span>
-                    <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link className="cursor-pointer" href="/admin/caches">
                     <span>Caches</span>
-                    <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link className="cursor-pointer" href="/admin/upload">
                     <span>Upload</span>
-                    <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
