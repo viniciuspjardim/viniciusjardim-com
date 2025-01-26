@@ -49,7 +49,7 @@ export default async function CategoriesPage({
           <div className="w-full rounded-md border border-neutral-800 py-24 text-center">
             <InfoIcon className="mx-auto size-8 text-rose-800" />
             <span className="mt-2 block text-lg text-neutral-400">
-              No posts here yet!
+              Oops, no posts here yet!
             </span>
           </div>
         )}
