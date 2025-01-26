@@ -11,7 +11,6 @@ import { assembleCategories } from '~/helpers/assemble-categories'
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const flatCategories = await ctx.db.category.findMany({
-      include: { posts: { select: { title: true, slug: true } } },
       orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
     })
 
@@ -22,7 +21,6 @@ export const categoryRouter = createTRPCRouter({
 
   getAllFlat: publicProcedure.query(async ({ ctx }) => {
     const flatCategories = await ctx.db.category.findMany({
-      include: { posts: { select: { title: true, slug: true } } },
       orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
     })
 
