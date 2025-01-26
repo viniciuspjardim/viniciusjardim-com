@@ -46,10 +46,13 @@ export default async function CategoriesPage({
         ))}
 
         {posts.length === 0 && (
-          <div className="w-full rounded-md border border-neutral-800 py-24 text-center">
+          <div className="w-full rounded-md border border-neutral-800 px-6 py-44 text-center">
             <InfoIcon className="mx-auto size-8 text-rose-800" />
-            <span className="mt-2 block text-lg text-neutral-400">
-              Oops, no posts here yet!
+            <span className="mx-auto mt-2 block max-w-lg text-balance text-lg font-semibold text-neutral-300">
+              Oops, no posts around here yet...
+            </span>
+            <span className="mx-auto block max-w-lg text-balance text-lg text-neutral-400">
+              Please come back later, we might have something for you!
             </span>
           </div>
         )}
