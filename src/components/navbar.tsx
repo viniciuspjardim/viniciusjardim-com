@@ -9,6 +9,7 @@ import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuLabel,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -18,7 +19,7 @@ import {
 import { api } from '~/trpc/server'
 
 export async function Navbar() {
-  const categories = await api.categories.getAll.query()
+  const categories = await api.categories.getAllFlat.query()
 
   return (
     <nav className="w-full border-b border-neutral-800">
@@ -58,6 +59,14 @@ export async function Navbar() {
 
             <DropdownMenuContent className="mt-6 w-64" align="end">
               <DropdownMenuGroup>
+                <DropdownMenuLabel>Categories</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link className="cursor-pointer" href={`/categories`}>
+                    <span>All</span>
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
                 {categories?.map((category) => (
                   <DropdownMenuItem key={category.id} asChild>
                     <Link
