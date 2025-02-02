@@ -1,7 +1,9 @@
 import { clerkClient } from '@clerk/nextjs/server'
+import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 
+import { s } from '~/db'
 import {
   createTRPCRouter,
   publicProcedure,
@@ -11,9 +13,10 @@ import { filterUserFields } from '~/helpers/user'
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.db.post.findMany({
-      orderBy: [{ rank: 'desc' }, { writtenAt: 'desc' }],
-    })
+    const posts = await ctx.db
+      .select()
+      .from(s.post)
+      .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
 
     const users = (
       await clerkClient.users.getUserList({
@@ -30,9 +33,10 @@ export const postRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const post = await ctx.db.post.findUnique({
-        where: { id: input.id },
-      })
+      const [post] = await ctx.db
+        .select()
+        .from(s.post)
+        .where(eq(s.post.id, input.id))
 
       if (!post) {
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
@@ -59,9 +63,10 @@ export const postRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ ctx, input }) => {
-      const post = await ctx.db.post.findUnique({
-        where: { slug: input.slug },
-      })
+      const [post] = await ctx.db
+        .select()
+        .from(s.post)
+        .where(eq(s.post.slug, input.slug))
 
       if (!post) {
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
@@ -101,17 +106,17 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId
 
-      return ctx.db.$transaction(async (tx) => {
-        const post = await tx.post.create({
-          data: { ...input, authorId },
-        })
+      return ctx.db.transaction(async (tx) => {
+        const [post] = await tx
+          .insert(s.post)
+          .values({ ...input, authorId })
+          .returning()
 
-        await tx.postLog.create({
-          data: {
-            ...post,
-            logType: 'CREATE',
-          },
-        })
+        if (!post) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+        }
+
+        await tx.insert(s.postLog).values({ ...post, logType: 'CREATE' })
 
         return post
       })
@@ -132,18 +137,18 @@ export const postRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.$transaction(async (tx) => {
-        const post = await ctx.db.post.update({
-          where: { id: input.id },
-          data: { ...input },
-        })
+      return ctx.db.transaction(async (tx) => {
+        const [post] = await tx
+          .update(s.post)
+          .set({ ...input })
+          .where(eq(s.post.id, input.id))
+          .returning()
 
-        await tx.postLog.create({
-          data: {
-            ...post,
-            logType: 'UPDATE',
-          },
-        })
+        if (!post) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+        }
+
+        await tx.insert(s.postLog).values({ ...post, logType: 'UPDATE' })
 
         return post
       })
@@ -152,17 +157,17 @@ export const postRouter = createTRPCRouter({
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.$transaction(async (tx) => {
-        const post = await ctx.db.post.delete({
-          where: { id: input.id },
-        })
+      return ctx.db.transaction(async (tx) => {
+        const [post] = await tx
+          .delete(s.post)
+          .where(eq(s.post.id, input.id))
+          .returning()
 
-        await tx.postLog.create({
-          data: {
-            ...post,
-            logType: 'DELETE',
-          },
-        })
+        if (!post) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+        }
+
+        await tx.insert(s.postLog).values({ ...post, logType: 'DELETE' })
 
         return post
       })

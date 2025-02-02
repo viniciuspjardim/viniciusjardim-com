@@ -1,7 +1,8 @@
+import { eq, asc, desc } from 'drizzle-orm'
 import { clerkClient } from '@clerk/nextjs/server'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
-
+import { s } from '~/db'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { filterUserFields } from '~/helpers/user'
 
@@ -10,9 +11,10 @@ export const pageRouter = createTRPCRouter({
     .input(z.object({ categorySlug: z.string().min(1).max(200).optional() }))
     .query(async ({ ctx, input }) => {
       // Get all categories
-      const flatCategories = await ctx.db.category.findMany({
-        orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
-      })
+      const flatCategories = await ctx.db
+        .select()
+        .from(s.category)
+        .orderBy(desc(s.category.rank), asc(s.category.createdAt))
 
       // Get category by slug
       const category = input.categorySlug
@@ -31,10 +33,11 @@ export const pageRouter = createTRPCRouter({
 
       // Get all posts or posts by the category
       // TODO: get post also from subcategories when the category is provided
-      const posts = await ctx.db.post.findMany({
-        where: { categoryId: category?.id },
-        orderBy: [{ rank: 'desc' }, { writtenAt: 'desc' }],
-      })
+      const posts = await ctx.db
+        .select()
+        .from(s.post)
+        .where(category ? eq(s.post.categoryId, category.id) : undefined)
+        .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
 
       const users = (
         await clerkClient.users.getUserList({

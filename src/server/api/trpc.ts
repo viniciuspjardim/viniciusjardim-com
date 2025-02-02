@@ -13,7 +13,7 @@ import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
 import { getAuth } from '@clerk/nextjs/server'
-import { db } from '~/server/db'
+import { db } from '~/db'
 import { env } from '~/env.mjs'
 
 /**

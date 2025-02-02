@@ -1,18 +1,20 @@
+import { eq, asc, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
+import { s } from '~/db'
 import {
   createTRPCRouter,
   publicProcedure,
   ownerProcedure,
 } from '~/server/api/trpc'
-
 import { assembleCategories } from '~/helpers/assemble-categories'
 
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const flatCategories = await ctx.db.category.findMany({
-      orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
-    })
+    const flatCategories = await ctx.db
+      .select()
+      .from(s.category)
+      .orderBy(desc(s.category.rank), asc(s.category.createdAt))
 
     const { rootCategories: categories } = assembleCategories(flatCategories)
 
@@ -20,9 +22,10 @@ export const categoryRouter = createTRPCRouter({
   }),
 
   getAllFlat: publicProcedure.query(async ({ ctx }) => {
-    const flatCategories = await ctx.db.category.findMany({
-      orderBy: [{ rank: 'desc' }, { createdAt: 'asc' }],
-    })
+    const flatCategories = await ctx.db
+      .select()
+      .from(s.category)
+      .orderBy(desc(s.category.rank), asc(s.category.createdAt))
 
     return flatCategories
   }),
@@ -30,9 +33,10 @@ export const categoryRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const category = await ctx.db.category.findUnique({
-        where: { id: input.id },
-      })
+      const [category] = await ctx.db
+        .select()
+        .from(s.category)
+        .where(eq(s.category.id, input.id))
 
       if (!category) {
         throw new TRPCError({
@@ -47,9 +51,10 @@ export const categoryRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ ctx, input }) => {
-      const category = await ctx.db.category.findUnique({
-        where: { slug: input.slug },
-      })
+      const [category] = await ctx.db
+        .select()
+        .from(s.category)
+        .where(eq(s.category.slug, input.slug))
 
       if (!category) {
         throw new TRPCError({
@@ -73,9 +78,10 @@ export const categoryRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.db.category.create({
-        data: { ...input },
-      })
+      const category = await ctx.db
+        .insert(s.category)
+        .values({ ...input })
+        .returning()
 
       return category
     }),
@@ -93,10 +99,11 @@ export const categoryRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.db.category.update({
-        where: { id: input.id },
-        data: { ...input },
-      })
+      const category = await ctx.db
+        .update(s.category)
+        .set({ ...input })
+        .where(eq(s.category.id, input.id))
+        .returning()
 
       return category
     }),
@@ -104,9 +111,10 @@ export const categoryRouter = createTRPCRouter({
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.db.category.delete({
-        where: { id: input.id },
-      })
+      const category = await ctx.db
+        .delete(s.category)
+        .where(eq(s.category.id, input.id))
+        .returning()
 
       return category
     }),

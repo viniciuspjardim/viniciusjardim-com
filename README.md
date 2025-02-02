@@ -40,3 +40,11 @@ See you later! 🚀
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog
   - [ ] Create CategoryLog
+
+### Database
+
+To backup the database use:
+
+```
+pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
+```
