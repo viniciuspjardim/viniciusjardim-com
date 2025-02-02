@@ -13,6 +13,7 @@ type EditPostFormProps = {
   userImageUrl?: string
   rank: number
   categoryId: number
+  lang: string
   writtenAt: Date
   closeForm: () => void
 }
@@ -37,6 +38,7 @@ export function EditPostForm(props: EditPostFormProps) {
       keywords: form.keywords || undefined,
       content: editorJson,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
+      lang: form.lang ? form.lang : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
       categoryId: parseInt(form.categoryId, 10),
     })
@@ -49,6 +51,7 @@ export function EditPostForm(props: EditPostFormProps) {
     content: props.content,
     rank: props.rank.toString(),
     categoryId: props.categoryId.toString(),
+    lang: props.lang,
     writtenAt: props.writtenAt.toISOString(),
   }
 

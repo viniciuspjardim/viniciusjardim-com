@@ -22,8 +22,9 @@ export function CreatePostForm() {
       keywords: form.keywords || undefined,
       content: editorJson,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
-      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
       categoryId: parseInt(form.categoryId, 10),
+      lang: form.lang ? form.lang : undefined,
+      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
     })
   }
 

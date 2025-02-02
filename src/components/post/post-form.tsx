@@ -19,10 +19,11 @@ export interface PostFormInputs {
   title: string
   description: string | null
   keywords: string | null
+  content?: string
   rank: string
   categoryId: string
+  lang: string
   writtenAt: string
-  content?: string
 }
 
 export interface PostFormProps {
@@ -73,6 +74,7 @@ export function PostForm({
       keywords: defaultValues?.keywords ?? '',
       rank: defaultValues?.rank ?? '',
       categoryId: defaultValues?.categoryId ?? '1',
+      lang: defaultValues?.lang ?? 'en-US',
       writtenAt: defaultValues?.writtenAt ?? '',
       content: defaultValues?.content ?? '',
     },
@@ -219,6 +221,14 @@ export function PostForm({
             ))}
           </select>
         )}
+        <select {...register('lang')}>
+          <option value="en-US" lang="en-US">
+            English
+          </option>
+          <option value="pt-BR" lang="pt-BR">
+            Português
+          </option>
+        </select>
       </div>
 
       {/* Editor toolbar */}

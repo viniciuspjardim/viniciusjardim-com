@@ -49,6 +49,7 @@ export default function PostsAdminPage() {
               userImageUrl={post.author?.userImageUrl}
               rank={post.rank}
               categoryId={post.categoryId}
+              lang={post.lang}
               writtenAt={post.writtenAt}
             />
           ))}

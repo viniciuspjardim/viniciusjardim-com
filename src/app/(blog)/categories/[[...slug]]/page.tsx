@@ -39,6 +39,7 @@ export default async function CategoriesPage({
             title={post.title}
             description={post.description}
             content={post.content}
+            lang={post.lang}
             writtenAt={new Date(post.writtenAt)}
             userName={formatAuthorName(post.author)}
             userImageUrl={post.author?.userImageUrl}

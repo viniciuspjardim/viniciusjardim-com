@@ -9,6 +9,7 @@ type PostCardProps = {
   title: string
   description: string | null
   content: string
+  lang: string
   writtenAt: Date
   userName: string
   userImageUrl?: string | null
@@ -19,6 +20,7 @@ export function PostCard({
   title,
   description,
   content,
+  lang,
   writtenAt,
   userName,
   userImageUrl,
@@ -31,6 +33,7 @@ export function PostCard({
     <Link
       className="group flex w-full flex-col items-start justify-between gap-x-8 gap-y-3 py-10 first:pt-0 last:pb-0 md:flex-row"
       href={`/posts/${slug}`}
+      lang={lang}
     >
       {imageUrl && (
         <>
@@ -54,6 +57,7 @@ export function PostCard({
           </h3>
         )}
         <PublishDetails
+          lang={lang}
           writtenAt={writtenAt}
           userName={userName}
           userImageUrl={userImageUrl}

@@ -23,6 +23,7 @@ export const category = pgTable(
     keywords: varchar('keywords', { length: 255 }),
     rank: integer('rank').notNull().default(5000),
     parentId: integer('parentId').references((): AnyPgColumn => category.id),
+    lang: varchar('lang', { length: 20 }).notNull().default('en-US'),
     createdAt: timestamp('createdAt', { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -53,6 +54,7 @@ export const post = pgTable(
     categoryId: integer('categoryId')
       .notNull()
       .references(() => category.id),
+    lang: varchar('lang', { length: 20 }).notNull().default('en-US'),
     writtenAt: timestamp('writtenAt', { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -90,6 +92,7 @@ export const postLog = pgTable(
     rank: integer('rank'),
     authorId: varchar('authorId', { length: 255 }),
     categoryId: integer('categoryId'),
+    lang: varchar('lang', { length: 20 }),
     writtenAt: timestamp('writtenAt', { withTimezone: true }),
     createdAt: timestamp('createdAt', { withTimezone: true }),
     updatedAt: timestamp('updatedAt', { withTimezone: true }),

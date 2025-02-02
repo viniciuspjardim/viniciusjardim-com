@@ -100,6 +100,7 @@ export const postRouter = createTRPCRouter({
         content: z.string().min(1),
         rank: z.number().optional(),
         categoryId: z.number(),
+        lang: z.string().min(1).max(20).optional(),
         writtenAt: z.date().optional(),
       })
     )
@@ -133,6 +134,7 @@ export const postRouter = createTRPCRouter({
         content: z.string().min(1),
         rank: z.number().optional(),
         categoryId: z.number(),
+        lang: z.string().min(1).max(20).optional(),
         writtenAt: z.date().optional(),
       })
     )

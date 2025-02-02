@@ -18,6 +18,7 @@ export default async function PostsPage() {
             title={post.title}
             description={post.description}
             content={post.content}
+            lang={post.lang}
             writtenAt={new Date(post.writtenAt)}
             userName={formatAuthorName(post.author)}
             userImageUrl={post.author?.userImageUrl}

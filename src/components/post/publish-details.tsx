@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Clock3Icon } from 'lucide-react'
+import { Clock3Icon, LanguagesIcon } from 'lucide-react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { formatDateDistance, formatDateTime } from '~/helpers/dates'
@@ -27,14 +27,27 @@ const publishDetailsVariants = cva('mb-12 flex gap-3', {
 export interface PublishDetailsProps
   extends VariantProps<typeof publishDetailsVariants> {
   className?: string
+  lang: string
   writtenAt: Date
   userName: string
   userImageUrl?: string | null
 }
 
+const renderFlag = (lang: string) => {
+  switch (lang) {
+    case 'en-US':
+      return '🇺🇸'
+    case 'pt-BR':
+      return '🇧🇷'
+    default:
+      return lang
+  }
+}
+
 const PublishDetails = ({
   className,
   variant,
+  lang,
   writtenAt,
   userName,
   userImageUrl,
@@ -64,12 +77,16 @@ const PublishDetails = ({
         <Popover>
           <PopoverTrigger>
             <span className="inline-flex items-center gap-1 text-sm text-neutral-500 transition-colors hover:text-neutral-400">
-              <Clock3Icon className="size-3.5" />
+              <LanguagesIcon className="size-3.5" />
+              <span className="pt-0.5">{renderFlag(lang)}</span>
+              <Clock3Icon className="ml-2 size-3.5" />
               {formatDateDistance(writtenAt)}
             </span>
           </PopoverTrigger>
           <PopoverContent className="w-auto py-2 text-sm">
-            <span className="text-neutral-500">Published on</span>{' '}
+            <span className="text-neutral-500">Language:</span>{' '}
+            <span className="text-neutral-300">{lang}</span>{' '}
+            <span className="text-neutral-500">· Published:</span>{' '}
             <span className="text-neutral-300">
               {formatDateTime(writtenAt)}
             </span>

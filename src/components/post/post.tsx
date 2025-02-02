@@ -7,6 +7,7 @@ type PostProps = {
   title: string
   description: string | null
   content: string
+  lang: string
   writtenAt: Date
   userName: string
   userImageUrl?: string | null
@@ -16,6 +17,7 @@ export function Post({
   title,
   description,
   content,
+  lang,
   writtenAt,
   userName,
   userImageUrl,
@@ -23,7 +25,7 @@ export function Post({
   const jsonContent = JSON.parse(content) as JSONContent
 
   return (
-    <article className="w-full space-y-6">
+    <article className="w-full space-y-6" lang={lang}>
       <div className="space-y-2">
         <h1 className="text-balance text-4xl font-bold text-neutral-300 md:text-5xl">
           {title}
@@ -38,6 +40,7 @@ export function Post({
 
       <PublishDetails
         variant="outline"
+        lang={lang}
         writtenAt={writtenAt}
         userName={userName}
         userImageUrl={userImageUrl}
