@@ -12,10 +12,6 @@
     "source.fixAll.eslint": "explicit"
   },
 
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
-
   "search.exclude": {
     "**/dist": true,
     "**/.git": true,
@@ -41,6 +37,7 @@
     "esnext",
     "lucide",
     "middlewares",
+    "neondatabase",
     "nextjs",
     "prismjs",
     "prosemirror",
