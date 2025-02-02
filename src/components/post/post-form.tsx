@@ -287,7 +287,13 @@ export function PostForm({
           className={editor.isActive('paragraph') ? 'dark:border-rose-950' : ''}
           onClick={() => editor.chain().focus().setParagraph().run()}
         >
-          Paragraph
+          P
+        </EditorButton>
+        <EditorButton
+          className={editor.isActive('hardBreak') ? 'dark:border-rose-950' : ''}
+          onClick={() => editor.chain().focus().setHardBreak().run()}
+        >
+          BR
         </EditorButton>
         <EditorButton
           className={

@@ -120,6 +120,9 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
         </p>
       )
 
+    case 'hardBreak':
+      return <br />
+
     case 'codeBlock':
       return (
         <CodeBlock

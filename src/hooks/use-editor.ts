@@ -4,8 +4,9 @@ import { useEditor as useInitEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Image from '@tiptap/extension-image'
-import { Video } from '~/helpers/tiptap-video'
 import Link from '@tiptap/extension-link'
+import HardBreak from '@tiptap/extension-hard-break'
+import { Video } from '~/helpers/tiptap-video'
 
 export function useEditor(content: string) {
   const editor = useInitEditor({
@@ -20,12 +21,13 @@ export function useEditor(content: string) {
       StarterKit,
       Placeholder.configure({ placeholder: 'Write your post here...' }),
       Image,
-      Video,
       Link.configure({
         openOnClick: false,
         autolink: true,
         defaultProtocol: 'https',
       }),
+      HardBreak,
+      Video,
     ],
     content: content ? (JSON.parse(content) as JSONContent) : null,
   })
