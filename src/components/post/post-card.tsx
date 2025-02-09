@@ -31,7 +31,7 @@ export function PostCard({
 
   return (
     <Link
-      className="group flex w-full flex-col items-start justify-between gap-x-8 gap-y-3 py-10 first:pt-0 last:pb-0 md:flex-row"
+      className="group flex w-full flex-col items-start gap-x-8 gap-y-3 py-10 first:pt-0 last:pb-0 md:flex-row"
       href={`/posts/${slug}`}
       lang={lang}
     >

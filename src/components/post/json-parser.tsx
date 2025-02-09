@@ -137,8 +137,8 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
             className="rounded-md bg-neutral-950"
             src={attrs?.src as string}
             alt={attrs?.alt as string}
-            width={768}
-            height={404}
+            width={(attrs?.width as `${number}`) ?? '768'}
+            height={(attrs?.height as `${number}`) ?? '404'}
             quality={90}
           />
         </div>

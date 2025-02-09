@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NodeSelection } from 'prosemirror-state'
-import { type Editor } from '~/hooks/use-editor'
 import { ImageIcon } from 'lucide-react'
+import { type Editor } from '~/hooks/use-editor'
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { EditorButton } from '~/components/post/editor-button'
+import { type ImageAttributes } from '~/helpers/tiptap-image'
 
 type SetImageDialogProps = {
   editor: Editor
@@ -33,7 +34,7 @@ function getSelectedImageAttributes(editor: Editor) {
     console.log
 
     if (node.type.name === 'image') {
-      return { ...node.attrs } as { src: string; alt: string }
+      return { ...node.attrs } as ImageAttributes
     }
   }
 
@@ -56,21 +57,18 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
   }
 
   const addImage = () => {
-    if (!imageSrc) {
+    if (!editor || !imageSrc) {
       return
     }
 
-    editor
-      ?.chain()
-      .focus()
-      .setImage({
-        src: imageSrc,
-        alt: imageAlt ? imageAlt : undefined,
-        // TODO: customize TipTap to allow images to have the width and height
-        // width: imageWidth ? imageWidth : undefined,
-        // height: imageHeight ? imageHeight : undefined,
-      })
-      .run()
+    const attributes: ImageAttributes = {
+      src: imageSrc,
+      alt: imageAlt ? imageAlt : undefined,
+      width: imageWidth ? imageWidth : undefined,
+      height: imageHeight ? imageHeight : undefined,
+    }
+
+    editor.chain().focus().setImage(attributes).run()
     resetState()
   }
 
@@ -82,6 +80,8 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
             const attributes = getSelectedImageAttributes(editor)
             setImageSrc(attributes?.src || '')
             setImageAlt(attributes?.alt || '')
+            setImageWidth(attributes?.width || '')
+            setImageHeight(attributes?.height || '')
           }}
         >
           <ImageIcon />
