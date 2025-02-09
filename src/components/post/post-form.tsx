@@ -4,14 +4,15 @@ import type { AppRouter } from '~/server/api/root'
 import { useCallback, type ReactNode } from 'react'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { ImageIcon, VideoIcon } from 'lucide-react'
+import { VideoIcon } from 'lucide-react'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
-import { cn } from '~/helpers/cn'
-import { Button, type ButtonProps } from '~/components/ui/button'
+import { Button } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
 import { useToast } from '~/hooks/use-toast'
+import { EditorButton } from '~/components/post/editor-button'
+import { SetImageDialog } from '~/components/post/set-image-dialog'
 
 type Post = inferRouterOutputs<AppRouter>['posts']['create']
 
@@ -35,18 +36,6 @@ export interface PostFormProps {
   isPosting: boolean
   extraActions?: ReactNode
   categoriesLoading?: boolean
-}
-
-export function EditorButton(props: ButtonProps) {
-  return (
-    <Button
-      className={cn('p-1', props.className)}
-      variant="outline"
-      size="sm"
-      type="button"
-      {...props}
-    />
-  )
 }
 
 export function PostForm({
@@ -80,7 +69,7 @@ export function PostForm({
     },
   })
 
-  const { Editor, editor } = useEditor(defaultValues?.content ?? '')
+  const { EditorContent, editor } = useEditor(defaultValues?.content ?? '')
   const { toast } = useToast()
 
   const slug = asSlug(watch('title') ?? '')
@@ -111,14 +100,6 @@ export function PostForm({
       })
     }
   }
-
-  const addImage = useCallback(() => {
-    const url = window.prompt('URL')
-
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run()
-    }
-  }, [editor])
 
   const addVideo = useCallback(() => {
     const url = window.prompt('URL')
@@ -233,9 +214,7 @@ export function PostForm({
 
       {/* Editor toolbar */}
       <div className="flex flex-wrap items-center gap-2">
-        <EditorButton onClick={addImage}>
-          <ImageIcon />
-        </EditorButton>
+        <SetImageDialog editor={editor} />
         <EditorButton onClick={addVideo}>
           <VideoIcon />
         </EditorButton>
@@ -411,7 +390,7 @@ export function PostForm({
         </EditorButton>
       </div>
 
-      <Editor editor={editor} />
+      <EditorContent editor={editor} />
 
       <div className="flex justify-end space-x-2">
         {/* Insert extra actions (like a Cancel button) if needed */}

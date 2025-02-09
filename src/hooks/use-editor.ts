@@ -32,5 +32,7 @@ export function useEditor(content: string) {
     content: content ? (JSON.parse(content) as JSONContent) : null,
   })
 
-  return { Editor: EditorContent, editor }
+  return { EditorContent, editor }
 }
+
+export type Editor = ReturnType<typeof useEditor>['editor']

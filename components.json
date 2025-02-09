@@ -11,6 +11,8 @@
   },
   "aliases": {
     "components": "~/components",
-    "utils": "~/helpers/cn"
+    "utils": "~/helpers/cn",
+    "lib": "~/helpers",
+    "hooks": "~/hooks"
   }
 }
