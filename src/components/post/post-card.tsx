@@ -26,8 +26,8 @@ export function PostCard({
   userImageUrl,
 }: PostCardProps) {
   const imageNode = findPostNode(JSON.parse(content) as JSONContent, 'image')
-  const imageUrl = imageNode?.attrs?.src as string | undefined
-  const alt = imageNode?.attrs?.alt as string | undefined
+  const imageSrc = imageNode?.attrs?.src as string | undefined
+  const imageAlt = imageNode?.attrs?.alt as string | undefined
 
   return (
     <Link
@@ -35,12 +35,12 @@ export function PostCard({
       href={`/posts/${slug}`}
       lang={lang}
     >
-      {imageUrl && (
+      {imageSrc && (
         <>
           <Image
             className="w-full rounded-md bg-neutral-950 md:h-[10.5rem] md:w-80"
-            src={imageUrl}
-            alt={alt ?? ''}
+            src={imageSrc}
+            alt={imageAlt ?? ''}
             width={768}
             height={404}
             quality={90}

@@ -114,7 +114,7 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
             <Input
               id="imageAlt"
               type="text"
-              maxLength={80}
+              maxLength={200}
               placeholder="Spaceship orbiting a planet"
               value={imageAlt}
               onChange={(event) => setImageAlt(event.target.value)}
