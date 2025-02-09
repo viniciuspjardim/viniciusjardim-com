@@ -26,7 +26,7 @@ See you later! 🚀
     - [ ] Pass props to the video to control size, video controls, and alignment
   - [ ] Allow editing codeblocks language, image props and video props
   - [ ] Replace editor buttons text with their icons
-  - [ ] Refactor code to only have one editor component
+  - [x] Refactor code to only have one editor component
   - [ ] Add upload files button on the editor
 - [ ] Manage files from UploadThing in the admin upload page
   - [x] Upload new file
