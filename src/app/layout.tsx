@@ -1,11 +1,12 @@
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-
 import '~/styles/globals.css'
 
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { PosthogProvider } from '~/components/posthog-provider'
+
 export const metadata = {
-  title: 'Vinícius Jardim - Blog',
-  description: 'Vinícius Jardim personal blog (draft)',
+  title: 'Vinícius Jardim',
+  description: 'Vinícius Jardim blog',
 }
 
 export default function RootLayout({
@@ -16,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="gutter-stable dark">
       <body>
-        {children}
+        <PosthogProvider>{children}</PosthogProvider>
         <Analytics />
         <SpeedInsights />
       </body>
