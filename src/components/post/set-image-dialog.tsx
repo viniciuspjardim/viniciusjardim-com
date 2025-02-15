@@ -5,7 +5,6 @@ import { type Editor } from '~/hooks/use-editor'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -59,8 +58,10 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
     setError('')
   }
 
+  const isDisabled = !editor || !imageSrc
+
   const addImage = () => {
-    if (!editor || !imageSrc) {
+    if (isDisabled) {
       return
     }
 
@@ -90,14 +91,11 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
           <ImageIcon />
         </EditorButton>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+      <DialogContent className="flex max-h-svh flex-col gap-0 rounded-md p-0">
+        <DialogHeader className="border-b border-neutral-800 px-6 py-5">
           <DialogTitle>Image properties</DialogTitle>
-          <DialogDescription>
-            Add an image to your post by pasting a URL, and sizes below.
-          </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 overflow-y-auto px-6 py-5">
           <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border border-neutral-800 bg-neutral-900">
             {imageSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -136,6 +134,7 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
               <Button
                 className="h-auto p-1"
                 variant="link"
+                disabled={!imageSrc}
                 onClick={() => {
                   setImageSrc('')
                   setError('')
@@ -186,8 +185,8 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
             />
           </div>
         </div>
-        <DialogFooter>
-          <Button type="button" onClick={addImage}>
+        <DialogFooter className="border-t border-neutral-800 px-6 py-5">
+          <Button type="button" disabled={isDisabled} onClick={addImage}>
             Ok
           </Button>
         </DialogFooter>
