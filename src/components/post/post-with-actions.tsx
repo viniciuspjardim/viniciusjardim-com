@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
+import posthog from 'posthog-js'
 
 import { api } from '~/utils/api'
 import { EditPostForm } from './edit-post-form'
@@ -95,6 +96,9 @@ export function PostWithActions({
               className="px-2"
               variant="destructive"
               disabled={isRemovingPost}
+              onClick={() => {
+                posthog.capture('delete-post-dialog-open', { slug: 'slug' })
+              }}
             >
               <TrashIcon className="size-5" />
             </Button>
@@ -115,10 +119,12 @@ export function PostWithActions({
                 onClick={async () => {
                   try {
                     await remove({ id })
+                    posthog.capture('delete-post-success', { slug })
                     toast({
                       description: `Your post has been deleted.`,
                     })
                   } catch (error) {
+                    posthog.capture('delete-post-error', { slug, error })
                     toast({
                       variant: 'destructive',
                       description:
