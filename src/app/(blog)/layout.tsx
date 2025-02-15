@@ -11,17 +11,13 @@ export default function BlogLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="gutter-stable dark">
-      <ClerkProvider
-        appearance={{
-          baseTheme: dark,
-        }}
-      >
-        <body>
-          <Navbar />
-          {children}
-        </body>
-      </ClerkProvider>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <Navbar />
+      {children}
+    </ClerkProvider>
   )
 }
