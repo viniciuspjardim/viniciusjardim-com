@@ -16,6 +16,7 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { EditorButton } from '~/components/post/editor-button'
 import { type ImageAttributes } from '~/helpers/tiptap-image'
+import { UploadButton } from '~/utils/uploadthing'
 
 type SetImageDialogProps = {
   editor: Editor
@@ -47,6 +48,7 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
   const [imageAlt, setImageAlt] = useState('')
   const [imageWidth, setImageWidth] = useState('')
   const [imageHeight, setImageHeight] = useState('')
+  const [error, setError] = useState('')
 
   const resetState = () => {
     setIsOpen(false)
@@ -54,6 +56,7 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
     setImageAlt('')
     setImageWidth('')
     setImageHeight('')
+    setError('')
   }
 
   const addImage = () => {
@@ -95,10 +98,52 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+          <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border border-neutral-800 bg-neutral-900">
+            {imageSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                className="h-48 object-contain"
+                src={imageSrc}
+                alt={imageAlt}
+              />
+            ) : (
+              <UploadButton
+                appearance={{
+                  button: 'bg-blue-900',
+                  allowedContent: 'text-neutral-300',
+                }}
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  setImageSrc(res?.[0]?.ufsUrl ?? '')
+                }}
+                onUploadError={(error: Error) => {
+                  setError(error.message || 'Unexpected error')
+                }}
+              />
+            )}
+            {error && (
+              <span className="absolute bottom-0 block text-balance p-2 text-center text-sm text-red-500">
+                {error}
+              </span>
+            )}
+          </div>
+
           <div className="space-y-2">
-            <Label htmlFor="imageSrc">
-              Image URL (<code>src</code>):
-            </Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="imageSrc">
+                Image URL (<code>src</code>):
+              </Label>
+              <Button
+                className="h-auto p-1"
+                variant="link"
+                onClick={() => {
+                  setImageSrc('')
+                  setError('')
+                }}
+              >
+                Clear
+              </Button>
+            </div>
             <Input
               id="imageSrc"
               type="url"
