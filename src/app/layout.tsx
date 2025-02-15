@@ -1,10 +1,10 @@
-import { Analytics } from '@vercel/analytics/react'
-
 import '~/styles/globals.css'
 
+import { PosthogProvider } from '~/components/posthog-provider'
+
 export const metadata = {
-  title: 'Vinícius Jardim - Blog',
-  description: 'Vinícius Jardim personal blog (draft)',
+  title: 'Vinícius Jardim',
+  description: 'Vinícius Jardim personal blog',
 }
 
 export default function RootLayout({
@@ -14,8 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
-      <Analytics />
+      <body>
+        <PosthogProvider>{children}</PosthogProvider>
+      </body>
     </html>
   )
 }
