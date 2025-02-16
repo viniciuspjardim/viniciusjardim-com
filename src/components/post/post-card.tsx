@@ -36,16 +36,15 @@ export function PostCard({
       lang={lang}
     >
       {imageSrc && (
-        <>
-          <Image
-            className="w-full rounded-md bg-neutral-950 md:h-[10.5rem] md:w-80"
-            src={imageSrc}
-            alt={imageAlt ?? ''}
-            width={768}
-            height={404}
-            quality={90}
-          />
-        </>
+        <Image
+          // Aspect ratio 16:9 - 768x432 or 320x180
+          className="aspect-video w-full shrink-0 rounded-md bg-neutral-950 object-cover md:w-80"
+          src={imageSrc}
+          alt={imageAlt ?? ''}
+          width={768}
+          height={432}
+          quality={90}
+        />
       )}
       <div className="shrink space-y-2">
         <h2 className="text-balance text-3xl font-bold text-neutral-300 transition-colors group-hover:text-neutral-200">

@@ -138,7 +138,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
             src={attrs?.src as string}
             alt={attrs?.alt as string}
             width={(attrs?.width as `${number}`) ?? '768'}
-            height={(attrs?.height as `${number}`) ?? '404'}
+            height={(attrs?.height as `${number}`) ?? '432'}
             quality={90}
           />
         </div>
@@ -151,7 +151,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
             src={attrs?.src as string}
             controls
             width={768}
-            height={404}
+            height={432}
           />
         </div>
       )

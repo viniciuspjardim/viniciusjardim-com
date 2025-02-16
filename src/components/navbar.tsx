@@ -23,9 +23,9 @@ export async function Navbar() {
           <Image
             className="h-9 w-[108px] md:h-12 md:w-36"
             src="/logo.svg"
+            alt="Vinícius Jardim home"
             width={144}
             height={48}
-            alt="Vinícius Jardim home"
           />
         </Link>
 

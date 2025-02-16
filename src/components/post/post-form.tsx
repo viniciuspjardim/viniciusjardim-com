@@ -137,7 +137,7 @@ export function PostForm({
       <div className="flex space-x-3">
         {userImageUrl && (
           <Image
-            className="h-12 w-12 rounded-full"
+            className="h-12 w-12 rounded-full bg-neutral-950"
             src={userImageUrl}
             alt={userName ?? 'User avatar'}
             width={48}

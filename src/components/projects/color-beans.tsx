@@ -21,9 +21,9 @@ export function ColorBeans() {
         <Image
           className="pb-1"
           src="/color-beans-2-icon.png"
+          alt="Color Beans logo"
           width={48}
           height={48}
-          alt="Color Beans logo"
         />
       </Link>
       <div>
