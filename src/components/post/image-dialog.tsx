@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { NodeSelection } from 'prosemirror-state'
 import { ImageIcon } from 'lucide-react'
 import { type Editor } from '~/hooks/use-editor'
@@ -17,7 +17,7 @@ import { EditorButton } from '~/components/post/editor-button'
 import { type ImageAttributes } from '~/helpers/tiptap-image'
 import { UploadButton } from '~/utils/uploadthing'
 
-type SetImageDialogProps = {
+type ImageDialogProps = {
   editor: Editor
 }
 
@@ -41,7 +41,8 @@ function getSelectedImageAttributes(editor: Editor) {
   return null
 }
 
-export function SetImageDialog({ editor }: SetImageDialogProps) {
+export function ImageDialog({ editor }: ImageDialogProps) {
+  const imageRef = useRef<HTMLImageElement>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState('')
   const [imageAlt, setImageAlt] = useState('')
@@ -59,6 +60,12 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
   }
 
   const isDisabled = !editor || !imageSrc
+  const imgHeight = imageRef.current?.naturalHeight
+  const imgWidth = imageRef.current?.naturalWidth
+  const imgAspect = imgWidth && imgHeight ? imgWidth / imgHeight : null
+  const imgProperties = imgAspect
+    ? `${imgWidth}w X ${imgHeight}h • Aspect: ${imgAspect.toFixed(4)}`
+    : null
 
   const addImage = () => {
     if (isDisabled) {
@@ -98,12 +105,27 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
         <div className="grid gap-4 overflow-y-auto px-6 py-5">
           <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border border-neutral-800 bg-neutral-900">
             {imageSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                className="h-48 object-contain"
-                src={imageSrc}
-                alt={imageAlt}
-              />
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="h-48 object-contain"
+                  ref={imageRef}
+                  src={imageSrc}
+                  alt={imageAlt}
+                  onLoad={(event) => {
+                    if (imageWidth || imageHeight) {
+                      return
+                    }
+                    setImageWidth(event.currentTarget.naturalWidth.toString())
+                    setImageHeight(event.currentTarget.naturalHeight.toString())
+                  }}
+                />
+                {imgProperties && (
+                  <span className="absolute bottom-0 left-0 right-0 block text-balance bg-black/80 p-2 text-center text-sm text-neutral-100">
+                    {imgProperties}
+                  </span>
+                )}
+              </>
             ) : (
               <UploadButton
                 appearance={{
@@ -137,6 +159,8 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
                 disabled={!imageSrc}
                 onClick={() => {
                   setImageSrc('')
+                  setImageWidth('')
+                  setImageHeight('')
                   setError('')
                 }}
               >
@@ -146,7 +170,6 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
             <Input
               id="imageSrc"
               type="url"
-              placeholder="https://abc.ufs.sh/f/tOHJ9"
               value={imageSrc}
               onChange={(event) => setImageSrc(event.target.value)}
             />
@@ -159,7 +182,6 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
               id="imageAlt"
               type="text"
               maxLength={200}
-              placeholder="Spaceship orbiting a planet"
               value={imageAlt}
               onChange={(event) => setImageAlt(event.target.value)}
             />
@@ -169,7 +191,6 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
             <Input
               id="imageWidth"
               type="number"
-              placeholder="1200"
               value={imageWidth}
               onChange={(event) => setImageWidth(event.target.value)}
             />
@@ -179,7 +200,6 @@ export function SetImageDialog({ editor }: SetImageDialogProps) {
             <Input
               id="imageHeight"
               type="number"
-              placeholder="630"
               value={imageHeight}
               onChange={(event) => setImageHeight(event.target.value)}
             />

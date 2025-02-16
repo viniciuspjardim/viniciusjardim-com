@@ -12,7 +12,7 @@ import { Button } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
 import { useToast } from '~/hooks/use-toast'
 import { EditorButton } from '~/components/post/editor-button'
-import { SetImageDialog } from '~/components/post/set-image-dialog'
+import { ImageDialog } from '~/components/post/image-dialog'
 
 type Post = inferRouterOutputs<AppRouter>['posts']['create']
 
@@ -214,7 +214,7 @@ export function PostForm({
 
       {/* Editor toolbar */}
       <div className="flex flex-wrap items-center gap-2">
-        <SetImageDialog editor={editor} />
+        <ImageDialog editor={editor} />
         <EditorButton onClick={addVideo}>
           <VideoIcon />
         </EditorButton>
