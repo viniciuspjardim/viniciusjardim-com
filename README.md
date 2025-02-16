@@ -19,9 +19,9 @@ See you later! 🚀
 - [x] Blog text editor
   - [x] Create post JSON parser as a recursive component
   - [x] Add buttons to control Tiptap editor functions (eg. bold, italic, H1, code, etc.)
-  - [ ] Use a modal to pass additional properties to the post element (eg. image `alt`)
+  - [x] Use a modal to pass additional properties to the post element (eg. image `alt`)
   - [x] Add image support
-    - [ ] Pass props to the image to control size, `alt`, and alignment
+    - [x] Pass props to the image to control size, `alt`, and alignment
   - [x] Add video support
     - [ ] Pass props to the video to control size, video controls, and alignment
   - [ ] Allow editing codeblocks language, image props and video props
@@ -34,9 +34,9 @@ See you later! 🚀
   - [ ] Delete files
 - [ ] Post card and post metadata
   - [ ] Add post main image
-  - [ ] Add metadata on the post page
-  - [ ] Create post card component with image, title and description
-  - [ ] Replace post in the homepage with the post card
+  - [x] Add metadata on the post page
+  - [x] Create post card component with image, title and description
+  - [x] Replace post in the homepage with the post card
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog
   - [ ] Create CategoryLog
