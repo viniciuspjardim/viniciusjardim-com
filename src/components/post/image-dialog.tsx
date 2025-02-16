@@ -48,6 +48,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
   const [imageAlt, setImageAlt] = useState('')
   const [imageWidth, setImageWidth] = useState('')
   const [imageHeight, setImageHeight] = useState('')
+  const [keepAspect, setKeepAspect] = useState(true)
   const [error, setError] = useState('')
 
   const resetState = () => {
@@ -56,6 +57,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
     setImageAlt('')
     setImageWidth('')
     setImageHeight('')
+    setKeepAspect(true)
     setError('')
   }
 
@@ -187,12 +189,33 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="imageWidth">Width:</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="imageWidth">Width:</Label>
+              <div className="flex gap-1.5">
+                <input
+                  type="checkbox"
+                  id="ratio"
+                  name="ratio"
+                  checked={keepAspect}
+                  onChange={(event) => setKeepAspect(event.target.checked)}
+                />
+                <Label htmlFor="ratio">Keep ratio</Label>
+              </div>
+            </div>
             <Input
               id="imageWidth"
               type="number"
               value={imageWidth}
-              onChange={(event) => setImageWidth(event.target.value)}
+              onChange={(event) => {
+                const width = event.target.value
+                setImageWidth(width)
+
+                if (width && keepAspect && imgAspect) {
+                  setImageHeight(
+                    Math.round(parseInt(width, 10) / imgAspect).toString()
+                  )
+                }
+              }}
             />
           </div>
           <div className="space-y-2">
@@ -201,7 +224,16 @@ export function ImageDialog({ editor }: ImageDialogProps) {
               id="imageHeight"
               type="number"
               value={imageHeight}
-              onChange={(event) => setImageHeight(event.target.value)}
+              onChange={(event) => {
+                const height = event.target.value
+                setImageHeight(height)
+
+                if (height && keepAspect && imgAspect) {
+                  setImageWidth(
+                    Math.round(parseInt(height, 10) * imgAspect).toString()
+                  )
+                }
+              }}
             />
           </div>
         </div>
