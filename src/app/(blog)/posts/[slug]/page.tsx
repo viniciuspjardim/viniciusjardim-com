@@ -2,6 +2,7 @@ import 'server-only'
 
 import type { Metadata } from 'next'
 import type { JSONContent } from '@tiptap/core'
+import { getImageProps, type ImageProps } from 'next/image'
 
 import { env } from '~/env.mjs'
 import { Post } from '~/components/post/post'
@@ -50,7 +51,19 @@ export async function generateMetadata({
     JSON.parse(post.content) as JSONContent,
     'image'
   )
-  const imageUrl = imageNode?.attrs?.src as string | undefined
+  const imageSrc = imageNode?.attrs?.src as string | undefined
+  const imageWidth = imageNode?.attrs?.width as string | undefined
+  const imageHeight = imageNode?.attrs?.height as string | undefined
+  let imageProps: ImageProps | undefined
+
+  if (imageSrc && imageWidth && imageHeight) {
+    imageProps = getImageProps({
+      src: imageSrc,
+      alt: '',
+      width: 1200,
+      height: 630,
+    }).props
+  }
 
   return {
     title: post.title,
@@ -59,7 +72,7 @@ export async function generateMetadata({
     metadataBase: baseUrl,
     keywords: post.keywords,
     authors: { name: formatAuthorName(post.author), url: baseUrl },
-    ...(imageUrl
+    ...(imageProps
       ? {
           twitter: {
             card: 'summary_large_image',
@@ -71,7 +84,7 @@ export async function generateMetadata({
       description: post.description ?? undefined,
       type: 'article',
       url: `/posts/${post.slug}`,
-      images: imageUrl,
+      images: typeof imageProps?.src === 'string' ? imageProps.src : undefined,
     },
   }
 }
