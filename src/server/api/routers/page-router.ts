@@ -1,10 +1,12 @@
-import { eq, asc, desc } from 'drizzle-orm'
+import { sql, asc, desc } from 'drizzle-orm'
 import { clerkClient } from '@clerk/nextjs/server'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { s } from '~/db'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { filterUserFields } from '~/helpers/user'
+
+type SelectPost = typeof s.post.$inferSelect
 
 export const pageRouter = createTRPCRouter({
   getAllPostsByCategorySlug: publicProcedure
@@ -31,13 +33,28 @@ export const pageRouter = createTRPCRouter({
         })
       }
 
-      // Get all posts or posts by the category
-      // TODO: get post also from subcategories when the category is provided
-      const posts = await ctx.db
-        .select()
-        .from(s.post)
-        .where(category ? eq(s.post.categoryId, category.id) : undefined)
-        .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
+      // When category slug is not provided get all posts
+      const slug = input.categorySlug ?? '<all>'
+
+      const { rows: posts } = await ctx.db.execute<SelectPost>(
+        sql`
+          WITH RECURSIVE categoryTree AS (
+            SELECT id
+            FROM category
+            WHERE slug = ${slug} OR ${slug} = '<all>'
+            
+            UNION ALL
+            
+            SELECT c.id
+            FROM category c
+            INNER JOIN categoryTree ct ON c."parentId" = ct.id
+          )
+          SELECT p.*
+          FROM post p
+          WHERE p."categoryId" IN (SELECT id FROM categoryTree)
+          ORDER BY p.rank DESC, p."writtenAt" DESC
+        `
+      )
 
       const users = (
         await clerkClient.users.getUserList({
