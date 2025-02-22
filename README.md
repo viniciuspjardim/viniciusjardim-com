@@ -27,13 +27,13 @@ See you later! 🚀
   - [ ] Allow editing codeblocks language, image props and video props
   - [ ] Replace editor buttons text with their icons
   - [x] Refactor code to only have one editor component
-  - [ ] Add upload files button on the editor
+  - [x] Add upload files button on the editor
 - [ ] Manage files from UploadThing in the admin upload page
   - [x] Upload new file
   - [ ] List files
   - [ ] Delete files
 - [ ] Post card and post metadata
-  - [ ] Add post main image
+  - [x] Add post main image
   - [x] Add metadata on the post page
   - [x] Create post card component with image, title and description
   - [x] Replace post in the homepage with the post card
