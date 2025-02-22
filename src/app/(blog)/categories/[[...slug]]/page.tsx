@@ -7,7 +7,7 @@ import { api } from '~/trpc/server'
 import { formatAuthorName } from '~/helpers/format-author-name'
 import { CategoryPill } from '~/components/category/category-pill'
 
-export default async function CategoriesPage({
+export default async function CategoryPage({
   params,
 }: {
   params: Promise<{ slug: string }>
