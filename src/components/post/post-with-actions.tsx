@@ -32,6 +32,7 @@ type PostWithActionsProps = {
   categoryId: number
   lang: string
   writtenAt: Date
+  published: boolean
 }
 
 export function PostWithActions({
@@ -47,6 +48,7 @@ export function PostWithActions({
   categoryId,
   lang,
   writtenAt,
+  published,
 }: PostWithActionsProps) {
   const ctx = api.useUtils()
 
@@ -75,13 +77,26 @@ export function PostWithActions({
           categoryId={categoryId}
           lang={lang}
           writtenAt={writtenAt}
+          published={published}
           closeForm={() => setIsEditing(false)}
         />
       </div>
     )
 
   return (
-    <div className="flex w-full items-center justify-between gap-3 px-4 py-2 transition-colors hover:bg-neutral-950">
+    <div className="flex w-full justify-between gap-3 px-4 py-2 transition-colors hover:bg-neutral-950">
+      {published ? (
+        <span
+          className="mr-1 mt-2 size-2.5 shrink-0 rounded-full bg-green-400"
+          title="Published"
+        />
+      ) : (
+        <span
+          className="mr-1 mt-2 size-2.5 shrink-0 rounded-full bg-orange-400"
+          title="Not published"
+        />
+      )}
+
       <Link className="w-full" href={`/posts/${slug}`}>
         <span className="text-lg font-bold text-neutral-300">{title}</span>
         {description && (
@@ -140,8 +155,12 @@ export function PostWithActions({
           </AlertDialogContent>
         </AlertDialog>
 
-        <Button disabled={isRemovingPost} onClick={() => setIsEditing(true)}>
-          <Edit3Icon className="mr-2 size-5" /> <span>Edit</span>
+        <Button
+          className="px-2"
+          disabled={isRemovingPost}
+          onClick={() => setIsEditing(true)}
+        >
+          <Edit3Icon className="size-5" />
         </Button>
       </div>
     </div>

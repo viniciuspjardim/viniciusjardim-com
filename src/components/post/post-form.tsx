@@ -25,13 +25,13 @@ export interface PostFormInputs {
   categoryId: string
   lang: string
   writtenAt: string
+  published: boolean
 }
 
 export interface PostFormProps {
-  defaultValues?: Partial<PostFormInputs>
+  defaultValues?: PostFormInputs
   userName?: string
   userImageUrl?: string
-  submitButtonLabel: string
   onSubmit: (form: PostFormInputs, editorJson: string) => Promise<Post>
   isPosting: boolean
   extraActions?: ReactNode
@@ -42,7 +42,6 @@ export function PostForm({
   defaultValues,
   userName,
   userImageUrl,
-  submitButtonLabel,
   onSubmit,
   isPosting,
   extraActions,
@@ -66,6 +65,7 @@ export function PostForm({
       lang: defaultValues?.lang ?? 'en-US',
       writtenAt: defaultValues?.writtenAt ?? '',
       content: defaultValues?.content ?? '',
+      published: defaultValues?.published ?? false,
     },
   })
 
@@ -73,6 +73,7 @@ export function PostForm({
   const { toast } = useToast()
 
   const slug = asSlug(watch('title') ?? '')
+  const published = watch('published')
   const isValid = isFormValid && !editor?.isEmpty
 
   const handleFormSubmit: SubmitHandler<PostFormInputs> = async (formData) => {
@@ -160,8 +161,7 @@ export function PostForm({
         </div>
       </div>
 
-      <input
-        type="text"
+      <textarea
         placeholder="Description"
         disabled={isPosting}
         {...register('description')}
@@ -202,6 +202,7 @@ export function PostForm({
             ))}
           </select>
         )}
+
         <select {...register('lang')}>
           <option value="en-US" lang="en-US">
             English
@@ -210,6 +211,17 @@ export function PostForm({
             Português
           </option>
         </select>
+
+        <label className="flex items-center space-x-2">
+          <input
+            className="size-4"
+            type="checkbox"
+            placeholder="Written at (YYYY-MM-DD)"
+            disabled={isPosting}
+            {...register('published')}
+          />
+          <span>Published</span>
+        </label>
       </div>
 
       {/* Editor toolbar */}
@@ -401,7 +413,7 @@ export function PostForm({
           disabled={isPosting || !isValid}
           type="submit"
         >
-          {submitButtonLabel}
+          {published ? 'Save and publish' : 'Save draft'}
         </Button>
       </div>
     </form>

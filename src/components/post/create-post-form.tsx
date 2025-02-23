@@ -25,6 +25,7 @@ export function CreatePostForm() {
       categoryId: parseInt(form.categoryId, 10),
       lang: form.lang ? form.lang : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
+      published: form.published,
     })
   }
 
@@ -35,7 +36,6 @@ export function CreatePostForm() {
       userName={user.username || 'Anonymous'}
       userImageUrl={user.imageUrl}
       onSubmit={handleSubmit}
-      submitButtonLabel="Publish Post"
       isPosting={isPosting}
     />
   )

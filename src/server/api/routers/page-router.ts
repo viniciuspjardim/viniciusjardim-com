@@ -51,7 +51,7 @@ export const pageRouter = createTRPCRouter({
           )
           SELECT p.*
           FROM post p
-          WHERE p."categoryId" IN (SELECT id FROM categoryTree)
+          WHERE p.published = TRUE and p."categoryId" IN (SELECT id FROM categoryTree)
           ORDER BY p.rank DESC, p."writtenAt" DESC
         `
       )

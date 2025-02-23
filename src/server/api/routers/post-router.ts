@@ -12,23 +12,30 @@ import {
 import { filterUserFields } from '~/helpers/user'
 
 export const postRouter = createTRPCRouter({
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.db
-      .select()
-      .from(s.post)
-      .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
+  getAll: publicProcedure
+    .input(
+      z
+        .object({ showUnpublished: z.boolean().optional().default(false) })
+        .optional()
+    )
+    .query(async ({ ctx, input }) => {
+      const posts = await ctx.db
+        .select()
+        .from(s.post)
+        .where(input?.showUnpublished ? undefined : eq(s.post.published, true))
+        .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
 
-    const users = (
-      await clerkClient.users.getUserList({
-        userId: posts.map((post) => post.authorId),
-      })
-    ).map(filterUserFields)
+      const users = (
+        await clerkClient.users.getUserList({
+          userId: posts.map((post) => post.authorId),
+        })
+      ).map(filterUserFields)
 
-    return posts.map((post) => ({
-      ...post,
-      author: users.find((user) => user.id === post.authorId),
-    }))
-  }),
+      return posts.map((post) => ({
+        ...post,
+        author: users.find((user) => user.id === post.authorId),
+      }))
+    }),
 
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
@@ -102,6 +109,7 @@ export const postRouter = createTRPCRouter({
         categoryId: z.number(),
         lang: z.string().min(1).max(20).optional(),
         writtenAt: z.date().optional(),
+        published: z.boolean().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -136,6 +144,7 @@ export const postRouter = createTRPCRouter({
         categoryId: z.number(),
         lang: z.string().min(1).max(20).optional(),
         writtenAt: z.date().optional(),
+        published: z.boolean().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

@@ -15,6 +15,7 @@ type EditPostFormProps = {
   categoryId: number
   lang: string
   writtenAt: Date
+  published: boolean
   closeForm: () => void
 }
 
@@ -41,6 +42,7 @@ export function EditPostForm(props: EditPostFormProps) {
       lang: form.lang ? form.lang : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
       categoryId: parseInt(form.categoryId, 10),
+      published: form.published ?? false,
     })
   }
 
@@ -53,6 +55,7 @@ export function EditPostForm(props: EditPostFormProps) {
     categoryId: props.categoryId.toString(),
     lang: props.lang,
     writtenAt: props.writtenAt.toISOString(),
+    published: props.published,
   }
 
   const extraActions = (
@@ -67,7 +70,6 @@ export function EditPostForm(props: EditPostFormProps) {
       userName={props.userName}
       userImageUrl={props.userImageUrl}
       onSubmit={handleSubmit}
-      submitButtonLabel="Save Post"
       isPosting={isPosting}
       extraActions={extraActions}
     />

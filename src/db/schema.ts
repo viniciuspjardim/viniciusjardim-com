@@ -64,7 +64,7 @@ export const post = pgTable(
     updatedAt: timestamp('updatedAt', { withTimezone: true })
       .notNull()
       .defaultNow(),
-    published: boolean('published').notNull().default(true),
+    published: boolean('published').notNull().default(false),
   },
   (t) => [
     {

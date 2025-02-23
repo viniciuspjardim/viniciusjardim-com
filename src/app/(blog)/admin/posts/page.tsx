@@ -11,7 +11,9 @@ import { formatAuthorName } from '~/helpers/format-author-name'
 const pageName = 'Posts'
 
 export default function PostsAdminPage() {
-  const { data, isLoading } = api.posts.getAll.useQuery()
+  const { data, isLoading } = api.posts.getAll.useQuery({
+    showUnpublished: true,
+  })
   const { user } = useUser()
 
   if (!user) {
@@ -51,6 +53,7 @@ export default function PostsAdminPage() {
               categoryId={post.categoryId}
               lang={post.lang}
               writtenAt={post.writtenAt}
+              published={post.published}
             />
           ))}
         </div>
