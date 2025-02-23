@@ -17,6 +17,22 @@ import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-zig'
 
 import { sanitizeHtml } from '~/helpers/sanitize-html'
+import { asSlug } from '~/helpers/as-slug'
+
+function generateHeadingId(content?: JSONContent[]) {
+  const text = content
+    ?.map((item) => {
+      switch (item.type) {
+        case 'text':
+          return item.text
+        default:
+          return ''
+      }
+    })
+    .join('')
+
+  return text ? asSlug(text) : undefined
+}
 
 type TextProps = {
   marks?: { type: string; attrs?: Record<string, unknown> }[]
@@ -54,13 +70,14 @@ function Text({ marks = [], children }: TextProps) {
 
 type HeadingProps = {
   level?: number
+  id?: string
   children: React.ReactNode
 }
 
-function Heading({ level = 1, children }: HeadingProps) {
+function Heading({ level = 1, id, children }: HeadingProps) {
   const Hx = `h${level}` as keyof JSX.IntrinsicElements
 
-  return <Hx>{children}</Hx>
+  return <Hx id={id}>{children}</Hx>
 }
 
 type CodeBlockProps = {
@@ -108,7 +125,10 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
 
     case 'heading':
       return (
-        <Heading level={attrs?.level as number | undefined}>
+        <Heading
+          level={attrs?.level as number | undefined}
+          id={generateHeadingId(content)}
+        >
           {content?.map((item, index) => <JsonParser key={index} {...item} />)}
         </Heading>
       )
