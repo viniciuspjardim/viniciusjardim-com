@@ -7,6 +7,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(['development', 'test', 'production']),
     CLERK_SECRET_KEY: z.string().min(1),
     DATABASE_URL: z.string().min(1),
+    OPEN_AI_API_KEY: z.string().min(1),
     SITE_OWNER_USER_ID: z.string().min(1),
     UPLOADTHING_TOKEN: z.string().min(1),
   },
@@ -29,6 +30,7 @@ export const env = createEnv({
     // Private variables (accessible in the server only)
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
+    OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
     SITE_OWNER_USER_ID: process.env.SITE_OWNER_USER_ID,
     UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
 

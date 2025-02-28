@@ -25,7 +25,7 @@ export const localFileRouter = {
     .onUploadComplete(({ metadata, file }) => ({
       userId: metadata.userId,
       fileName: file.name,
-      fileUrl: file.url,
+      fileUrl: file.ufsUrl,
       fileSize: file.size,
     })),
 } satisfies FileRouter

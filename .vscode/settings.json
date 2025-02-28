@@ -39,6 +39,7 @@
     "middlewares",
     "neondatabase",
     "nextjs",
+    "openai",
     "posthog",
     "prismjs",
     "prosemirror",

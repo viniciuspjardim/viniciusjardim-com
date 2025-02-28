@@ -3,6 +3,17 @@ import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 
+import { UTApi, UTFile } from 'uploadthing/server'
+export const utApi = new UTApi()
+
+async function uploadFile(file: UTFile) {
+  try {
+    await utApi.uploadFiles([file])
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 import { s } from '~/db'
 import {
   createTRPCRouter,
@@ -10,6 +21,7 @@ import {
   ownerProcedure,
 } from '~/server/api/trpc'
 import { filterUserFields } from '~/helpers/user'
+import { createSpeech as generateSpeech } from '~/helpers/open-ai'
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -162,6 +174,32 @@ export const postRouter = createTRPCRouter({
         await tx.insert(s.postLog).values({ ...post, logType: 'UPDATE' })
 
         return post
+      })
+    }),
+
+  generateSpeech: ownerProcedure
+    .input(
+      z.object({
+        slug: z.string().min(1).max(200),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.transaction(async (tx) => {
+        const [post] = await tx
+          .select()
+          .from(s.post)
+          .where(eq(s.post.slug, input.slug))
+
+        if (!post) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+        }
+
+        // TODO: replace title with the post content
+        const content = z.string().min(1).max(4000).parse(post.title)
+        const speechBuffer = await generateSpeech(content)
+        await uploadFile(new UTFile([speechBuffer], `${post.slug}.mp3`))
+
+        return { success: true }
       })
     }),
 
