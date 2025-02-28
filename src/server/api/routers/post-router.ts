@@ -10,6 +10,7 @@ import {
   ownerProcedure,
 } from '~/server/api/trpc'
 import { filterUserFields } from '~/helpers/user'
+import { createSpeech as generateSpeech } from '~/helpers/open-ai'
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -162,6 +163,44 @@ export const postRouter = createTRPCRouter({
         await tx.insert(s.postLog).values({ ...post, logType: 'UPDATE' })
 
         return post
+      })
+    }),
+
+  generateSpeech: ownerProcedure
+    .input(
+      z.object({
+        slug: z.string().min(1).max(200),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.transaction(async (tx) => {
+        const [post] = await tx
+          .select()
+          .from(s.post)
+          .where(eq(s.post.slug, input.slug))
+
+        if (!post) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+        }
+
+        // TODO: replace title with the post content
+        const content = z.string().min(1).max(4000).parse(post.title)
+
+        /*
+         * Steps to create a speech:
+         * - [x] Get the post content from DB
+         * - [ ] Create a text version of the post (strip JSON)
+         * - [x] Pass to OpenAi TTS API to create a speech buffer
+         * - [ ] Write the buffer into UploadThing
+         * - [ ] Get the speech URL of the file from UploadThing
+         * - [ ] Update the post content JSON with the speech audio URL
+         * - [ ] Update admin UI to allow requesting the speech generation
+         * - [ ] Update post UI to allow playing the speech
+         */
+
+        await generateSpeech('audio-test-2', content)
+
+        return { success: true }
       })
     }),
 

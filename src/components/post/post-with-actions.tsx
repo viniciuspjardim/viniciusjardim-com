@@ -62,6 +62,9 @@ export function PostWithActions({
       },
     })
 
+  const { mutate: generateSpeech, isLoading: isGenerateSpeechLoading } =
+    api.posts.generateSpeech.useMutation()
+
   if (isEditing)
     return (
       <div className="mb-6 px-4 py-16">
@@ -154,6 +157,15 @@ export function PostWithActions({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        <Button
+          className="px-2"
+          variant="outline"
+          disabled={isGenerateSpeechLoading}
+          onClick={() => generateSpeech({ slug })}
+        >
+          {isGenerateSpeechLoading ? '...' : '🔊'}
+        </Button>
 
         <Button
           className="px-2"
