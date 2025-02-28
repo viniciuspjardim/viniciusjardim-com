@@ -3,6 +3,17 @@ import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 
+import { UTApi, UTFile } from 'uploadthing/server'
+export const utApi = new UTApi()
+
+async function uploadFile(file: UTFile) {
+  try {
+    await utApi.uploadFiles([file])
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 import { s } from '~/db'
 import {
   createTRPCRouter,
@@ -185,8 +196,8 @@ export const postRouter = createTRPCRouter({
 
         // TODO: replace title with the post content
         const content = z.string().min(1).max(4000).parse(post.title)
-
-        await generateSpeech('audio-test-2', content)
+        const speechBuffer = await generateSpeech(content)
+        await uploadFile(new UTFile([speechBuffer], `${post.slug}.mp3`))
 
         return { success: true }
       })
