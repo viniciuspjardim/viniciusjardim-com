@@ -186,18 +186,6 @@ export const postRouter = createTRPCRouter({
         // TODO: replace title with the post content
         const content = z.string().min(1).max(4000).parse(post.title)
 
-        /*
-         * Steps to create a speech:
-         * - [x] Get the post content from DB
-         * - [ ] Create a text version of the post (strip JSON)
-         * - [x] Pass to OpenAi TTS API to create a speech buffer
-         * - [ ] Write the buffer into UploadThing
-         * - [ ] Get the speech URL of the file from UploadThing
-         * - [ ] Update the post content JSON with the speech audio URL
-         * - [ ] Update admin UI to allow requesting the speech generation
-         * - [ ] Update post UI to allow playing the speech
-         */
-
         await generateSpeech('audio-test-2', content)
 
         return { success: true }
