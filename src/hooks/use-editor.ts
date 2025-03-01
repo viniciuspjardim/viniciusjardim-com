@@ -5,6 +5,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
 import { TipTapImage } from '~/helpers/tiptap-image'
+import { Speech } from '~/helpers/tiptap-speech'
 import { Video } from '~/helpers/tiptap-video'
 
 export function useEditor(content: string) {
@@ -25,6 +26,7 @@ export function useEditor(content: string) {
         defaultProtocol: 'https',
       }),
       TipTapImage,
+      Speech,
       Video,
     ],
     content: content ? (JSON.parse(content) as JSONContent) : null,
