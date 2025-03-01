@@ -1,5 +1,6 @@
 import type { JSONContent } from '@tiptap/core'
 
+import { findPostNode } from '~/helpers/tiptap-utils'
 import { JsonParser } from './json-parser'
 import { PublishDetails } from './publish-details'
 
@@ -23,6 +24,9 @@ export function Post({
   userImageUrl,
 }: PostProps) {
   const jsonContent = JSON.parse(content) as JSONContent
+  const audioUrl = findPostNode(jsonContent, 'speech')?.attrs?.src as
+    | string
+    | undefined
 
   return (
     <article className="w-full space-y-6" lang={lang}>
@@ -44,6 +48,7 @@ export function Post({
         writtenAt={writtenAt}
         userName={userName}
         userImageUrl={userImageUrl}
+        audioUrl={audioUrl}
       />
 
       <JsonParser {...jsonContent} />

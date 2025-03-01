@@ -8,7 +8,7 @@ import { env } from '~/env.mjs'
 import { Post } from '~/components/post/post'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
-import { findPostNode } from '~/helpers/find-post-node'
+import { findPostNode } from '~/helpers/tiptap-utils'
 import { formatAuthorName } from '~/helpers/format-author-name'
 import { PostBreadcrumb } from '~/components/ui/breadcrumb'
 

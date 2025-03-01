@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { JSONContent } from '@tiptap/core'
 import { PublishDetails } from './publish-details'
-import { findPostNode } from '~/helpers/find-post-node'
+import { findPostNode } from '~/helpers/tiptap-utils'
 
 type PostCardProps = {
   slug: string

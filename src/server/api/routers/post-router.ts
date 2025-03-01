@@ -2,26 +2,16 @@ import { clerkClient } from '@clerk/nextjs/server'
 import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
-
-import { UTApi, UTFile } from 'uploadthing/server'
-export const utApi = new UTApi()
-
-async function uploadFile(file: UTFile) {
-  try {
-    await utApi.uploadFiles([file])
-  } catch (error) {
-    console.error(error)
-  }
-}
-
 import { s } from '~/db'
 import {
   createTRPCRouter,
   publicProcedure,
   ownerProcedure,
 } from '~/server/api/trpc'
+import { upload } from '~/server/uploadthing'
 import { filterUserFields } from '~/helpers/user'
 import { createSpeech as generateSpeech } from '~/helpers/open-ai'
+import { addOrReplaceSpeechNode } from '~/helpers/tiptap-utils'
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -197,7 +187,33 @@ export const postRouter = createTRPCRouter({
         // TODO: replace title with the post content
         const content = z.string().min(1).max(4000).parse(post.title)
         const speechBuffer = await generateSpeech(content)
-        await uploadFile(new UTFile([speechBuffer], `${post.slug}.mp3`))
+        const [utFile] = await upload(speechBuffer, input.slug)
+
+        const speechFileUrl = utFile?.data?.ufsUrl
+
+        if (!speechFileUrl) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to upload speech file',
+          })
+        }
+
+        const contentWithSpeech = addOrReplaceSpeechNode(
+          post.content,
+          speechFileUrl
+        )
+
+        const [updatedPost] = await tx
+          .update(s.post)
+          .set({ ...post, content: contentWithSpeech })
+          .where(eq(s.post.id, post.id))
+          .returning()
+
+        if (!updatedPost) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+        }
+
+        await tx.insert(s.postLog).values({ ...updatedPost, logType: 'UPDATE' })
 
         return { success: true }
       })
