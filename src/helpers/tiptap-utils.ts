@@ -37,3 +37,24 @@ export function addOrReplaceSpeechNode(content: string, speechUrl: string) {
 
   return JSON.stringify(root)
 }
+
+export function getPostText(node: JSONContent, textArray: string[] = []) {
+  if (node.type === 'text' && node.text) {
+    textArray.push(node.text)
+  }
+  if (node.type === 'hardBreak') {
+    textArray.push('\n')
+  }
+
+  if (node.content) {
+    for (const child of node.content) {
+      getPostText(child, textArray)
+    }
+  }
+
+  if (node.type === 'paragraph') {
+    textArray.push('\n\n')
+  }
+
+  return textArray
+}

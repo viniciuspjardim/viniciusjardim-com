@@ -2,6 +2,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
+import type { JSONContent } from '@tiptap/core'
 import { s } from '~/db'
 import {
   createTRPCRouter,
@@ -11,7 +12,7 @@ import {
 import { upload } from '~/server/uploadthing'
 import { filterUserFields } from '~/helpers/user'
 import { createSpeech as generateSpeech } from '~/helpers/open-ai'
-import { addOrReplaceSpeechNode } from '~/helpers/tiptap-utils'
+import { addOrReplaceSpeechNode, getPostText } from '~/helpers/tiptap-utils'
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -184,8 +185,12 @@ export const postRouter = createTRPCRouter({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
         }
 
-        // TODO: replace title with the post content
-        const content = z.string().min(1).max(4000).parse(post.title)
+        const postText = getPostText(JSON.parse(post.content) as JSONContent, [
+          `${post.title}\n\n`,
+          post.description ? `${post.description}\n\n` : '',
+        ]).join('')
+
+        const content = z.string().min(1).max(4000).parse(postText)
         const speechBuffer = await generateSpeech(content)
         const [utFile] = await upload(speechBuffer, input.slug)
 
