@@ -17,6 +17,9 @@ export default withUt({
         '2xl': '1400px',
       },
     },
+    transitionDuration: {
+      DEFAULT: '200ms',
+    },
     extend: {
       keyframes: {
         'accordion-down': {
