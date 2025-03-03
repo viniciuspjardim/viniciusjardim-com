@@ -28,8 +28,8 @@ export default withUt({
           to: { height: '0' },
         },
         'move-right-100': {
-          from: { transform: 'translateX(-100%)' },
-          to: { transform: 'translateX(0)' },
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
         },
       },
       animation: {

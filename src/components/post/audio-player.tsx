@@ -8,8 +8,16 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPaused, setIsPaused] = useState(true)
 
-  const iconsClassNames = cn(
-    'animate-move-right-100 size-6 shrink-0 text-rose-800',
+  const buttonClasses = cn(
+    'flex h-10 items-center space-x-2 rounded-full border border-transparent px-4 text-neutral-500 transition-colors hover:bg-neutral-900 hover:text-neutral-400',
+    {
+      'border-neutral-700 bg-neutral-900 text-neutral-300 hover:text-neutral-300':
+        !isPaused,
+    }
+  )
+
+  const iconClasses = cn(
+    'flex size-6 shrink-0 animate-move-right-100 text-rose-800',
     {
       '[animation-play-state:paused]': isPaused,
     }
@@ -24,7 +32,7 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
         onPause={() => setIsPaused(true)}
       />
       <button
-        className="flex items-center space-x-2 rounded-full px-3 text-neutral-500 transition-colors hover:bg-neutral-900 hover:text-neutral-400"
+        className={buttonClasses}
         onClick={async () => {
           if (!audioRef.current) return
 
@@ -36,10 +44,10 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
         }}
       >
         <span className="inline-flex size-6 justify-start overflow-hidden rounded-full">
-          <AudioLinesIcon className={iconsClassNames} />
-          <AudioLinesIcon className={iconsClassNames} />
+          <AudioLinesIcon className={iconClasses} />
+          <AudioLinesIcon className={iconClasses} />
         </span>
-        <span>{isPaused ? 'Listen' : 'Pause'}</span>
+        <span className="min-w-12">{isPaused ? 'Listen' : 'Pause'}</span>
       </button>
     </>
   )

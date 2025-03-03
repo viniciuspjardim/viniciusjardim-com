@@ -13,17 +13,20 @@ import { cn } from '~/helpers/cn'
 import { authorFallback } from '~/helpers/format-author-name'
 import { AudioPlayer } from './audio-player'
 
-const publishDetailsVariants = cva('mb-12 flex gap-3 justify-between', {
-  variants: {
-    variant: {
-      default: '',
-      outline: 'py-2 border-y border-dashed border-neutral-800',
+const publishDetailsVariants = cva(
+  'mb-12 flex items-center justify-between gap-3',
+  {
+    variants: {
+      variant: {
+        default: '',
+        outline: 'border-y border-dashed border-neutral-800 py-2',
+      },
     },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+)
 
 export interface PublishDetailsProps
   extends VariantProps<typeof publishDetailsVariants> {
