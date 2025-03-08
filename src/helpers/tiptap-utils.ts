@@ -38,7 +38,17 @@ export function addOrReplaceSpeechNode(content: string, speechUrl: string) {
   return JSON.stringify(root)
 }
 
-export function getPostText(node: JSONContent, textArray: string[] = []) {
+function getPostTextRecursive(
+  node: JSONContent,
+  textArray: string[],
+  separator: string,
+  titlesSeparator: string,
+  skipCodeBlocks: boolean
+) {
+  if (skipCodeBlocks && node.type === 'codeBlock') {
+    return textArray
+  }
+
   if (node.type === 'text' && node.text) {
     textArray.push(node.text)
   }
@@ -48,13 +58,77 @@ export function getPostText(node: JSONContent, textArray: string[] = []) {
 
   if (node.content) {
     for (const child of node.content) {
-      getPostText(child, textArray)
+      getPostTextRecursive(
+        child,
+        textArray,
+        separator,
+        titlesSeparator,
+        skipCodeBlocks
+      )
     }
   }
 
+  if (node.type === 'heading') {
+    textArray.push(titlesSeparator)
+  }
   if (node.type === 'paragraph') {
-    textArray.push('\n\n')
+    textArray.push(separator)
+  }
+  if (node.type === 'codeBlock' && !skipCodeBlocks) {
+    textArray.push(separator)
   }
 
   return textArray
+}
+
+type GetPostTextOptions = {
+  title?: string
+  description?: string | null
+  separator?: string
+  titlesSeparator?: string
+  skipCodeBlocks?: boolean
+}
+
+const getPostTextDefaultOptions = Object.freeze({
+  separator: '\n\n',
+  titlesSeparator: '\n\n',
+  skipCodeBlocks: true,
+})
+
+/**
+ * Parse the tiptap post object into a string, so it can be used to generate a text to
+ * speech audio
+ */
+export function getPostText(
+  content: string,
+  {
+    title,
+    description,
+    separator = getPostTextDefaultOptions.separator,
+    titlesSeparator = getPostTextDefaultOptions.titlesSeparator,
+    skipCodeBlocks = getPostTextDefaultOptions.skipCodeBlocks,
+  }: GetPostTextOptions = getPostTextDefaultOptions
+) {
+  const root = JSON.parse(content) as JSONContent
+  const textArray: string[] = []
+
+  if (title) {
+    textArray.push(title)
+    textArray.push(titlesSeparator)
+  }
+
+  if (description) {
+    textArray.push(description)
+    textArray.push(separator)
+  }
+
+  getPostTextRecursive(
+    root,
+    textArray,
+    separator,
+    titlesSeparator,
+    skipCodeBlocks
+  )
+
+  return textArray.join('')
 }

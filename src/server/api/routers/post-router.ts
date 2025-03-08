@@ -2,7 +2,6 @@ import { clerkClient } from '@clerk/nextjs/server'
 import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
-import type { JSONContent } from '@tiptap/core'
 import { s } from '~/db'
 import {
   createTRPCRouter,
@@ -185,10 +184,11 @@ export const postRouter = createTRPCRouter({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
         }
 
-        const postText = getPostText(JSON.parse(post.content) as JSONContent, [
-          `${post.title}\n\n`,
-          post.description ? `${post.description}\n\n` : '',
-        ]).join('')
+        const postText = getPostText(post.content, {
+          title: post.title,
+          description: post.description,
+          titlesSeparator: '.\n\n',
+        })
 
         const content = z.string().min(1).max(4000).parse(postText)
         const speechBuffer = await generateSpeech(content)
