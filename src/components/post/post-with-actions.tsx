@@ -1,3 +1,5 @@
+import type { s } from '~/db'
+
 import { useState } from 'react'
 import Link from 'next/link'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
@@ -20,35 +22,15 @@ import {
 import { useToast } from '~/hooks/use-toast'
 
 type PostWithActionsProps = {
-  id: number
-  slug: string
-  title: string
-  description: string | null
-  keywords: string | null
-  content: string
+  post: s.Post
   userName: string
   userImageUrl?: string
-  rank: number
-  categoryId: number
-  lang: string
-  writtenAt: Date
-  published: boolean
 }
 
 export function PostWithActions({
-  id,
-  slug,
-  title,
-  description,
-  keywords,
-  content,
+  post,
   userName,
   userImageUrl,
-  rank,
-  categoryId,
-  lang,
-  writtenAt,
-  published,
 }: PostWithActionsProps) {
   const ctx = api.useUtils()
 
@@ -69,26 +51,19 @@ export function PostWithActions({
     return (
       <div className="mb-6 px-4 py-16">
         <EditPostForm
-          id={id}
-          title={title}
-          description={description}
-          keywords={keywords}
-          content={content}
+          post={post}
           userName={userName}
           userImageUrl={userImageUrl}
-          rank={rank}
-          categoryId={categoryId}
-          lang={lang}
-          writtenAt={writtenAt}
-          published={published}
           closeForm={() => setIsEditing(false)}
         />
       </div>
     )
 
+  const { id, slug } = post
+
   return (
     <div className="flex w-full justify-between gap-3 px-4 py-2 transition-colors hover:bg-neutral-950">
-      {published ? (
+      {post.published ? (
         <span
           className="mr-1 mt-2 size-2.5 shrink-0 rounded-full bg-green-400"
           title="Published"
@@ -100,10 +75,10 @@ export function PostWithActions({
         />
       )}
 
-      <Link className="w-full" href={`/posts/${slug}`}>
-        <span className="text-lg font-bold text-neutral-300">{title}</span>
-        {description && (
-          <p className="text-sm text-neutral-400">{description}</p>
+      <Link className="w-full" href={`/posts/${post.slug}`}>
+        <span className="text-lg font-bold text-neutral-300">{post.title}</span>
+        {post.description && (
+          <p className="text-sm text-neutral-400">{post.description}</p>
         )}
       </Link>
 
@@ -126,7 +101,9 @@ export function PostWithActions({
               <AlertDialogTitle>Are you sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This will permanently delete your{' '}
-                <strong className="font-semibold">&quot;{title}&quot;</strong>{' '}
+                <strong className="font-semibold">
+                  &quot;{post.title}&quot;
+                </strong>{' '}
                 post. This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>

@@ -1,5 +1,4 @@
-import type { inferRouterOutputs } from '@trpc/server'
-import type { AppRouter } from '~/server/api/root'
+import type { s } from '~/db'
 
 import { useCallback, type ReactNode } from 'react'
 import Image from 'next/image'
@@ -14,8 +13,6 @@ import { useToast } from '~/hooks/use-toast'
 import { EditorButton } from '~/components/post/editor-button'
 import { ImageDialog } from '~/components/post/image-dialog'
 
-type Post = inferRouterOutputs<AppRouter>['posts']['create']
-
 export interface PostFormInputs {
   title: string
   description: string | null
@@ -29,10 +26,10 @@ export interface PostFormInputs {
 }
 
 export interface PostFormProps {
-  defaultValues?: PostFormInputs
+  defaultValues?: s.Post
   userName?: string
   userImageUrl?: string
-  onSubmit: (form: PostFormInputs, editorJson: string) => Promise<Post>
+  onSubmit: (form: PostFormInputs, editorJson: string) => Promise<s.Post>
   isPosting: boolean
   extraActions?: ReactNode
   categoriesLoading?: boolean
@@ -60,10 +57,14 @@ export function PostForm({
       title: defaultValues?.title ?? '',
       description: defaultValues?.description ?? '',
       keywords: defaultValues?.keywords ?? '',
-      rank: defaultValues?.rank ?? '',
-      categoryId: defaultValues?.categoryId ?? '1',
+      rank: defaultValues?.rank ? defaultValues.rank.toString() : '',
+      categoryId: defaultValues?.categoryId
+        ? defaultValues.categoryId.toString()
+        : '1',
       lang: defaultValues?.lang ?? 'en-US',
-      writtenAt: defaultValues?.writtenAt ?? '',
+      writtenAt: defaultValues?.writtenAt
+        ? defaultValues.writtenAt.toISOString()
+        : '',
       content: defaultValues?.content ?? '',
       published: defaultValues?.published ?? false,
     },

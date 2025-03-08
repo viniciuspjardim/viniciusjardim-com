@@ -41,19 +41,9 @@ export default function PostsAdminPage() {
           {data?.map((post) => (
             <PostWithActions
               key={post.id}
-              id={post.id}
-              slug={post.slug}
-              title={post.title}
-              description={post.description}
-              keywords={post.keywords}
-              content={post.content}
+              post={post}
               userName={formatAuthorName(post.author)}
               userImageUrl={post.author?.userImageUrl}
-              rank={post.rank}
-              categoryId={post.categoryId}
-              lang={post.lang}
-              writtenAt={post.writtenAt}
-              published={post.published}
             />
           ))}
         </div>

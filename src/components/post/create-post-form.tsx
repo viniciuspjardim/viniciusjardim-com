@@ -14,18 +14,18 @@ export function CreatePostForm() {
     },
   })
 
-  async function handleSubmit(form: PostFormInputs, editorJson: string) {
+  async function handleSubmit(form: PostFormInputs, content: string) {
     return mutateAsync({
       slug: asSlug(form.title),
       title: form.title,
       description: form.description || undefined,
       keywords: form.keywords || undefined,
-      content: editorJson,
+      content,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       categoryId: parseInt(form.categoryId, 10),
       lang: form.lang ? form.lang : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
-      published: form.published,
+      published: form.published ?? false,
     })
   }
 

@@ -40,6 +40,9 @@ export const category = pgTable(
   ]
 )
 
+export type Category = typeof category.$inferSelect
+export type NewCategory = typeof category.$inferInsert
+
 export const post = pgTable(
   'post',
   {
@@ -75,6 +78,9 @@ export const post = pgTable(
   ]
 )
 
+export type Post = typeof post.$inferSelect
+export type NewPost = typeof post.$inferInsert
+
 export const postLog = pgTable(
   'postLog',
   {
@@ -105,3 +111,6 @@ export const postLog = pgTable(
     },
   ]
 )
+
+export type PostLog = typeof postLog.$inferSelect
+export type NewPostLog = typeof postLog.$inferInsert

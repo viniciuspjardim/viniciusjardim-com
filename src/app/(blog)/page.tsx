@@ -17,12 +17,7 @@ export default async function HomePage() {
         {posts?.map((post) => (
           <PostCard
             key={post.id}
-            slug={post.slug}
-            title={post.title}
-            description={post.description}
-            content={post.content}
-            lang={post.lang}
-            writtenAt={new Date(post.writtenAt)}
+            post={post}
             userName={formatAuthorName(post.author)}
             userImageUrl={post.author?.userImageUrl}
           />

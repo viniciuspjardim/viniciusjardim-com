@@ -6,8 +6,6 @@ import { s } from '~/db'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { filterUserFields } from '~/helpers/user'
 
-type SelectPost = typeof s.post.$inferSelect
-
 export const pageRouter = createTRPCRouter({
   getAllPostsByCategorySlug: publicProcedure
     .input(z.object({ categorySlug: z.string().min(1).max(200).optional() }))
@@ -36,7 +34,7 @@ export const pageRouter = createTRPCRouter({
       // When category slug is not provided get all posts
       const slug = input.categorySlug ?? '<all>'
 
-      const { rows: posts } = await ctx.db.execute<SelectPost>(
+      const { rows: posts } = await ctx.db.execute<s.Post>(
         sql`
           WITH RECURSIVE categoryTree AS (
             SELECT id

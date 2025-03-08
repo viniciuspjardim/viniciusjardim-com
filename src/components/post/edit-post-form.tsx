@@ -1,26 +1,19 @@
+import type { s } from '~/db'
+
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { PostForm, type PostFormInputs } from './post-form'
 
 type EditPostFormProps = {
-  id: number
-  title: string
-  description: string | null
-  keywords: string | null
-  content: string
+  post: s.Post
   userName: string
   userImageUrl?: string
-  rank: number
-  categoryId: number
-  lang: string
-  writtenAt: Date
-  published: boolean
   closeForm: () => void
 }
 
 export function EditPostForm(props: EditPostFormProps) {
-  const { id, closeForm } = props
+  const { post, closeForm } = props
   const ctx = api.useUtils()
 
   const { mutateAsync, isLoading: isPosting } = api.posts.update.useMutation({
@@ -30,14 +23,14 @@ export function EditPostForm(props: EditPostFormProps) {
     },
   })
 
-  async function handleSubmit(form: PostFormInputs, editorJson: string) {
+  async function handleSubmit(form: PostFormInputs, content: string) {
     return mutateAsync({
-      id,
+      id: post.id,
       slug: asSlug(form.title),
       title: form.title,
       description: form.description || undefined,
       keywords: form.keywords || undefined,
-      content: editorJson,
+      content,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       lang: form.lang ? form.lang : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
@@ -46,23 +39,15 @@ export function EditPostForm(props: EditPostFormProps) {
     })
   }
 
-  const defaultValues = {
-    title: props.title,
-    description: props.description,
-    keywords: props.keywords,
-    content: props.content,
-    rank: props.rank.toString(),
-    categoryId: props.categoryId.toString(),
-    lang: props.lang,
-    writtenAt: props.writtenAt.toISOString(),
-    published: props.published,
-  }
+  const defaultValues = { ...post }
 
   const extraActions = (
     <Button variant="outline" type="button" onClick={closeForm}>
       Cancel
     </Button>
   )
+
+  console.log('EditPostForm', { post, defaultValues })
 
   return (
     <PostForm
