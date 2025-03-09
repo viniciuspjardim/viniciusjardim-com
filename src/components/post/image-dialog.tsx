@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { NodeSelection } from 'prosemirror-state'
 import { ImageIcon } from 'lucide-react'
 import { type Editor } from '~/hooks/use-editor'
@@ -42,7 +42,8 @@ function getSelectedImageAttributes(editor: Editor) {
 }
 
 export function ImageDialog({ editor }: ImageDialogProps) {
-  const imageRef = useRef<HTMLImageElement>(null)
+  const [imgHeight, setImgHeight] = useState(0)
+  const [imgWidth, setImgWidth] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const [imageSrc, setImageSrc] = useState('')
   const [imageAlt, setImageAlt] = useState('')
@@ -62,8 +63,6 @@ export function ImageDialog({ editor }: ImageDialogProps) {
   }
 
   const isDisabled = !editor || !imageSrc
-  const imgHeight = imageRef.current?.naturalHeight
-  const imgWidth = imageRef.current?.naturalWidth
   const imgAspect = imgWidth && imgHeight ? imgWidth / imgHeight : null
   const imgProperties = imgAspect
     ? `${imgWidth}w X ${imgHeight}h • Aspect: ${imgAspect.toFixed(4)}`
@@ -111,10 +110,12 @@ export function ImageDialog({ editor }: ImageDialogProps) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   className="h-48 object-contain"
-                  ref={imageRef}
                   src={imageSrc}
                   alt={imageAlt}
                   onLoad={(event) => {
+                    setImgWidth(event.currentTarget.naturalWidth)
+                    setImgHeight(event.currentTarget.naturalHeight)
+
                     if (imageWidth || imageHeight) {
                       return
                     }
@@ -180,9 +181,9 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             <Label htmlFor="imageAlt">
               Description (<code>alt</code>):
             </Label>
-            <Input
+            <textarea
+              className="block w-full"
               id="imageAlt"
-              type="text"
               maxLength={200}
               value={imageAlt}
               onChange={(event) => setImageAlt(event.target.value)}

@@ -8,7 +8,7 @@ import {
 type DateArg = _DateArg<Date>
 
 export const defaultDateFormat = 'd LLL yyyy'
-export const defaultTimeFormat = 'hh:mm bbb O'
+export const defaultTimeFormat = 'hh:mm bbb'
 export const defaultDateTimeFormat = `${defaultDateFormat} ${defaultTimeFormat}`
 
 export function formatDateDistance(date: DateArg) {
