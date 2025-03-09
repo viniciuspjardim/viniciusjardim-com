@@ -2,7 +2,7 @@
 
 import { useUser } from '@clerk/nextjs'
 
-import { Button } from '~/components/button'
+import { Button } from '~/components/ui/button'
 import { WidthContainer } from '~/components/width-container'
 import { useState } from 'react'
 

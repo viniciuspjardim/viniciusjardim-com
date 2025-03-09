@@ -88,6 +88,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <EditorButton
+          title="Add image"
           onClick={() => {
             const attributes = getSelectedImageAttributes(editor)
             setImageSrc(attributes?.src || '')
