@@ -97,7 +97,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             setImageHeight(attributes?.height || '')
           }}
         >
-          <ImageIcon />
+          <ImageIcon className="size-5" />
         </EditorButton>
       </DialogTrigger>
       <DialogContent className="flex max-h-svh flex-col gap-0 rounded-md p-0">

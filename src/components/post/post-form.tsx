@@ -3,7 +3,7 @@ import type { s } from '~/db'
 import { useCallback, type ReactNode } from 'react'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { VideoIcon } from 'lucide-react'
+import { VideoIcon, Undo2Icon, Redo2Icon } from 'lucide-react'
 
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
@@ -228,10 +228,53 @@ export function PostForm({
       {/* Editor container */}
       <div className="max-h-[90svh] overflow-y-auto rounded-md border border-neutral-800">
         {/* Editor toolbar */}
-        <div className="sticky top-0 z-10 flex flex-wrap items-center justify-center gap-2 border-b border-neutral-800 bg-black px-2 py-1">
+        <div className="sticky top-0 z-10 flex items-center gap-x-2 gap-y-1 overflow-x-auto border-b border-neutral-800 bg-black p-1 pb-2 md:flex-wrap md:justify-center md:overflow-visible md:p-1">
+          <EditorButton
+            title="Paragraph"
+            isActive={editor.isActive('paragraph')}
+            onClick={() => editor.chain().focus().setParagraph().run()}
+          >
+            p
+          </EditorButton>
+          <EditorButton
+            title="Heading 3"
+            isActive={editor.isActive('heading', { level: 3 })}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level: 3 }).run()
+            }
+          >
+            h3
+          </EditorButton>
           <ImageDialog editor={editor} />
+          <EditorButton
+            title="Code"
+            isActive={editor.isActive('code')}
+            onClick={() => editor.chain().focus().toggleCode().run()}
+          >
+            {'``'}
+          </EditorButton>
+          <EditorButton
+            title="Code block"
+            isActive={editor.isActive('codeBlock')}
+            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          >
+            {'{ }'}
+          </EditorButton>
+          <EditorButton
+            title="Link"
+            isActive={editor.isActive('link')}
+            onClick={setLink}
+          >
+            a
+          </EditorButton>
+          <EditorButton
+            title="Line break"
+            onClick={() => editor.chain().focus().setHardBreak().run()}
+          >
+            br
+          </EditorButton>
           <EditorButton title="Add video" onClick={addVideo}>
-            <VideoIcon />
+            <VideoIcon className="size-5" />
           </EditorButton>
           <EditorButton
             className="text-semibold"
@@ -256,49 +299,6 @@ export function PostForm({
             onClick={() => editor.chain().focus().toggleStrike().run()}
           >
             S
-          </EditorButton>
-          <EditorButton
-            title="Code"
-            isActive={editor.isActive('code')}
-            onClick={() => editor.chain().focus().toggleCode().run()}
-          >
-            {'``'}
-          </EditorButton>
-          <EditorButton
-            title="Code block"
-            isActive={editor.isActive('codeBlock')}
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          >
-            {'{ }'}
-          </EditorButton>
-          <EditorButton
-            title="Link"
-            isActive={editor.isActive('link')}
-            onClick={setLink}
-          >
-            a
-          </EditorButton>
-          <EditorButton
-            title="Paragraph"
-            isActive={editor.isActive('paragraph')}
-            onClick={() => editor.chain().focus().setParagraph().run()}
-          >
-            p
-          </EditorButton>
-          <EditorButton
-            title="Line break"
-            onClick={() => editor.chain().focus().setHardBreak().run()}
-          >
-            br
-          </EditorButton>
-          <EditorButton
-            title="Heading 3"
-            isActive={editor.isActive('heading', { level: 3 })}
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 3 }).run()
-            }
-          >
-            h3
           </EditorButton>
           <EditorButton
             title="Heading 4"
@@ -355,10 +355,10 @@ export function PostForm({
             hr
           </EditorButton>
           <EditorButton onClick={() => editor.chain().focus().undo().run()}>
-            Undo
+            <Undo2Icon className="size-5" />
           </EditorButton>
           <EditorButton onClick={() => editor.chain().focus().redo().run()}>
-            Redo
+            <Redo2Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Clear link"

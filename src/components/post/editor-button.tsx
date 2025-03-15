@@ -13,7 +13,7 @@ export function EditorButton({
   return (
     <Button
       className={cn(
-        'min-w-8 p-1',
+        'min-w-9 shrink-0 p-1',
         { 'dark:border-rose-950': isActive },
         className
       )}
