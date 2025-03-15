@@ -225,173 +225,178 @@ export function PostForm({
         </label>
       </div>
 
-      {/* Editor toolbar */}
-      <div className="flex flex-wrap items-center gap-2">
-        <ImageDialog editor={editor} />
-        <EditorButton title="Add video" onClick={addVideo}>
-          <VideoIcon />
-        </EditorButton>
-        <EditorButton
-          className="text-semibold"
-          title="Bold"
-          isActive={editor.isActive('bold')}
-          onClick={() => editor.chain().focus().toggleBold().run()}
-        >
-          B
-        </EditorButton>
-        <EditorButton
-          className="font-serif italic"
-          title="Italic"
-          isActive={editor.isActive('italic')}
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-        >
-          I
-        </EditorButton>
-        <EditorButton
-          className="line-through"
-          title="Strike"
-          isActive={editor.isActive('strike')}
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-        >
-          S
-        </EditorButton>
-        <EditorButton
-          title="Code"
-          isActive={editor.isActive('code')}
-          onClick={() => editor.chain().focus().toggleCode().run()}
-        >
-          {'``'}
-        </EditorButton>
-        <EditorButton
-          title="Code block"
-          isActive={editor.isActive('codeBlock')}
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        >
-          {'{ }'}
-        </EditorButton>
-        <EditorButton
-          title="Link"
-          isActive={editor.isActive('link')}
-          onClick={setLink}
-        >
-          a
-        </EditorButton>
-        <EditorButton
-          title="Paragraph"
-          isActive={editor.isActive('paragraph')}
-          onClick={() => editor.chain().focus().setParagraph().run()}
-        >
-          p
-        </EditorButton>
-        <EditorButton
-          title="Line break"
-          onClick={() => editor.chain().focus().setHardBreak().run()}
-        >
-          br
-        </EditorButton>
-        <EditorButton
-          title="Heading 3"
-          isActive={editor.isActive('heading', { level: 3 })}
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 3 }).run()
-          }
-        >
-          h3
-        </EditorButton>
-        <EditorButton
-          title="Heading 4"
-          isActive={editor.isActive('heading', { level: 4 })}
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 4 }).run()
-          }
-        >
-          h4
-        </EditorButton>
-        <EditorButton
-          title="Heading 5"
-          isActive={editor.isActive('heading', { level: 5 })}
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 5 }).run()
-          }
-        >
-          h5
-        </EditorButton>
-        <EditorButton
-          title="Heading 6"
-          isActive={editor.isActive('heading', { level: 6 })}
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 6 }).run()
-          }
-        >
-          h6
-        </EditorButton>
-        <EditorButton
-          title="Unordered list"
-          isActive={editor.isActive('bulletList')}
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-        >
-          ul
-        </EditorButton>
-        <EditorButton
-          title="Ordered list"
-          isActive={editor.isActive('orderedList')}
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        >
-          ol
-        </EditorButton>
-        <EditorButton
-          title="Quote"
-          isActive={editor.isActive('blockquote')}
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        >
-          {'"'}
-        </EditorButton>
-        <EditorButton
-          title="Horizontal rule"
-          onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        >
-          hr
-        </EditorButton>
-        <EditorButton onClick={() => editor.chain().focus().undo().run()}>
-          Undo
-        </EditorButton>
-        <EditorButton onClick={() => editor.chain().focus().redo().run()}>
-          Redo
-        </EditorButton>
-        <EditorButton
-          title="Clear link"
-          onClick={() => editor.chain().focus().unsetLink().run()}
-          disabled={!editor.isActive('link')}
-        >
-          CL
-        </EditorButton>
-        <EditorButton
-          title="Clear formatting"
-          onClick={() => editor.chain().focus().unsetAllMarks().run()}
-        >
-          CF
-        </EditorButton>
-        <EditorButton
-          title="Clear nodes"
-          onClick={() => editor.chain().focus().clearNodes().run()}
-        >
-          CN
-        </EditorButton>
-      </div>
+      {/* Editor container */}
+      <div className="max-h-[90svh] overflow-y-auto rounded-md border border-neutral-800">
+        {/* Editor toolbar */}
+        <div className="sticky top-0 z-10 flex flex-wrap items-center justify-center gap-2 border-b border-neutral-800 bg-black px-2 py-1">
+          <ImageDialog editor={editor} />
+          <EditorButton title="Add video" onClick={addVideo}>
+            <VideoIcon />
+          </EditorButton>
+          <EditorButton
+            className="text-semibold"
+            title="Bold"
+            isActive={editor.isActive('bold')}
+            onClick={() => editor.chain().focus().toggleBold().run()}
+          >
+            B
+          </EditorButton>
+          <EditorButton
+            className="font-serif italic"
+            title="Italic"
+            isActive={editor.isActive('italic')}
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+          >
+            I
+          </EditorButton>
+          <EditorButton
+            className="line-through"
+            title="Strike"
+            isActive={editor.isActive('strike')}
+            onClick={() => editor.chain().focus().toggleStrike().run()}
+          >
+            S
+          </EditorButton>
+          <EditorButton
+            title="Code"
+            isActive={editor.isActive('code')}
+            onClick={() => editor.chain().focus().toggleCode().run()}
+          >
+            {'``'}
+          </EditorButton>
+          <EditorButton
+            title="Code block"
+            isActive={editor.isActive('codeBlock')}
+            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          >
+            {'{ }'}
+          </EditorButton>
+          <EditorButton
+            title="Link"
+            isActive={editor.isActive('link')}
+            onClick={setLink}
+          >
+            a
+          </EditorButton>
+          <EditorButton
+            title="Paragraph"
+            isActive={editor.isActive('paragraph')}
+            onClick={() => editor.chain().focus().setParagraph().run()}
+          >
+            p
+          </EditorButton>
+          <EditorButton
+            title="Line break"
+            onClick={() => editor.chain().focus().setHardBreak().run()}
+          >
+            br
+          </EditorButton>
+          <EditorButton
+            title="Heading 3"
+            isActive={editor.isActive('heading', { level: 3 })}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level: 3 }).run()
+            }
+          >
+            h3
+          </EditorButton>
+          <EditorButton
+            title="Heading 4"
+            isActive={editor.isActive('heading', { level: 4 })}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level: 4 }).run()
+            }
+          >
+            h4
+          </EditorButton>
+          <EditorButton
+            title="Heading 5"
+            isActive={editor.isActive('heading', { level: 5 })}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level: 5 }).run()
+            }
+          >
+            h5
+          </EditorButton>
+          <EditorButton
+            title="Heading 6"
+            isActive={editor.isActive('heading', { level: 6 })}
+            onClick={() =>
+              editor.chain().focus().toggleHeading({ level: 6 }).run()
+            }
+          >
+            h6
+          </EditorButton>
+          <EditorButton
+            title="Unordered list"
+            isActive={editor.isActive('bulletList')}
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+          >
+            ul
+          </EditorButton>
+          <EditorButton
+            title="Ordered list"
+            isActive={editor.isActive('orderedList')}
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          >
+            ol
+          </EditorButton>
+          <EditorButton
+            title="Quote"
+            isActive={editor.isActive('blockquote')}
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          >
+            {'"'}
+          </EditorButton>
+          <EditorButton
+            title="Horizontal rule"
+            onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          >
+            hr
+          </EditorButton>
+          <EditorButton onClick={() => editor.chain().focus().undo().run()}>
+            Undo
+          </EditorButton>
+          <EditorButton onClick={() => editor.chain().focus().redo().run()}>
+            Redo
+          </EditorButton>
+          <EditorButton
+            title="Clear link"
+            onClick={() => editor.chain().focus().unsetLink().run()}
+            disabled={!editor.isActive('link')}
+          >
+            CL
+          </EditorButton>
+          <EditorButton
+            title="Clear formatting"
+            onClick={() => editor.chain().focus().unsetAllMarks().run()}
+          >
+            CF
+          </EditorButton>
+          <EditorButton
+            title="Clear nodes"
+            onClick={() => editor.chain().focus().clearNodes().run()}
+          >
+            CN
+          </EditorButton>
+        </div>
 
-      <EditorContent editor={editor} />
+        {/* Content of the post in the editor */}
+        <EditorContent editor={editor} />
 
-      <div className="flex justify-end space-x-2">
-        {/* Insert extra actions (like a Cancel button) if needed */}
-        {extraActions}
+        {/* Editor footer */}
+        <div className="sticky bottom-0 flex justify-end space-x-2 p-2">
+          {/* Insert extra actions (like a Cancel button) if needed */}
+          {extraActions}
 
-        <Button
-          variant="outline"
-          disabled={isPosting || !isValid}
-          type="submit"
-        >
-          {published ? 'Save and publish' : 'Save draft'}
-        </Button>
+          <Button
+            variant="outline"
+            disabled={isPosting || !isValid}
+            type="submit"
+          >
+            {published ? 'Save and publish' : 'Save draft'}
+          </Button>
+        </div>
       </div>
     </form>
   )
