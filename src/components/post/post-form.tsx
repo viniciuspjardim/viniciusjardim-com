@@ -3,8 +3,23 @@ import type { s } from '~/db'
 import { useCallback, type ReactNode } from 'react'
 import Image from 'next/image'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { VideoIcon, Undo2Icon, Redo2Icon } from 'lucide-react'
-
+import {
+  PilcrowIcon,
+  VideoIcon,
+  Undo2Icon,
+  Redo2Icon,
+  CodeIcon,
+  BracesIcon,
+  LinkIcon,
+  Heading3Icon,
+  Heading4Icon,
+  Heading5Icon,
+  Heading6Icon,
+  ListIcon,
+  ListOrderedIcon,
+  UnlinkIcon,
+  FlipVerticalIcon,
+} from 'lucide-react'
 import { api } from '~/utils/api'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
@@ -228,13 +243,13 @@ export function PostForm({
       {/* Editor container */}
       <div className="max-h-[90svh] overflow-y-auto rounded-md border border-neutral-800">
         {/* Editor toolbar */}
-        <div className="sticky top-0 z-10 flex items-center gap-x-2 gap-y-1 overflow-x-auto border-b border-neutral-800 bg-black p-1 pb-2 md:flex-wrap md:justify-center md:overflow-visible md:p-1">
+        <div className="sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b border-neutral-800 bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
           <EditorButton
             title="Paragraph"
             isActive={editor.isActive('paragraph')}
             onClick={() => editor.chain().focus().setParagraph().run()}
           >
-            p
+            <PilcrowIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Heading 3"
@@ -243,7 +258,7 @@ export function PostForm({
               editor.chain().focus().toggleHeading({ level: 3 }).run()
             }
           >
-            h3
+            <Heading3Icon className="size-5" />
           </EditorButton>
           <ImageDialog editor={editor} />
           <EditorButton
@@ -251,21 +266,21 @@ export function PostForm({
             isActive={editor.isActive('code')}
             onClick={() => editor.chain().focus().toggleCode().run()}
           >
-            {'``'}
+            <CodeIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Code block"
             isActive={editor.isActive('codeBlock')}
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           >
-            {'{ }'}
+            <BracesIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Link"
             isActive={editor.isActive('link')}
             onClick={setLink}
           >
-            a
+            <LinkIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Line break"
@@ -307,7 +322,7 @@ export function PostForm({
               editor.chain().focus().toggleHeading({ level: 4 }).run()
             }
           >
-            h4
+            <Heading4Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Heading 5"
@@ -316,7 +331,7 @@ export function PostForm({
               editor.chain().focus().toggleHeading({ level: 5 }).run()
             }
           >
-            h5
+            <Heading5Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Heading 6"
@@ -325,21 +340,21 @@ export function PostForm({
               editor.chain().focus().toggleHeading({ level: 6 }).run()
             }
           >
-            h6
+            <Heading6Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Unordered list"
             isActive={editor.isActive('bulletList')}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           >
-            ul
+            <ListIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Ordered list"
             isActive={editor.isActive('orderedList')}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
-            ol
+            <ListOrderedIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Quote"
@@ -352,20 +367,26 @@ export function PostForm({
             title="Horizontal rule"
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
           >
-            hr
+            <FlipVerticalIcon className="size-5" />
           </EditorButton>
-          <EditorButton onClick={() => editor.chain().focus().undo().run()}>
+          <EditorButton
+            title="Undo"
+            onClick={() => editor.chain().focus().undo().run()}
+          >
             <Undo2Icon className="size-5" />
           </EditorButton>
-          <EditorButton onClick={() => editor.chain().focus().redo().run()}>
+          <EditorButton
+            title="Redo"
+            onClick={() => editor.chain().focus().redo().run()}
+          >
             <Redo2Icon className="size-5" />
           </EditorButton>
           <EditorButton
-            title="Clear link"
+            title="Remove link"
             onClick={() => editor.chain().focus().unsetLink().run()}
             disabled={!editor.isActive('link')}
           >
-            CL
+            <UnlinkIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Clear formatting"
