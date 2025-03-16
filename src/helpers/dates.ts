@@ -1,5 +1,5 @@
 import {
-  formatDistanceToNow,
+  formatDistanceToNowStrict,
   format,
   parseISO,
   type DateArg as _DateArg,
@@ -12,7 +12,7 @@ export const defaultTimeFormat = 'hh:mm bbb'
 export const defaultDateTimeFormat = `${defaultDateFormat} ${defaultTimeFormat}`
 
 export function formatDateDistance(date: DateArg) {
-  return formatDistanceToNow(date, { addSuffix: true })
+  return formatDistanceToNowStrict(date, { addSuffix: true })
 }
 
 export function formatDateTime(date: DateArg) {
