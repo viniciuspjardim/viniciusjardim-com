@@ -35,7 +35,7 @@
   }
 
   :not(pre) > code {
-    @apply rounded border border-neutral-800 px-1 py-0.5 font-mono text-base text-white;
+    @apply break-words rounded border border-neutral-800 px-1 py-0.5 font-mono text-base text-white;
   }
 
   ul {
