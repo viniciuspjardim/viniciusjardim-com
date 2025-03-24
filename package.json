@@ -47,7 +47,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
     "lucide-react": "^0.438.0",
-    "next": "^14.2.23",
+    "next": "14.2.25",
     "openai": "^4.86.1",
     "posthog-js": "^1.218.1",
     "prismjs": "^1.29.0",
