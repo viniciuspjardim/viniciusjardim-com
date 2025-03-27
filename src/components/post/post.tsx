@@ -40,7 +40,7 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
                   key={heading.slug}
                 >
                   <Link
-                    className="text-neutral-400 hover:text-white"
+                    className="text-neutral-400 transition-colors hover:text-white"
                     href={`#${heading.slug}`}
                   >
                     {heading.text}
