@@ -19,6 +19,7 @@ import 'prismjs/components/prism-zig'
 import { sanitizeHtml } from '~/helpers/sanitize-html'
 import { asSlug } from '~/helpers/as-slug'
 
+// TODO: this is not necessary anymore, use generateHeadingItem instead
 function generateHeadingId(content?: JSONContent[]) {
   const text = content
     ?.map((item) => {

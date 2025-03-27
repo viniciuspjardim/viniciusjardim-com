@@ -1,4 +1,5 @@
 import type { JSONContent } from '@tiptap/core'
+import { asSlug } from '~/helpers/as-slug'
 
 export function findPostNode(
   node: JSONContent,
@@ -131,4 +132,48 @@ export function getPostText(
   )
 
   return textArray.join('')
+}
+
+export function generateHeadingItem(node: JSONContent) {
+  const text = node.content
+    ?.map((item) => {
+      switch (item.type) {
+        case 'text':
+          return item.text
+        default:
+          return ''
+      }
+    })
+    .join('')
+
+  return text
+    ? {
+        slug: asSlug(text),
+        text,
+        level: (node?.attrs?.level ?? 4) as number,
+      }
+    : undefined
+}
+
+/** Get post headings */
+export function getPostHeadings(
+  node: JSONContent,
+  headingsArray: { text: string; slug: string; level: number }[] = [],
+  upTo = 4
+) {
+  if (!node.content) {
+    return headingsArray
+  }
+
+  for (const child of node.content) {
+    if (child.type === 'heading' && child.attrs?.level <= upTo) {
+      const item = generateHeadingItem(child)
+
+      if (item) {
+        headingsArray.push(item)
+      }
+    }
+  }
+
+  return headingsArray
 }
