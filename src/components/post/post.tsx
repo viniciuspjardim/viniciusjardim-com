@@ -28,12 +28,14 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
       <nav className="order-last hidden w-64 shrink-0 lg:block">
         <div className="sticky top-6 max-h-svh overflow-y-auto">
           <span className="block pb-4 text-2xl font-semibold text-neutral-300">
-            On this post
+            In this article
           </span>
           <ol className="space-y-3 text-lg leading-6">
             {headings.map((heading) => (
               <li
-                className={cn({ 'ml-4': heading.level >= 4 })}
+                className={cn({
+                  'ml-4 text-base leading-5': heading.level >= 4,
+                })}
                 key={heading.slug}
               >
                 <Link
