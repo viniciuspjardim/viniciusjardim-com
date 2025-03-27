@@ -47,8 +47,6 @@ export function EditPostForm(props: EditPostFormProps) {
     </Button>
   )
 
-  console.log('EditPostForm', { post, defaultValues })
-
   return (
     <PostForm
       defaultValues={defaultValues}

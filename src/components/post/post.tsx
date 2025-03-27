@@ -19,36 +19,38 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
   const audioUrl = findPostNode(jsonContent, 'speech')?.attrs?.src as
     | string
     | undefined
-  const headings = getPostHeadings(jsonContent)
 
-  console.log('Post =>', headings)
+  const headings = getPostHeadings(jsonContent)
+  const showPostNav = headings.length >= 3
 
   return (
     <div className="flex w-full gap-8">
-      <nav className="order-last hidden w-64 shrink-0 lg:block">
-        <div className="sticky top-6 max-h-svh overflow-y-auto">
-          <span className="block pb-4 text-2xl font-semibold text-neutral-300">
-            In this article
-          </span>
-          <ol className="space-y-3 text-lg leading-6">
-            {headings.map((heading) => (
-              <li
-                className={cn({
-                  'ml-4 text-base leading-5': heading.level >= 4,
-                })}
-                key={heading.slug}
-              >
-                <Link
-                  className="text-neutral-400 hover:text-white"
-                  href={`#${heading.slug}`}
+      {showPostNav && (
+        <nav className="order-last hidden w-64 shrink-0 lg:block">
+          <div className="sticky top-6 max-h-svh overflow-y-auto">
+            <span className="block pb-4 text-2xl font-semibold text-neutral-300">
+              In this article
+            </span>
+            <ol className="space-y-3 text-lg leading-6">
+              {headings.map((heading) => (
+                <li
+                  className={cn({
+                    'ml-4 text-base leading-5': heading.level >= 4,
+                  })}
+                  key={heading.slug}
                 >
-                  {heading.text}
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </nav>
+                  <Link
+                    className="text-neutral-400 hover:text-white"
+                    href={`#${heading.slug}`}
+                  >
+                    {heading.text}
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </nav>
+      )}
 
       <article className="min-w-0 flex-grow space-y-6" lang={post.lang}>
         <div className="space-y-2">

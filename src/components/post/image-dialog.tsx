@@ -31,8 +31,6 @@ function getSelectedImageAttributes(editor: Editor) {
   if (selection instanceof NodeSelection) {
     const node = selection.node
 
-    console.log
-
     if (node.type.name === 'image') {
       return { ...node.attrs } as ImageAttributes
     }
