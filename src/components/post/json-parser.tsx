@@ -17,23 +17,7 @@ import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-zig'
 
 import { sanitizeHtml } from '~/helpers/sanitize-html'
-import { asSlug } from '~/helpers/as-slug'
-
-// TODO: this is not necessary anymore, use generateHeadingItem instead
-function generateHeadingId(content?: JSONContent[]) {
-  const text = content
-    ?.map((item) => {
-      switch (item.type) {
-        case 'text':
-          return item.text
-        default:
-          return ''
-      }
-    })
-    .join('')
-
-  return text ? asSlug(text) : undefined
-}
+import { generateHeadingItem } from '~/helpers/tiptap-utils'
 
 type TextProps = {
   marks?: { type: string; attrs?: Record<string, unknown> }[]
@@ -112,32 +96,38 @@ function CodeBlock({
   )
 }
 
-export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
-  switch (type) {
+export function JsonParser(node: JSONContent) {
+  switch (node.type) {
     case 'doc':
       return (
         <div className="blog-post text-md whitespace-pre-wrap md:text-xl">
-          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
+          {node.content?.map((item, index) => (
+            <JsonParser key={index} {...item} />
+          ))}
         </div>
       )
 
     case 'text':
-      return <Text marks={marks}>{text}</Text>
+      return <Text marks={node.marks}>{node.text}</Text>
 
     case 'heading':
       return (
         <Heading
-          level={attrs?.level as number | undefined}
-          id={generateHeadingId(content)}
+          level={node.attrs?.level as number | undefined}
+          id={generateHeadingItem(node)?.slug}
         >
-          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
+          {node.content?.map((item, index) => (
+            <JsonParser key={index} {...item} />
+          ))}
         </Heading>
       )
 
     case 'paragraph':
       return (
         <p>
-          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
+          {node.content?.map((item, index) => (
+            <JsonParser key={index} {...item} />
+          ))}
         </p>
       )
 
@@ -147,8 +137,8 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
     case 'codeBlock':
       return (
         <CodeBlock
-          language={attrs?.language as string}
-          contentText={content?.[0]?.text}
+          language={node.attrs?.language as string}
+          contentText={node.content?.[0]?.text}
         />
       )
     case 'image':
@@ -156,10 +146,10 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
         <div className="py-2">
           <Image
             className="rounded-md bg-neutral-950"
-            src={attrs?.src as string}
-            alt={attrs?.alt as string}
-            width={(attrs?.width as `${number}`) ?? '768'}
-            height={(attrs?.height as `${number}`) ?? '432'}
+            src={node.attrs?.src as string}
+            alt={node.attrs?.alt as string}
+            width={(node.attrs?.width as `${number}`) ?? '768'}
+            height={(node.attrs?.height as `${number}`) ?? '432'}
             quality={90}
           />
         </div>
@@ -169,7 +159,7 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
         <div className="py-2">
           <video
             className="rounded-md bg-neutral-950"
-            src={attrs?.src as string}
+            src={node.attrs?.src as string}
             controls
             width={768}
             height={432}
@@ -179,14 +169,18 @@ export function JsonParser({ content, type, text, attrs, marks }: JSONContent) {
     case 'bulletList':
       return (
         <ul>
-          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
+          {node.content?.map((item, index) => (
+            <JsonParser key={index} {...item} />
+          ))}
         </ul>
       )
 
     case 'listItem':
       return (
         <li>
-          {content?.map((item, index) => <JsonParser key={index} {...item} />)}
+          {node.content?.map((item, index) => (
+            <JsonParser key={index} {...item} />
+          ))}
         </li>
       )
 
