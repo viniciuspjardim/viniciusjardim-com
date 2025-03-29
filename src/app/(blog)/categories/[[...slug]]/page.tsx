@@ -13,9 +13,9 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>
 }) {
   const slug = (await params).slug?.[0]
-  const { categories, posts } = await api.pages.getAllPostsByCategorySlug.query(
-    { categorySlug: slug }
-  )
+  const { categories, posts } = await api.pages.getAllPostsByCategorySlug({
+    categorySlug: slug,
+  })
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">
@@ -37,7 +37,7 @@ export default async function CategoryPage({
             key={post.id}
             post={post}
             userName={formatAuthorName(post.author)}
-            userImageUrl={post.author?.userImageUrl}
+            userImageUrl={post.author?.userImageUrl as string | undefined}
           />
         ))}
 

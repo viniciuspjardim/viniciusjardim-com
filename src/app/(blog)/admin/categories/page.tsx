@@ -4,7 +4,7 @@ import { useUser } from '@clerk/nextjs'
 
 import { CategoriesList } from '~/components/category/categories-list'
 import { WidthContainer } from '~/components/width-container'
-import { api } from '~/utils/api'
+import { api } from '~/trpc/react'
 
 const pageName = 'Categories'
 

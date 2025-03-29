@@ -5,18 +5,18 @@ export const env = createEnv({
   /** Specify your server-side environment variables schema here */
   server: {
     NODE_ENV: z.enum(['development', 'test', 'production']),
-    CLERK_SECRET_KEY: z.string().min(1),
-    DATABASE_URL: z.string().min(1),
-    OPEN_AI_API_KEY: z.string().min(1),
-    SITE_OWNER_USER_ID: z.string().min(1),
-    UPLOADTHING_TOKEN: z.string().min(1),
+    CLERK_SECRET_KEY: z.string(),
+    DATABASE_URL: z.string(),
+    OPEN_AI_API_KEY: z.string(),
+    SITE_OWNER_USER_ID: z.string(),
+    UPLOADTHING_TOKEN: z.string(),
   },
 
   /** Specify your client-side environment variables schema here */
   client: {
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().url(),
-    NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1),
+    NEXT_PUBLIC_POSTHOG_KEY: z.string(),
     NEXT_PUBLIC_SITE_URL: z.string().url(),
   },
 

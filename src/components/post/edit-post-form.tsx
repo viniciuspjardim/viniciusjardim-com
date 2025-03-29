@@ -1,6 +1,6 @@
 import type { s } from '~/db'
 
-import { api } from '~/utils/api'
+import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { PostForm, type PostFormInputs } from './post-form'
@@ -16,7 +16,7 @@ export function EditPostForm(props: EditPostFormProps) {
   const { post, closeForm } = props
   const ctx = api.useUtils()
 
-  const { mutateAsync, isLoading: isPosting } = api.posts.update.useMutation({
+  const { mutateAsync, isPending: isPosting } = api.posts.update.useMutation({
     onSuccess: async () => {
       await ctx.posts.getAll.invalidate()
       closeForm()

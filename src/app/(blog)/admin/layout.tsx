@@ -1,9 +1,10 @@
 'use client'
 
 import { Toaster } from '~/components/ui/toaster'
-import { api } from '~/utils/api'
 
-function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
       {children}
@@ -11,5 +12,3 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
     </>
   )
 }
-
-export default api.withTRPC(AdminLayout)

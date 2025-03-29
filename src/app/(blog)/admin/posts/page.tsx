@@ -5,7 +5,7 @@ import { useUser } from '@clerk/nextjs'
 import { CreatePostForm } from '~/components/post/create-post-form'
 import { PostWithActions } from '~/components/post/post-with-actions'
 import { WidthContainer } from '~/components/width-container'
-import { api } from '~/utils/api'
+import { api } from '~/trpc/react'
 import { formatAuthorName } from '~/helpers/format-author-name'
 
 const pageName = 'Posts'
@@ -43,7 +43,7 @@ export default function PostsAdminPage() {
               key={post.id}
               post={post}
               userName={formatAuthorName(post.author)}
-              userImageUrl={post.author?.userImageUrl}
+              userImageUrl={post.author?.userImageUrl as string | undefined}
             />
           ))}
         </div>

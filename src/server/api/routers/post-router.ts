@@ -27,11 +27,11 @@ export const postRouter = createTRPCRouter({
         .where(input?.showUnpublished ? undefined : eq(s.post.published, true))
         .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
 
-      const users = (
-        await clerkClient.users.getUserList({
-          userId: posts.map((post) => post.authorId),
-        })
-      ).map(filterUserFields)
+      const userList = await clerkClient.users.getUserList({
+        userId: posts.map((post) => post.authorId),
+      })
+
+      const users = userList.data.map(filterUserFields)
 
       return posts.map((post) => ({
         ...post,

@@ -20,7 +20,7 @@ import {
   UnlinkIcon,
   FlipVerticalIcon,
 } from 'lucide-react'
-import { api } from '~/utils/api'
+import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
@@ -93,7 +93,7 @@ export function PostForm({
   const isValid = isFormValid && !editor?.isEmpty
 
   const handleFormSubmit: SubmitHandler<PostFormInputs> = async (formData) => {
-    const editorJson = JSON.stringify(editor?.getJSON() || {})
+    const editorJson = JSON.stringify(editor?.getJSON() ?? {})
 
     try {
       await onSubmit(formData, editorJson)

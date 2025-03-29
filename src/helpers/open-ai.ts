@@ -1,5 +1,5 @@
 import OpenAI from 'openai'
-import { env } from '~/env.mjs'
+import { env } from '~/env'
 
 export const openAi = new OpenAI({
   apiKey: env.OPEN_AI_API_KEY,
