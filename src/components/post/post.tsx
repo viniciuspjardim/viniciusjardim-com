@@ -3,10 +3,11 @@ import type { s } from '~/db'
 
 import Link from 'next/link'
 
+import { cn } from '~/helpers/cn'
 import { findPostNode, getPostHeadings } from '~/helpers/tiptap-utils'
 import { JsonParser } from './json-parser'
 import { PublishDetails } from './publish-details'
-import { cn } from '~/helpers/cn'
+import { GoToTopButton } from './go-to-top-button'
 
 type PostProps = {
   post: s.Post
@@ -28,26 +29,31 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
       {showPostNav && (
         <nav className="order-last hidden w-64 shrink-0 lg:block">
           <div className="sticky top-6 max-h-svh overflow-y-auto">
-            <span className="block pb-4 text-2xl font-semibold text-neutral-300">
-              In this article
-            </span>
-            <ol className="space-y-3 text-lg leading-6">
-              {headings.map((heading) => (
-                <li
-                  className={cn({
-                    'ml-4 text-base leading-5': heading.level >= 4,
-                  })}
-                  key={heading.slug}
-                >
-                  <Link
-                    className="text-neutral-400 transition-colors hover:text-white"
-                    href={`#${heading.slug}`}
+            <div className="pb-4">
+              <span className="block text-2xl font-semibold text-neutral-300">
+                In this article
+              </span>
+              <ol className="space-y-3 pt-4 text-lg leading-6">
+                {headings.map((heading) => (
+                  <li
+                    className={cn({
+                      'ml-4 text-base leading-5': heading.level >= 4,
+                    })}
+                    key={heading.slug}
                   >
-                    {heading.text}
-                  </Link>
-                </li>
-              ))}
-            </ol>
+                    <Link
+                      className="font-medium text-neutral-400 transition-colors hover:text-white"
+                      href={`#${heading.slug}`}
+                    >
+                      {heading.text}
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="border-t border-neutral-800 py-3">
+              <GoToTopButton />
+            </div>
           </div>
         </nav>
       )}
