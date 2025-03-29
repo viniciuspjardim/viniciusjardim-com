@@ -102,10 +102,7 @@ export const Video = Node.create({
               const {
                 state: { schema, tr },
               } = view
-              const hasFiles =
-                event.dataTransfer &&
-                event.dataTransfer.files &&
-                event.dataTransfer.files.length
+              const hasFiles = !!event?.dataTransfer?.files.length
 
               if (!hasFiles) return false
 

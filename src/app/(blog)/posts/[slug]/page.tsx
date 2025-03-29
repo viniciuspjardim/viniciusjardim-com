@@ -29,7 +29,7 @@ export default async function PostPage({
         key={post.id}
         post={post}
         userName={formatAuthorName(post.author)}
-        userImageUrl={post.author?.userImageUrl as string | undefined}
+        userImageUrl={post.author?.userImageUrl}
       />
     </WidthContainer>
   )

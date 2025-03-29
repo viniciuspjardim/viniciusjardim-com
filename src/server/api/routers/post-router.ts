@@ -55,7 +55,7 @@ export const postRouter = createTRPCRouter({
         const user = await clerkClient.users.getUser(post.authorId)
 
         return { ...post, author: filterUserFields(user) }
-      } catch (error) {
+      } catch (_error) {
         return {
           ...post,
           author: {
@@ -85,7 +85,7 @@ export const postRouter = createTRPCRouter({
         const user = await clerkClient.users.getUser(post.authorId)
 
         return { ...post, author: filterUserFields(user) }
-      } catch (error) {
+      } catch (_error) {
         return {
           ...post,
           author: {

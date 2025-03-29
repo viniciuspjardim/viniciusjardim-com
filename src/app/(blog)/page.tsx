@@ -20,7 +20,7 @@ export default async function HomePage() {
               key={post.id}
               post={post}
               userName={formatAuthorName(post.author)}
-              userImageUrl={post.author?.userImageUrl as string | undefined}
+              userImageUrl={post.author?.userImageUrl}
             />
           ))}
         </div>

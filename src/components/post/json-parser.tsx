@@ -1,5 +1,7 @@
-import Image from 'next/image'
 import type { JSONContent } from '@tiptap/core'
+
+import React from 'react'
+import Image from 'next/image'
 
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
@@ -60,7 +62,7 @@ type HeadingProps = {
 }
 
 function Heading({ level = 1, id, children }: HeadingProps) {
-  const Hx = `h${level}` as keyof JSX.IntrinsicElements
+  const Hx = `h${level}` as keyof React.JSX.IntrinsicElements
 
   return <Hx id={id}>{children}</Hx>
 }
