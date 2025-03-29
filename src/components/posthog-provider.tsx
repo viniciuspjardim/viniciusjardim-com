@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import posthog from 'posthog-js'
 import { PostHogProvider as Provider } from 'posthog-js/react'
-import { env } from '~/env.mjs'
+import { env } from '~/env'
 
 const PosthogPageView = dynamic(
   () => import('./posthog-page-view').then((module) => module.PosthogPageView),

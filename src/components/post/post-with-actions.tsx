@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
 import posthog from 'posthog-js'
 
-import { api } from '~/utils/api'
+import { api } from '~/trpc/react'
 import { EditPostForm } from './edit-post-form'
 import { Button } from '~/components/ui/button'
 import {
@@ -37,14 +37,14 @@ export function PostWithActions({
   const [isEditing, setIsEditing] = useState(false)
   const { toast } = useToast()
 
-  const { mutateAsync: remove, isLoading: isRemovingPost } =
+  const { mutateAsync: remove, isPending: isRemovingPost } =
     api.posts.remove.useMutation({
       onSuccess: async () => {
         await ctx.posts.getAll.invalidate()
       },
     })
 
-  const { mutate: generateSpeech, isLoading: isGenerateSpeechLoading } =
+  const { mutate: generateSpeech, isPending: isGenerateSpeechLoading } =
     api.posts.generateSpeech.useMutation()
 
   if (isEditing)

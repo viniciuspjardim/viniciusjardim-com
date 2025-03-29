@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { type NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 

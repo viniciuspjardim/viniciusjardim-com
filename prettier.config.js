@@ -1,4 +1,4 @@
-/** @type {import("prettier").Config} */
+/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').PluginOptions} */
 const config = {
   semi: false,
   trailingComma: 'es5',
@@ -11,9 +11,9 @@ const config = {
    * Prettier tailwindcss plugin config for sorting classes.
    * See Tailwind CSS IntelliSense extension config in `.vscode/settings.json`
    */
-  plugins: [require.resolve('prettier-plugin-tailwindcss')],
+  plugins: ['prettier-plugin-tailwindcss'],
   tailwindAttributes: ['class', 'classes', 'className', 'classNames'],
   tailwindFunctions: ['clsx', 'cva', 'cn'],
 }
 
-module.exports = config
+export default config

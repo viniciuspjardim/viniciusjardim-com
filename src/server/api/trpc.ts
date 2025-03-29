@@ -1,4 +1,4 @@
-/**
+/*
  * Don't edit this file, unless:
  *
  * 1. You want to modify request context (see Part 1).
@@ -8,52 +8,36 @@
  * use are documented accordingly near the end.
  */
 
-import { type NextRequest } from 'next/server'
 import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
-import { getAuth } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server'
 import { db } from '~/db'
-import { env } from '~/env.mjs'
+import { env } from '~/env'
 
-/**
+/*
  * 1. Context
  *
  * This section defines the "contexts" that are available in the backend API. These allow you to
  * access things when processing a request, like the database, the session, etc.
  */
 
-interface CreateContextOptions {
-  headers: Headers
-  isSiteOwner: boolean
-  userId: string | null
-  req: NextRequest
-}
+export const createTRPCContext = async (opts: { headers: Headers }) => {
+  // eslint-disable-next-line @typescript-eslint/await-thenable
+  const authData = await auth()
 
-export const createInnerTRPCContext = (opts: CreateContextOptions) => {
+  const isSiteOwner = authData.userId === env.SITE_OWNER_USER_ID
+
   return {
-    headers: opts.headers,
     db,
-    isSiteOwner: opts.isSiteOwner,
-    userId: opts.userId,
-    req: opts.req,
+    auth: authData,
+    isSiteOwner,
+    userId: authData.userId,
+    ...opts,
   }
 }
 
-export const createTRPCContext = (opts: { req: NextRequest }) => {
-  const { req } = opts
-  const { userId } = getAuth(req)
-  const isSiteOwner = userId === env.SITE_OWNER_USER_ID
-
-  return createInnerTRPCContext({
-    headers: opts.req.headers,
-    isSiteOwner,
-    userId,
-    req,
-  })
-}
-
-/**
+/*
  * 2. Initialization
  *
  * This is where the tRPC API is initialized, connecting the context and transformer.
@@ -74,6 +58,13 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 })
 
 /**
+ * Create a server-side caller.
+ *
+ * @see https://trpc.io/docs/server/server-side-calls
+ */
+export const createCallerFactory = t.createCallerFactory
+
+/*
  * 3. Router and Procedure (the important bit)
  *
  * These are the pieces you use to build your tRPC API. You should import these a lot in the

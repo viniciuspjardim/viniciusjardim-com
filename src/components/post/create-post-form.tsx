@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/nextjs'
 
-import { api } from '~/utils/api'
+import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { PostForm, type PostFormInputs } from './post-form'
 
@@ -8,7 +8,7 @@ export function CreatePostForm() {
   const { user } = useUser()
   const ctx = api.useUtils()
 
-  const { mutateAsync, isLoading: isPosting } = api.posts.create.useMutation({
+  const { mutateAsync, isPending: isPosting } = api.posts.create.useMutation({
     onSuccess: async () => {
       await ctx.posts.getAll.invalidate()
     },

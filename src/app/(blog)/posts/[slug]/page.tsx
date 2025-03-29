@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import type { JSONContent } from '@tiptap/core'
 import { getImageProps, type ImageProps } from 'next/image'
 
-import { env } from '~/env.mjs'
+import { env } from '~/env'
 import { Post } from '~/components/post/post'
 import { WidthContainer } from '~/components/width-container'
 import { api } from '~/trpc/server'
@@ -13,13 +13,14 @@ import { formatAuthorName } from '~/helpers/format-author-name'
 import { PostBreadcrumb } from '~/components/ui/breadcrumb'
 
 export default async function PostPage({
-  params: { slug },
+  params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params
   const [categories, post] = await Promise.all([
-    api.categories.getAllFlat.query(),
-    api.posts.getOneBySlug.query({ slug }),
+    api.categories.getAllFlat(),
+    api.posts.getOneBySlug({ slug }),
   ])
 
   return (
@@ -36,11 +37,12 @@ export default async function PostPage({
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const post = await api.posts.getOneBySlug.query({ slug })
+  const { slug } = await params
+  const post = await api.posts.getOneBySlug({ slug })
   const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
 
   const imageNode = findPostNode(

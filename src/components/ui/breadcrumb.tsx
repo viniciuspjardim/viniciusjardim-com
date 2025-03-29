@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { Slot } from '@radix-ui/react-slot'
 import { ChevronRight, MoreHorizontal } from 'lucide-react'
@@ -132,14 +132,14 @@ const PostBreadcrumb = ({ categories, categoryId }: PostBreadcrumbProps) => {
           </BreadcrumbLink>
         </BreadcrumbItem>
         {breadcrumbs.map((crumb) => (
-          <>
+          <React.Fragment key={crumb.id}>
             <BreadcrumbSeparator />
-            <BreadcrumbItem key={crumb.id}>
+            <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href={`/categories/${crumb.slug}`}>{crumb.title}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
-          </>
+          </React.Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>

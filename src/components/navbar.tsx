@@ -11,7 +11,7 @@ import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { api } from '~/trpc/server'
 
 export async function Navbar() {
-  const categories = await api.categories.getAllFlat.query()
+  const categories = await api.categories.getAllFlat()
 
   return (
     <nav className="w-full border-b border-neutral-800">

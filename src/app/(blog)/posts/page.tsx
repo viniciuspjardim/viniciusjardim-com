@@ -6,7 +6,7 @@ import { api } from '~/trpc/server'
 import { formatAuthorName } from '~/helpers/format-author-name'
 
 export default async function PostsPage() {
-  const posts = await api.posts.getAll.query()
+  const posts = await api.posts.getAll()
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">

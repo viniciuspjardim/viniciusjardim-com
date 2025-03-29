@@ -54,11 +54,11 @@ export const pageRouter = createTRPCRouter({
         `
       )
 
-      const users = (
-        await clerkClient.users.getUserList({
-          userId: posts.map((post) => post.authorId),
-        })
-      ).map(filterUserFields)
+      const userList = await clerkClient.users.getUserList({
+        userId: posts.map((post) => post.authorId),
+      })
+
+      const users = userList.data.map(filterUserFields)
 
       const postsWithAuthor = posts.map((post) => ({
         ...post,
