@@ -26,10 +26,12 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
 
   return (
     <div className="flex w-full gap-8">
+      {/* Post navigation */}
       {showPostNav && (
-        <nav className="order-last hidden w-64 shrink-0 lg:block">
-          <div className="sticky top-6 max-h-svh overflow-y-auto">
-            <div className="pb-4">
+        <nav className="order-last -mt-6 hidden w-64 shrink-0 lg:block">
+          {/* Headings */}
+          <div className="sticky top-0 max-h-svh overflow-y-auto py-6">
+            <div>
               <span className="block text-2xl font-semibold text-neutral-300">
                 In this article
               </span>
@@ -51,7 +53,12 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
                 ))}
               </ol>
             </div>
-            <div className="border-t border-neutral-800 py-3">
+
+            {/* Separator */}
+            <div className="mb-3 mt-4 border-b border-neutral-800" />
+
+            {/* Go to top button */}
+            <div>
               <GoToTopButton />
             </div>
           </div>
