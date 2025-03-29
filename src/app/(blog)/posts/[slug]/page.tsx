@@ -13,10 +13,11 @@ import { formatAuthorName } from '~/helpers/format-author-name'
 import { PostBreadcrumb } from '~/components/ui/breadcrumb'
 
 export default async function PostPage({
-  params: { slug },
+  params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params
   const [categories, post] = await Promise.all([
     api.categories.getAllFlat(),
     api.posts.getOneBySlug({ slug }),
@@ -36,10 +37,11 @@ export default async function PostPage({
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
+  const { slug } = await params
   const post = await api.posts.getOneBySlug({ slug })
   const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
 
