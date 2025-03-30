@@ -23,7 +23,6 @@ import { env } from '~/env'
  */
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  // eslint-disable-next-line @typescript-eslint/await-thenable
   const authData = await auth()
 
   const isSiteOwner = authData.userId === env.SITE_OWNER_USER_ID

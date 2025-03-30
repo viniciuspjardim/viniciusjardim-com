@@ -3,8 +3,8 @@ import { createUploadthing, type FileRouter } from 'uploadthing/next'
 
 const f = createUploadthing()
 
-const getUserId = () => {
-  const { userId } = auth()
+const getUserId = async () => {
+  const { userId } = await auth()
 
   if (!userId) {
     throw new Error('Unauthorized')
@@ -18,8 +18,8 @@ export const localFileRouter = {
     image: { maxFileSize: '8MB' },
     video: { maxFileSize: '32MB' },
   })
-    .middleware(() => {
-      const { userId } = getUserId()
+    .middleware(async () => {
+      const { userId } = await getUserId()
       return { userId }
     })
     .onUploadComplete(({ metadata, file }) => ({

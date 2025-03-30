@@ -48,6 +48,7 @@ export default tseslint.config(
         'error',
         { drizzleObjectName: ['db', 'ctx.db'] },
       ],
+      '@typescript-eslint/await-thenable': 'error',
     },
   },
   {

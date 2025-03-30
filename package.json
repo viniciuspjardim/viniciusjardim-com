@@ -14,7 +14,7 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.7.5",
+    "@clerk/nextjs": "^6.12.12",
     "@clerk/themes": "^2.2.26",
     "@hookform/resolvers": "^3.10.0",
     "@neondatabase/serverless": "^0.10.4",
@@ -48,7 +48,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
     "lucide-react": "^0.438.0",
-    "next": "^15.2.3",
+    "next": "^15.2.4",
     "openai": "^4.86.1",
     "posthog-js": "^1.218.1",
     "prismjs": "^1.29.0",
@@ -75,7 +75,7 @@
     "bun-types": "^1.2.7",
     "drizzle-kit": "^0.30.4",
     "eslint": "^9.23.0",
-    "eslint-config-next": "^15.2.3",
+    "eslint-config-next": "^15.2.4",
     "eslint-plugin-drizzle": "^0.2.3",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
