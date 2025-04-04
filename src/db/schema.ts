@@ -1,8 +1,10 @@
+import type { JSONContent } from '@tiptap/core'
+
 import {
   pgTable,
   serial,
   varchar,
-  text,
+  jsonb,
   integer,
   boolean,
   timestamp,
@@ -51,7 +53,7 @@ export const post = pgTable(
     title: varchar('title', { length: 255 }).notNull(),
     description: varchar('description', { length: 255 }),
     keywords: varchar('keywords', { length: 255 }),
-    content: text('content').notNull(),
+    content: jsonb('content').notNull().$type<JSONContent>(),
     rank: integer('rank').notNull().default(5000),
     authorId: varchar('authorId', { length: 255 }).notNull(),
     categoryId: integer('categoryId')
@@ -94,7 +96,7 @@ export const postLog = pgTable(
     title: varchar('title', { length: 255 }),
     description: varchar('description', { length: 255 }),
     keywords: varchar('keywords', { length: 255 }),
-    content: text('content'),
+    content: jsonb('content').$type<JSONContent>(),
     rank: integer('rank'),
     authorId: varchar('authorId', { length: 255 }),
     categoryId: integer('categoryId'),

@@ -1,3 +1,4 @@
+import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
 import { useCallback, type ReactNode } from 'react'
@@ -32,7 +33,7 @@ export interface PostFormInputs {
   title: string
   description: string | null
   keywords: string | null
-  content?: string
+  content?: JSONContent
   rank: string
   categoryId: string
   lang: string
@@ -80,12 +81,12 @@ export function PostForm({
       writtenAt: defaultValues?.writtenAt
         ? defaultValues.writtenAt.toISOString()
         : '',
-      content: defaultValues?.content ?? '',
+      content: defaultValues?.content,
       published: defaultValues?.published ?? false,
     },
   })
 
-  const { EditorContent, editor } = useEditor(defaultValues?.content ?? '')
+  const { EditorContent, editor } = useEditor(defaultValues?.content)
   const { toast } = useToast()
 
   const slug = asSlug(watch('title') ?? '')

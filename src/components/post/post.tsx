@@ -1,4 +1,3 @@
-import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
 import Link from 'next/link'
@@ -16,12 +15,11 @@ type PostProps = {
 }
 
 export function Post({ post, userName, userImageUrl }: PostProps) {
-  const jsonContent = JSON.parse(post.content) as JSONContent
-  const audioUrl = findPostNode(jsonContent, 'speech')?.attrs?.src as
+  const audioUrl = findPostNode(post.content, 'speech')?.attrs?.src as
     | string
     | undefined
 
-  const headings = getPostHeadings(jsonContent)
+  const headings = getPostHeadings(post.content)
   const showPostNav = headings.length >= 3
 
   return (
@@ -87,7 +85,7 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
           audioUrl={audioUrl}
         />
 
-        <JsonParser {...jsonContent} />
+        <JsonParser {...post.content} />
       </article>
     </div>
   )

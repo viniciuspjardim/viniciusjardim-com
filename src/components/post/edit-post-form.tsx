@@ -1,3 +1,4 @@
+import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
 import { api } from '~/trpc/react'
@@ -30,7 +31,7 @@ export function EditPostForm(props: EditPostFormProps) {
       title: form.title,
       description: form.description || undefined,
       keywords: form.keywords || undefined,
-      content,
+      content: JSON.parse(content) as JSONContent,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       lang: form.lang ? form.lang : undefined,
       writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,

@@ -1,3 +1,5 @@
+import type { JSONContent } from '@tiptap/core'
+
 import { clerkClient } from '@clerk/nextjs/server'
 import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
@@ -12,6 +14,27 @@ import { upload } from '~/server/uploadthing'
 import { filterUserFields } from '~/helpers/user'
 import { createSpeech as generateSpeech } from '~/helpers/open-ai'
 import { addOrReplaceSpeechNode, getPostText } from '~/helpers/tiptap-utils'
+
+const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
+  z
+    .object({
+      type: z.string().optional(),
+      attrs: z.record(z.any()).optional(),
+      content: z.array(JSONContentSchema).optional(),
+      marks: z
+        .array(
+          z
+            .object({
+              type: z.string(),
+              attrs: z.record(z.any()).optional(),
+            })
+            .catchall(z.any())
+        )
+        .optional(),
+      text: z.string().optional(),
+    })
+    .catchall(z.any())
+)
 
 export const postRouter = createTRPCRouter({
   getAll: publicProcedure
@@ -109,7 +132,7 @@ export const postRouter = createTRPCRouter({
         title: z.string().min(1).max(200),
         description: z.string().min(1).max(200).optional(),
         keywords: z.string().min(1).max(200).optional(),
-        content: z.string().min(1),
+        content: JSONContentSchema,
         rank: z.number().optional(),
         categoryId: z.number(),
         lang: z.string().min(1).max(20).optional(),
@@ -144,7 +167,7 @@ export const postRouter = createTRPCRouter({
         title: z.string().min(1).max(200),
         description: z.string().min(1).max(200).optional(),
         keywords: z.string().min(1).max(200).optional(),
-        content: z.string().min(1),
+        content: JSONContentSchema,
         rank: z.number().optional(),
         categoryId: z.number(),
         lang: z.string().min(1).max(20).optional(),
@@ -206,14 +229,12 @@ export const postRouter = createTRPCRouter({
           })
         }
 
-        const contentWithSpeech = addOrReplaceSpeechNode(
-          post.content,
-          speechFileUrl
-        )
+        // Note: this mutates the `post.content` object
+        addOrReplaceSpeechNode(post.content, speechFileUrl)
 
         const [updatedPost] = await tx
           .update(s.post)
-          .set({ ...post, content: contentWithSpeech })
+          .set(post)
           .where(eq(s.post.id, post.id))
           .returning()
 

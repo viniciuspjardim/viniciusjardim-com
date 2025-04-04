@@ -1,4 +1,3 @@
-import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
 import Link from 'next/link'
@@ -13,10 +12,7 @@ type PostCardProps = {
 }
 
 export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
-  const imageNode = findPostNode(
-    JSON.parse(post.content) as JSONContent,
-    'image'
-  )
+  const imageNode = findPostNode(post.content, 'image')
   const imageSrc = imageNode?.attrs?.src as string | undefined
   const imageAlt = imageNode?.attrs?.alt as string | undefined
 

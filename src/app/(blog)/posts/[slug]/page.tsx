@@ -1,7 +1,6 @@
 import 'server-only'
 
 import type { Metadata } from 'next'
-import type { JSONContent } from '@tiptap/core'
 import { getImageProps, type ImageProps } from 'next/image'
 
 import { env } from '~/env'
@@ -45,10 +44,7 @@ export async function generateMetadata({
   const post = await api.posts.getOneBySlug({ slug })
   const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
 
-  const imageNode = findPostNode(
-    JSON.parse(post.content) as JSONContent,
-    'image'
-  )
+  const imageNode = findPostNode(post.content, 'image')
   const imageSrc = imageNode?.attrs?.src as string | undefined
   const imageWidth = imageNode?.attrs?.width as string | undefined
   const imageHeight = imageNode?.attrs?.height as string | undefined

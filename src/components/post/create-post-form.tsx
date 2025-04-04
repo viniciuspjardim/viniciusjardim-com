@@ -1,3 +1,5 @@
+import type { JSONContent } from '@tiptap/core'
+
 import { useUser } from '@clerk/nextjs'
 
 import { api } from '~/trpc/react'
@@ -20,7 +22,7 @@ export function CreatePostForm() {
       title: form.title,
       description: form.description || undefined,
       keywords: form.keywords || undefined,
-      content,
+      content: JSON.parse(content) as JSONContent,
       rank: form.rank ? parseInt(form.rank, 10) : undefined,
       categoryId: parseInt(form.categoryId, 10),
       lang: form.lang ? form.lang : undefined,

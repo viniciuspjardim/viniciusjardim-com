@@ -8,7 +8,7 @@ import { TipTapImage } from '~/helpers/tiptap-image'
 import { Speech } from '~/helpers/tiptap-speech'
 import { Video } from '~/helpers/tiptap-video'
 
-export function useEditor(content: string) {
+export function useEditor(content?: JSONContent) {
   const editor = useInitEditor({
     immediatelyRender: false,
     editorProps: {
@@ -28,7 +28,7 @@ export function useEditor(content: string) {
       Speech,
       Video,
     ],
-    content: content ? (JSON.parse(content) as JSONContent) : null,
+    content,
   })
 
   return { EditorContent, editor }

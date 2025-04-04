@@ -22,21 +22,25 @@ export function findPostNode(
   return null
 }
 
-/** Add the speech audio into the post. In case the audio already exists it will replace it. */
-export function addOrReplaceSpeechNode(content: string, speechUrl: string) {
-  const root = JSON.parse(content) as JSONContent
-  const speechNode = findPostNode(root, 'speech')
+/**
+ * Add the speech audio into the post. In case the audio already exists it will replace it.
+ *
+ * Note that this will mutate the content object.
+ */
+export function addOrReplaceSpeechNode(
+  content: JSONContent,
+  speechUrl: string
+) {
+  const speechNode = findPostNode(content, 'speech')
 
   if (speechNode?.attrs) {
     speechNode.attrs.src = speechUrl
   } else {
-    root.content?.push({
+    content.content?.push({
       type: 'speech',
       attrs: { src: speechUrl },
     })
   }
-
-  return JSON.stringify(root)
 }
 
 function getPostTextRecursive(
@@ -101,7 +105,7 @@ const getPostTextDefaultOptions = Object.freeze({
  * speech audio
  */
 export function getPostText(
-  content: string,
+  content: JSONContent,
   {
     title,
     description,
@@ -110,7 +114,6 @@ export function getPostText(
     skipCodeBlocks = getPostTextDefaultOptions.skipCodeBlocks,
   }: GetPostTextOptions = getPostTextDefaultOptions
 ) {
-  const root = JSON.parse(content) as JSONContent
   const textArray: string[] = []
 
   if (title) {
@@ -124,7 +127,7 @@ export function getPostText(
   }
 
   getPostTextRecursive(
-    root,
+    content,
     textArray,
     separator,
     titlesSeparator,
