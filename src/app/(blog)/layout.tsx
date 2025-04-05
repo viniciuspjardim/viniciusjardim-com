@@ -14,6 +14,7 @@ export default function BlogLayout({
     <ClerkProvider
       appearance={{
         baseTheme: dark,
+        variables: { colorBackground: '#0a0a0a' },
       }}
     >
       <TRPCReactProvider>
