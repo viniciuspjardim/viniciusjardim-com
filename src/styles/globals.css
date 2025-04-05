@@ -3,6 +3,17 @@
 
 @theme {
   --default-transition-duration: 200ms;
+
+  --animate-move-right-100: move-right-100 2s linear infinite;
+
+  @keyframes move-right-100 {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
 }
 
 @layer utilities {
