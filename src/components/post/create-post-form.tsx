@@ -1,13 +1,20 @@
-import type { JSONContent } from '@tiptap/core'
+'use client'
 
-import { useUser } from '@clerk/nextjs'
+import type { JSONContent } from '@tiptap/core'
 
 import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { PostForm, type PostFormInputs } from './post-form'
 
-export function CreatePostForm() {
-  const { user } = useUser()
+type CreatePostFormProps = {
+  userName: string
+  userImageUrl?: string
+}
+
+export function CreatePostForm({
+  userName,
+  userImageUrl,
+}: CreatePostFormProps) {
   const ctx = api.useUtils()
 
   const { mutateAsync, isPending: isPosting } = api.posts.create.useMutation({
@@ -31,14 +38,12 @@ export function CreatePostForm() {
     })
   }
 
-  if (!user) return null
-
   return (
     <PostForm
-      userName={user.username || 'Anonymous'}
-      userImageUrl={user.imageUrl}
-      onSubmit={handleSubmit}
       isPosting={isPosting}
+      onSubmit={handleSubmit}
+      userName={userName}
+      userImageUrl={userImageUrl}
     />
   )
 }

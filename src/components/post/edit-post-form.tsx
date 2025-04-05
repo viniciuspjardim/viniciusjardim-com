@@ -13,8 +13,12 @@ type EditPostFormProps = {
   closeForm: () => void
 }
 
-export function EditPostForm(props: EditPostFormProps) {
-  const { post, closeForm } = props
+export function EditPostForm({
+  post,
+  userName,
+  userImageUrl,
+  closeForm,
+}: EditPostFormProps) {
   const ctx = api.useUtils()
 
   const { mutateAsync, isPending: isPosting } = api.posts.update.useMutation({
@@ -51,10 +55,10 @@ export function EditPostForm(props: EditPostFormProps) {
   return (
     <PostForm
       defaultValues={defaultValues}
-      userName={props.userName}
-      userImageUrl={props.userImageUrl}
-      onSubmit={handleSubmit}
       isPosting={isPosting}
+      onSubmit={handleSubmit}
+      userName={userName}
+      userImageUrl={userImageUrl}
       extraActions={extraActions}
     />
   )

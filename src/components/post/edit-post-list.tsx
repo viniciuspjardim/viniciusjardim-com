@@ -1,3 +1,5 @@
+'use client'
+
 import type { s } from '~/db'
 
 import { useState } from 'react'
@@ -19,6 +21,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '~/components/ui/alert-dialog'
+import { formatAuthorName } from '~/helpers/format-author-name'
 import { useToast } from '~/hooks/use-toast'
 
 type PostWithActionsProps = {
@@ -27,7 +30,7 @@ type PostWithActionsProps = {
   userImageUrl?: string
 }
 
-export function PostWithActions({
+function PostWithActions({
   post,
   userName,
   userImageUrl,
@@ -152,6 +155,34 @@ export function PostWithActions({
           <Edit3Icon className="size-5" />
         </Button>
       </div>
+    </div>
+  )
+}
+
+export function EditPostList() {
+  const [posts, { isLoading: isPostsLoading, isError: isPostsError }] =
+    api.posts.getAll.useSuspenseQuery({ showUnpublished: true })
+
+  if (isPostsLoading) {
+    return 'Loading...'
+  }
+  if (isPostsError) {
+    return 'Error!'
+  }
+  if (!posts?.length) {
+    return 'No posts found!'
+  }
+
+  return (
+    <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border border-neutral-800">
+      {posts.map((post) => (
+        <PostWithActions
+          key={post.id}
+          post={post}
+          userName={formatAuthorName(post.author)}
+          userImageUrl={post.author?.userImageUrl}
+        />
+      ))}
     </div>
   )
 }

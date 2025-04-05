@@ -43,24 +43,23 @@ export interface PostFormInputs {
 
 export interface PostFormProps {
   defaultValues?: s.Post
+  isPosting: boolean
+  onSubmit: (form: PostFormInputs, editorJson: string) => Promise<s.Post>
   userName?: string
   userImageUrl?: string
-  onSubmit: (form: PostFormInputs, editorJson: string) => Promise<s.Post>
-  isPosting: boolean
   extraActions?: ReactNode
-  categoriesLoading?: boolean
 }
 
 export function PostForm({
   defaultValues,
+  isPosting,
+  onSubmit,
   userName,
   userImageUrl,
-  onSubmit,
-  isPosting,
   extraActions,
 }: PostFormProps) {
-  const { data: categoriesData, isLoading: categoriesLoading } =
-    api.categories.getAllFlat.useQuery()
+  const [categoriesData, { isLoading: categoriesLoading }] =
+    api.categories.getAllFlat.useSuspenseQuery()
 
   const {
     register,
@@ -142,10 +141,6 @@ export function PostForm({
 
     editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
   }, [editor])
-
-  if (!editor) {
-    return null
-  }
 
   return (
     <form
@@ -247,16 +242,16 @@ export function PostForm({
         <div className="sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b border-neutral-800 bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
           <EditorButton
             title="Paragraph"
-            isActive={editor.isActive('paragraph')}
-            onClick={() => editor.chain().focus().setParagraph().run()}
+            isActive={editor?.isActive('paragraph')}
+            onClick={() => editor?.chain().focus().setParagraph().run()}
           >
             <PilcrowIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Heading 3"
-            isActive={editor.isActive('heading', { level: 3 })}
+            isActive={editor?.isActive('heading', { level: 3 })}
             onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 3 }).run()
+              editor?.chain().focus().toggleHeading({ level: 3 }).run()
             }
           >
             <Heading3Icon className="size-5" />
@@ -264,28 +259,28 @@ export function PostForm({
           <ImageDialog editor={editor} />
           <EditorButton
             title="Code"
-            isActive={editor.isActive('code')}
-            onClick={() => editor.chain().focus().toggleCode().run()}
+            isActive={editor?.isActive('code')}
+            onClick={() => editor?.chain().focus().toggleCode().run()}
           >
             <CodeIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Code block"
-            isActive={editor.isActive('codeBlock')}
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+            isActive={editor?.isActive('codeBlock')}
+            onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
           >
             <BracesIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Link"
-            isActive={editor.isActive('link')}
+            isActive={editor?.isActive('link')}
             onClick={setLink}
           >
             <LinkIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Line break"
-            onClick={() => editor.chain().focus().setHardBreak().run()}
+            onClick={() => editor?.chain().focus().setHardBreak().run()}
           >
             br
           </EditorButton>
@@ -295,116 +290,120 @@ export function PostForm({
           <EditorButton
             className="text-semibold"
             title="Bold"
-            isActive={editor.isActive('bold')}
-            onClick={() => editor.chain().focus().toggleBold().run()}
+            isActive={editor?.isActive('bold')}
+            onClick={() => editor?.chain().focus().toggleBold().run()}
           >
             B
           </EditorButton>
           <EditorButton
             className="font-serif italic"
             title="Italic"
-            isActive={editor.isActive('italic')}
-            onClick={() => editor.chain().focus().toggleItalic().run()}
+            isActive={editor?.isActive('italic')}
+            onClick={() => editor?.chain().focus().toggleItalic().run()}
           >
             I
           </EditorButton>
           <EditorButton
             className="line-through"
             title="Strike"
-            isActive={editor.isActive('strike')}
-            onClick={() => editor.chain().focus().toggleStrike().run()}
+            isActive={editor?.isActive('strike')}
+            onClick={() => editor?.chain().focus().toggleStrike().run()}
           >
             S
           </EditorButton>
           <EditorButton
             title="Heading 4"
-            isActive={editor.isActive('heading', { level: 4 })}
+            isActive={editor?.isActive('heading', { level: 4 })}
             onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 4 }).run()
+              editor?.chain().focus().toggleHeading({ level: 4 }).run()
             }
           >
             <Heading4Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Heading 5"
-            isActive={editor.isActive('heading', { level: 5 })}
+            isActive={editor?.isActive('heading', { level: 5 })}
             onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 5 }).run()
+              editor?.chain().focus().toggleHeading({ level: 5 }).run()
             }
           >
             <Heading5Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Heading 6"
-            isActive={editor.isActive('heading', { level: 6 })}
+            isActive={editor?.isActive('heading', { level: 6 })}
             onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 6 }).run()
+              editor?.chain().focus().toggleHeading({ level: 6 }).run()
             }
           >
             <Heading6Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Unordered list"
-            isActive={editor.isActive('bulletList')}
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            isActive={editor?.isActive('bulletList')}
+            onClick={() => editor?.chain().focus().toggleBulletList().run()}
           >
             <ListIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Ordered list"
-            isActive={editor.isActive('orderedList')}
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            isActive={editor?.isActive('orderedList')}
+            onClick={() => editor?.chain().focus().toggleOrderedList().run()}
           >
             <ListOrderedIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Quote"
-            isActive={editor.isActive('blockquote')}
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            isActive={editor?.isActive('blockquote')}
+            onClick={() => editor?.chain().focus().toggleBlockquote().run()}
           >
             {'"'}
           </EditorButton>
           <EditorButton
             title="Horizontal rule"
-            onClick={() => editor.chain().focus().setHorizontalRule().run()}
+            onClick={() => editor?.chain().focus().setHorizontalRule().run()}
           >
             <FlipVerticalIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Undo"
-            onClick={() => editor.chain().focus().undo().run()}
+            onClick={() => editor?.chain().focus().undo().run()}
           >
             <Undo2Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Redo"
-            onClick={() => editor.chain().focus().redo().run()}
+            onClick={() => editor?.chain().focus().redo().run()}
           >
             <Redo2Icon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Remove link"
-            onClick={() => editor.chain().focus().unsetLink().run()}
-            disabled={!editor.isActive('link')}
+            onClick={() => editor?.chain().focus().unsetLink().run()}
+            disabled={!editor?.isActive('link')}
           >
             <UnlinkIcon className="size-5" />
           </EditorButton>
           <EditorButton
             title="Clear formatting"
-            onClick={() => editor.chain().focus().unsetAllMarks().run()}
+            onClick={() => editor?.chain().focus().unsetAllMarks().run()}
           >
             CF
           </EditorButton>
           <EditorButton
             title="Clear nodes"
-            onClick={() => editor.chain().focus().clearNodes().run()}
+            onClick={() => editor?.chain().focus().clearNodes().run()}
           >
             CN
           </EditorButton>
         </div>
 
         {/* Content of the post in the editor */}
-        <EditorContent editor={editor} />
+        {editor ? (
+          <EditorContent editor={editor} />
+        ) : (
+          <div className="min-h-48" />
+        )}
 
         {/* Editor footer */}
         <div className="sticky bottom-0 flex justify-end space-x-2 p-2">
