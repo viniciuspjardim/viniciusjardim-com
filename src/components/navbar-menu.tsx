@@ -43,17 +43,6 @@ export function NavbarMenu({ categories }: NavbarMenuProps) {
           <DropdownMenuItem asChild>
             <Link href="/admin/posts">Posts</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/admin/categories">
-              <span>Categories</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/admin/caches">Caches</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/admin/upload">Upload</Link>
-          </DropdownMenuItem>
         </DropdownMenuGroup>
       )}
 
