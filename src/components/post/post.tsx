@@ -63,7 +63,7 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
         </nav>
       )}
 
-      <article className="min-w-0 flex-grow space-y-6" lang={post.lang}>
+      <article className="min-w-0 grow space-y-6" lang={post.lang}>
         <div className="space-y-2">
           <h1 className="text-balance text-4xl font-bold text-neutral-300 md:text-5xl">
             {post.title}

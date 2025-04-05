@@ -123,7 +123,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
                   }}
                 />
                 {imgProperties && (
-                  <span className="absolute bottom-0 left-0 right-0 block text-balance bg-black/80 p-2 text-center text-sm text-neutral-100">
+                  <span className="absolute right-0 bottom-0 left-0 block bg-black/80 p-2 text-center text-sm text-balance text-neutral-100">
                     {imgProperties}
                   </span>
                 )}
@@ -144,7 +144,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
               />
             )}
             {error && (
-              <span className="absolute bottom-0 block text-balance p-2 text-center text-sm text-red-500">
+              <span className="absolute bottom-0 block p-2 text-center text-sm text-balance text-red-500">
                 {error}
               </span>
             )}

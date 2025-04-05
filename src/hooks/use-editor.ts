@@ -13,7 +13,7 @@ export function useEditor(content?: JSONContent) {
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        class: 'blog-post blog-post-min-h focus:outline-none w-full p-2',
+        class: 'blog-post blog-post-min-h focus:outline-hidden w-full p-2',
       },
     },
     extensions: [

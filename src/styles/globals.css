@@ -1,15 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  color-scheme: dark;
+@theme {
+  --default-transition-duration: 200ms;
 }
 
-input,
-select,
-textarea {
-  @apply rounded-sm border border-neutral-800 bg-transparent px-2 py-1;
+@layer utilities {
+  :root {
+    color-scheme: dark;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply rounded-xs border border-neutral-800 bg-transparent px-2 py-1;
+  }
 }
 
 @layer base {
@@ -20,10 +24,158 @@ textarea {
   .gutter-stable {
     scrollbar-gutter: stable both-edges;
   }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 /* This fixes alert-dialog component causing horizontal shift when opened */
 html body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0 !important;
   margin-right: 0 !important;
+}
+
+.blog-post-min-h {
+  min-height: 12rem;
+}
+
+.blog-post {
+  @apply text-lg;
+
+  p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    @apply pointer-events-none float-left h-0 text-white/50;
+  }
+
+  h1 {
+    @apply mb-4 text-2xl line-through;
+  }
+
+  h2 {
+    @apply mb-4 text-2xl line-through;
+  }
+
+  h3 {
+    @apply mt-8 mb-6 text-3xl font-semibold;
+  }
+
+  h4 {
+    @apply mt-6 mb-4 text-2xl font-medium;
+  }
+
+  p {
+    @apply mb-2.5;
+  }
+
+  a {
+    @apply font-normal text-white underline decoration-rose-800 underline-offset-4 transition-all hover:text-rose-600;
+  }
+
+  b,
+  strong {
+    @apply font-bold;
+  }
+
+  :not(pre) > code {
+    @apply rounded border border-neutral-800 px-1 py-0.5 font-mono text-base break-words text-white;
+  }
+
+  ul {
+    @apply list-disc pl-5 marker:text-rose-800;
+
+    li {
+      @apply mb-0;
+
+      p {
+        @apply mb-0;
+      }
+    }
+  }
+
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  pre {
+    @apply overflow-y-auto rounded-md border border-neutral-800 px-4 py-2;
+
+    code {
+      @apply font-mono text-base;
+      color: #edeef0;
+    }
+  }
+
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    @apply text-neutral-200/60;
+  }
+
+  .token.atrule,
+  .token.punctuation {
+    color: #edeef0;
+  }
+
+  .namespace {
+    opacity: 0.7;
+  }
+
+  .token.attr-name,
+  .token.property,
+  .token.class-name,
+  .token.function {
+    color: #70b8ff;
+  }
+
+  .token.selector,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol {
+    color: #ff92ad;
+  }
+
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.regex,
+  .token.important,
+  .token.attr-value,
+  .token.inserted {
+    color: #0bd8b6;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string,
+  .token.variable {
+    color: #ff92ad;
+  }
+
+  .token.keyword {
+    color: #ff92ad;
+  }
+
+  .token.important,
+  .token.bold {
+    font-weight: bold;
+  }
+
+  .token.italic {
+    font-style: italic;
+  }
+
+  .token.entity {
+    cursor: help;
+  }
+
+  .token.deleted {
+    color: red;
+  }
 }

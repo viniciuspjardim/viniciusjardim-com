@@ -7,7 +7,7 @@ import { Button } from '~/components/ui/button'
 export function GoToTopButton() {
   return (
     <Button
-      className="flex h-auto items-center gap-2 p-0 transition-colors dark:text-neutral-400 dark:no-underline dark:hover:text-white"
+      className="flex h-auto items-center gap-2 p-0 transition-colors dark:text-neutral-400 dark:hover:text-white dark:hover:no-underline"
       variant="link"
       onClick={() => {
         window.scrollTo({
