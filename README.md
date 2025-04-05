@@ -52,7 +52,15 @@ I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excus
   - [x] Move from PlanetScale to Vercel Postgres
   - [x] Move from Prisma to Drizzle
   - [x] Move from Vercel Postgres to Neon Postgres
-  - [ ] Upgrade to Next.js 15, tRPC 11, and Tailwind 4
+  - [x] Upgrade to Next.js 15, tRPC 11 and Clerk 6
+  - [ ] Upgrade to Tailwind v4
+    - [x] Run Tailwind code mod
+    - [ ] Fix UploadThing styles
+    - [ ] Fix image dialog labels spacing and text area border radius
+    - [x] Replace `tailwindcss-animate` in favor of `tw-animate-css`
+    - [ ] Fix modal animations (remove post and mage dialog)
+    - [ ] Remove `React.forwardRef`
+    - [ ] Upgrade shadcn/ui components
   - [ ] Cache pages and requests when possible using Next.js cache
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog
