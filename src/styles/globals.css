@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-/* shadcn-ui theme */
+/* shadcn/ui theme */
 @custom-variant dark (&:is(.dark *));
 
 /* Tailwind CSS theme customization */
@@ -20,21 +20,18 @@
   }
 }
 
+/* Make the site to always use dark mode */
 @layer utilities {
   :root {
     color-scheme: dark;
   }
-
-  input,
-  select,
-  textarea {
-    @apply rounded-xs border border-neutral-800 bg-transparent px-2 py-1;
-  }
 }
 
 @layer base {
-  body {
-    @apply bg-black font-light text-neutral-300;
+  /* This fixes alert-dialog component causing horizontal shift when opened */
+  html body[data-scroll-locked] {
+    --removed-body-scroll-bar-size: 0 !important;
+    margin-right: 0 !important;
   }
 
   .gutter-stable {
@@ -47,13 +44,7 @@
   }
 }
 
-/* This fixes alert-dialog component causing horizontal shift when opened */
-html body[data-scroll-locked] {
-  --removed-body-scroll-bar-size: 0 !important;
-  margin-right: 0 !important;
-}
-
-/* shadcn-ui theme */
+/* shadcn/ui theme */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -89,6 +80,7 @@ html body[data-scroll-locked] {
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* shadcn/ui theme */
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -123,6 +115,7 @@ html body[data-scroll-locked] {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* shadcn/ui theme */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -161,6 +154,7 @@ html body[data-scroll-locked] {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* shadcn/ui theme */
 @layer base {
   * {
     @apply border-border outline-ring/50;
