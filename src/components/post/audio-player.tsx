@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { AudioLinesIcon } from 'lucide-react'
-import { cn } from '~/helpers/cn'
+import { cn } from '~/lib/utils'
 
 export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -17,7 +17,7 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   )
 
   const iconClasses = cn(
-    'flex size-6 shrink-0 animate-move-right-100 text-rose-800',
+    'animate-move-right-100 flex size-6 shrink-0 text-rose-800',
     {
       '[animation-play-state:paused]': isPaused,
     }

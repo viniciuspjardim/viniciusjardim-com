@@ -7,13 +7,14 @@ import Link from '@tiptap/extension-link'
 import { TipTapImage } from '~/helpers/tiptap-image'
 import { Speech } from '~/helpers/tiptap-speech'
 import { Video } from '~/helpers/tiptap-video'
+import { cn } from '~/lib/utils'
 
 export function useEditor(content?: JSONContent) {
   const editor = useInitEditor({
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        class: 'blog-post blog-post-min-h focus:outline-hidden w-full p-2',
+        class: cn('blog-post min-h-48 w-full p-2 focus:outline-hidden'),
       },
     },
     extensions: [

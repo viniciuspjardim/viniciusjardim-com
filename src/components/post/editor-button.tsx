@@ -1,4 +1,4 @@
-import { cn } from '~/helpers/cn'
+import { cn } from '~/lib/utils'
 import { Button, type ButtonProps } from '~/components/ui/button'
 
 interface EditorButtonProps extends ButtonProps {

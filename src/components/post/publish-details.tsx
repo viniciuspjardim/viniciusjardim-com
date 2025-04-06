@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { formatDateDistance, formatDateTime } from '~/helpers/dates'
 
-import { cn } from '~/helpers/cn'
+import { cn } from '~/lib/utils'
 import { authorFallback } from '~/helpers/format-author-name'
 import { AudioPlayer } from './audio-player'
 

@@ -29,7 +29,7 @@
 
   /*
    * Tailwind CSS IntelliSense extension config.
-   * See Prettier plugin config in `prettier.config.cjs`
+   * See Prettier plugin config in `prettier.config.js`
    */
   "tailwindCSS.classAttributes": [
     "class",
@@ -63,6 +63,7 @@
     "middlewares",
     "neondatabase",
     "nextjs",
+    "oklch",
     "openai",
     "Pilcrow",
     "posthog",
