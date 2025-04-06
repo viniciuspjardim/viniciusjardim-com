@@ -51,14 +51,14 @@ I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excus
 - [ ] Upgrade to Tailwind v4 and shadcn/ui components
   - [x] Run Tailwind code mod
   - [ ] Fix UploadThing styles
-  - [ ] Fix image dialog labels, spacing, input background color, and text area border radius
+  - [x] Fix image dialog labels, spacing, input background color, and text area border radius
   - [x] Replace `tailwindcss-animate` in favor of `tw-animate-css`
   - [x] Update shadcn/ui dependencies
   - [x] Fix modal animations
   - [x] Fix audio player animation
-  - [ ] Remove `React.forwardRef`
+  - [x] Remove `React.forwardRef`
   - [x] Upgrade shadcn/ui components
-  - [ ] Fix toasts, Go to top button, button width and height, navbar menu padding text size and spacing
+  - [x] Move shadcn/ui to use CSS variables
 - [ ] Other refactors and Improvements
   - [x] Move from PlanetScale to Vercel Postgres
   - [x] Move from Prisma to Drizzle

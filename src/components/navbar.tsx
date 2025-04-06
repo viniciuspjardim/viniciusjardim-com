@@ -14,7 +14,7 @@ export async function Navbar() {
   const categories = await api.categories.getAllFlat()
 
   return (
-    <nav className="w-full border-b border-neutral-800">
+    <nav className="w-full border-b">
       <WidthContainer className="flex h-12 items-center justify-between gap-4 py-1.5 md:h-16 md:py-2">
         <Link
           className="flex items-center gap-4 rounded-md transition-all hover:brightness-125"
@@ -31,22 +31,24 @@ export async function Navbar() {
         </Link>
 
         <div className="flex items-center justify-center gap-4">
-          <a
-            className="flex h-9 items-center space-x-2 rounded-md px-2 text-sm font-medium transition-all hover:bg-neutral-800 hover:text-white"
-            href="https://github.com/viniciuspjardim"
-            target="_blank"
-          >
-            <GitHubLogoIcon className="size-5" />
-            <span className="hidden md:block">GitHub</span>
-          </a>
+          <Button className="h-8 py-0" variant="ghost" asChild>
+            <a
+              className="flex items-center gap-1 rounded-md px-2 py-0 text-sm font-medium transition-all hover:bg-neutral-800 hover:text-white"
+              href="https://github.com/viniciuspjardim"
+              target="_blank"
+            >
+              <GitHubLogoIcon className="size-5" />
+              <span className="hidden md:block">GitHub</span>
+            </a>
+          </Button>
 
           <AuthButton className="hidden md:block" />
 
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button className="group px-2 py-0" variant="ghost" size="sm">
-                <MenuIcon className="group-data-[state=open]:hidden" />
-                <XIcon className="group-data-[state=closed]:hidden" />
+              <Button className="group px-1" variant="ghost" size="sm">
+                <MenuIcon className="size-6 group-data-[state=open]:hidden" />
+                <XIcon className="size-6 group-data-[state=closed]:hidden" />
               </Button>
             </DropdownMenuTrigger>
 

@@ -166,7 +166,7 @@ export function EditPostList() {
   }
 
   return (
-    <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border border-neutral-800">
+    <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
       {posts.map((post) => (
         <PostWithActions
           key={post.id}

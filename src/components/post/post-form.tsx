@@ -300,9 +300,9 @@ export function PostForm({
       </div>
 
       {/* Editor container */}
-      <div className="max-h-[90svh] overflow-y-auto rounded-md border border-neutral-800">
+      <div className="max-h-[90svh] overflow-y-auto rounded-md border">
         {/* Editor toolbar */}
-        <div className="sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b border-neutral-800 bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
+        <div className="sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
           <EditorButton
             title="Paragraph"
             isActive={editor?.isActive('paragraph')}

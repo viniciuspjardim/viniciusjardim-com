@@ -13,7 +13,7 @@ export function CategoryPill({ selectedSlug, slug, title }: CategoryPillProps) {
   return (
     <Link
       aria-selected={isSelected}
-      className="rounded-full border border-neutral-800 px-6 py-2 text-left font-semibold transition-all hover:bg-neutral-950 aria-selected:bg-gray-100 aria-selected:text-gray-900"
+      className="rounded-full border px-6 py-2 text-left font-semibold transition-all hover:bg-neutral-950 aria-selected:bg-gray-100 aria-selected:text-gray-900"
       href={href}
     >
       {title}

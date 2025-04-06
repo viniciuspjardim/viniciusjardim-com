@@ -53,7 +53,7 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
             </div>
 
             {/* Separator */}
-            <div className="mt-4 mb-3 border-b border-neutral-800" />
+            <div className="mt-4 mb-3 border-b" />
 
             {/* Go to top button */}
             <div>

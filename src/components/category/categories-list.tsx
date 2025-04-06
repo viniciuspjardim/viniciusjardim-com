@@ -33,7 +33,7 @@ export function CategoriesList({
 
       {subcategories.length > 0 && (
         <div className="flex">
-          <div className="border-l border-neutral-800 pr-4" />
+          <div className="border-l pr-4" />
 
           <div className="flex-1">
             {subcategories.map((subcategory) => (
