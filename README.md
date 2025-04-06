@@ -48,11 +48,22 @@ I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excus
   - [ ] Use Postgres JSONB to store the post content
   - [ ] Add another JSONB column to store post metadata like image, audio, links, etc.
   - [ ] Rework homepage and category endpoints to only fetch necessary data (not all the post content)
+- [ ] Upgrade to Tailwind v4 and shadcn/ui components
+  - [x] Run Tailwind code mod
+  - [ ] Fix UploadThing styles
+  - [x] Fix image dialog labels, spacing, input background color, and text area border radius
+  - [x] Replace `tailwindcss-animate` in favor of `tw-animate-css`
+  - [x] Update shadcn/ui dependencies
+  - [x] Fix modal animations
+  - [x] Fix audio player animation
+  - [x] Remove `React.forwardRef`
+  - [x] Upgrade shadcn/ui components
+  - [x] Move shadcn/ui to use CSS variables
 - [ ] Other refactors and Improvements
   - [x] Move from PlanetScale to Vercel Postgres
   - [x] Move from Prisma to Drizzle
   - [x] Move from Vercel Postgres to Neon Postgres
-  - [ ] Upgrade to Next.js 15, tRPC 11, and Tailwind 4
+  - [x] Upgrade to Next.js 15, tRPC 11 and Clerk 6
   - [ ] Cache pages and requests when possible using Next.js cache
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog

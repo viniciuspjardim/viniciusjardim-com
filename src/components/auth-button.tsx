@@ -3,7 +3,7 @@
 import { useUser, useClerk, SignInButton } from '@clerk/nextjs'
 import { Button } from '~/components/ui/button'
 
-import { cn } from '~/helpers/cn'
+import { cn } from '~/lib/utils'
 
 export function AuthButton({ className }: { className?: string }) {
   const user = useUser()

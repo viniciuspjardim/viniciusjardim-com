@@ -3,7 +3,7 @@ import { env } from '~/env'
 
 export default function ColorBeansPage() {
   return (
-    <main className="bg-[#040408]">
+    <main className="bg-[#131313]">
       <iframe
         className="h-screen w-screen"
         src="https://viniciuspjardim.github.io/color-beans-gwt"

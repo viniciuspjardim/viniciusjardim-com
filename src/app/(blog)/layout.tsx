@@ -5,8 +5,6 @@ import { Navbar } from '~/components/navbar'
 
 import { TRPCReactProvider } from '~/trpc/react'
 
-import '~/styles/post.scss'
-
 export default function BlogLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

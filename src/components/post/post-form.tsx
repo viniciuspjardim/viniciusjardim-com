@@ -3,7 +3,7 @@ import type { s } from '~/db'
 
 import { useCallback, type ReactNode } from 'react'
 import Image from 'next/image'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import {
   PilcrowIcon,
   VideoIcon,
@@ -21,11 +21,23 @@ import {
   UnlinkIcon,
   FlipVerticalIcon,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
+import { Input } from '~/components/ui/input'
+import { Label } from '~/components/ui/label'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from '~/components/ui/select'
+import { Textarea } from '~/components/ui/textarea'
 import { useEditor } from '~/hooks/use-editor'
-import { useToast } from '~/hooks/use-toast'
 import { EditorButton } from '~/components/post/editor-button'
 import { ImageDialog } from '~/components/post/image-dialog'
 
@@ -58,12 +70,12 @@ export function PostForm({
   userImageUrl,
   extraActions,
 }: PostFormProps) {
-  const [categoriesData, { isLoading: categoriesLoading }] =
-    api.categories.getAllFlat.useSuspenseQuery()
+  const [categoriesData] = api.categories.getAllFlat.useSuspenseQuery()
 
   const {
     register,
     handleSubmit,
+    control,
     watch,
     reset,
     formState: { isValid: isFormValid },
@@ -86,7 +98,6 @@ export function PostForm({
   })
 
   const { EditorContent, editor } = useEditor(defaultValues?.content)
-  const { toast } = useToast()
 
   const slug = asSlug(watch('title') ?? '')
   const published = watch('published')
@@ -100,9 +111,7 @@ export function PostForm({
       reset()
       editor?.commands.setContent('')
 
-      toast({
-        description: defaultValues ? 'Changes saved!' : 'Post published!',
-      })
+      toast(defaultValues ? 'Changes saved!' : 'Post published!')
     } catch (error) {
       let description = 'There was a problem with your request.'
 
@@ -110,11 +119,7 @@ export function PostForm({
         description = 'There is already a post with the same slug.'
       }
 
-      toast({
-        variant: 'destructive',
-        title: 'Something went wrong.',
-        description,
-      })
+      toast(description)
     }
   }
 
@@ -159,70 +164,128 @@ export function PostForm({
           />
         )}
 
-        <div className="flex w-full flex-col space-y-1">
-          <input
+        {/* Title */}
+        <div className="flex w-full flex-col gap-2">
+          <Label htmlFor="title">Title</Label>
+          <Input
+            id="title"
             type="text"
-            placeholder="Title"
+            placeholder="My post title"
             disabled={isPosting}
             {...register('title', { required: true })}
           />
 
           <div className="flex justify-between">
-            <p className="text-sm opacity-40">➡️ {slug || 'Post Slug'}</p>
+            <span className="text-muted-foreground text-sm">
+              {slug || 'Post Slug'}
+            </span>
           </div>
         </div>
       </div>
 
-      <textarea
-        placeholder="Description"
-        disabled={isPosting}
-        {...register('description')}
-      />
+      {/* Description */}
+      <div className="space-y-2">
+        <Label htmlFor="description">Description</Label>
+        <Textarea
+          id="description"
+          placeholder="This is a description of my post."
+          disabled={isPosting}
+          {...register('description')}
+        />
+      </div>
 
-      <input
-        type="text"
-        placeholder="Keywords"
-        disabled={isPosting}
-        {...register('keywords')}
-      />
+      {/* Keywords */}
+      <div className="space-y-2">
+        <Label htmlFor="keywords">Keywords</Label>
+        <Input
+          id="keywords"
+          type="text"
+          placeholder="Coding, JavaScript, React"
+          disabled={isPosting}
+          {...register('keywords')}
+        />
+      </div>
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <input
-          type="text"
-          placeholder="Rank"
-          disabled={isPosting}
-          {...register('rank')}
-        />
+        {/* Rank */}
+        <div className="space-y-2">
+          <Label htmlFor="rank">Rank</Label>
+          <Input
+            id="rank"
+            type="text"
+            placeholder="5000"
+            disabled={isPosting}
+            {...register('rank')}
+          />
+        </div>
 
-        <input
-          type="text"
-          placeholder="Written at (YYYY-MM-DD)"
-          disabled={isPosting}
-          {...register('writtenAt')}
-        />
+        {/* Written at */}
+        <div className="space-y-2">
+          <Label htmlFor="writtenAt">Written at</Label>
+          <Input
+            id="writtenAt"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            disabled={isPosting}
+            {...register('writtenAt')}
+          />
+        </div>
 
-        {categoriesLoading && (
-          <div className="h-[30px] text-gray-600">Categories loading...</div>
-        )}
+        {/* Category */}
+        <div className="space-y-2">
+          <Label htmlFor="categoryId">Category</Label>
+          <Controller
+            name="categoryId"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Select value={value} onValueChange={onChange}>
+                <SelectTrigger className="w-full" id="categoryId">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Categories</SelectLabel>
+                    {categoriesData.map((category) => (
+                      <SelectItem
+                        key={category.id}
+                        value={category.id.toString()}
+                      >
+                        {category.title}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
 
-        {categoriesData && (
-          <select {...register('categoryId')}>
-            {categoriesData.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.title}
-              </option>
-            ))}
-          </select>
-        )}
-
-        <select {...register('lang')}>
-          <option value="en-US" lang="en-US">
-            English
-          </option>
-          <option value="pt-BR" lang="pt-BR">
-            Português
-          </option>
-        </select>
+        {/* Language */}
+        <div className="space-y-2">
+          <Label htmlFor="lang">Language</Label>
+          <Controller
+            name="lang"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Select value={value} onValueChange={onChange}>
+                <SelectTrigger className="w-full" id="lang">
+                  <SelectValue placeholder="Select a language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Languages</SelectLabel>
+                    <SelectItem value="en-US" lang="en-US">
+                      🇺🇸 English
+                    </SelectItem>
+                    <SelectItem value="pt-BR" lang="pt-BR">
+                      🇧🇷 Português
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
 
         <label className="flex items-center space-x-2">
           <input
@@ -237,9 +300,9 @@ export function PostForm({
       </div>
 
       {/* Editor container */}
-      <div className="max-h-[90svh] overflow-y-auto rounded-md border border-neutral-800">
+      <div className="max-h-[90svh] overflow-y-auto rounded-md border">
         {/* Editor toolbar */}
-        <div className="sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b border-neutral-800 bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
+        <div className="sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
           <EditorButton
             title="Paragraph"
             isActive={editor?.isActive('paragraph')}

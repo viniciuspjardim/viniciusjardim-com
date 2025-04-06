@@ -13,6 +13,7 @@ import {
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import { Textarea } from '~/components/ui/textarea'
 import { EditorButton } from '~/components/post/editor-button'
 import { type ImageAttributes } from '~/helpers/tiptap-image'
 import { UploadButton } from '~/utils/uploadthing'
@@ -98,12 +99,12 @@ export function ImageDialog({ editor }: ImageDialogProps) {
           <ImageIcon className="size-5" />
         </EditorButton>
       </DialogTrigger>
-      <DialogContent className="flex max-h-svh flex-col gap-0 rounded-md p-0">
-        <DialogHeader className="border-b border-neutral-800 px-6 py-5">
+      <DialogContent className="bg-card flex max-h-svh flex-col gap-0 rounded-md p-0">
+        <DialogHeader className="border-b px-6 py-5">
           <DialogTitle>Image properties</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 overflow-y-auto px-6 py-5">
-          <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border border-neutral-800 bg-neutral-900">
+          <div className="dark:bg-input/30 relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border">
             {imageSrc ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -123,7 +124,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
                   }}
                 />
                 {imgProperties && (
-                  <span className="absolute bottom-0 left-0 right-0 block text-balance bg-black/80 p-2 text-center text-sm text-neutral-100">
+                  <span className="absolute right-0 bottom-0 left-0 block bg-black/80 p-2 text-center text-sm text-balance text-neutral-100">
                     {imgProperties}
                   </span>
                 )}
@@ -144,7 +145,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
               />
             )}
             {error && (
-              <span className="absolute bottom-0 block text-balance p-2 text-center text-sm text-red-500">
+              <span className="absolute bottom-0 block p-2 text-center text-sm text-balance text-red-500">
                 {error}
               </span>
             )}
@@ -152,9 +153,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="imageSrc">
-                Image URL (<code>src</code>):
-              </Label>
+              <Label htmlFor="imageSrc">Image URL:</Label>
               <Button
                 className="h-auto p-1"
                 variant="link"
@@ -177,10 +176,8 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="imageAlt">
-              Description (<code>alt</code>):
-            </Label>
-            <textarea
+            <Label htmlFor="imageAlt">Description:</Label>
+            <Textarea
               className="block w-full"
               id="imageAlt"
               maxLength={200}
@@ -237,7 +234,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             />
           </div>
         </div>
-        <DialogFooter className="border-t border-neutral-800 px-6 py-5">
+        <DialogFooter className="border-t px-6 py-5">
           <Button type="button" disabled={isDisabled} onClick={addImage}>
             Ok
           </Button>

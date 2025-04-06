@@ -2,7 +2,7 @@ import type { s } from '~/db'
 
 import Link from 'next/link'
 
-import { cn } from '~/helpers/cn'
+import { cn } from '~/lib/utils'
 import { findPostNode, getPostHeadings } from '~/helpers/tiptap-utils'
 import { JsonParser } from './json-parser'
 import { PublishDetails } from './publish-details'
@@ -53,7 +53,7 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
             </div>
 
             {/* Separator */}
-            <div className="mb-3 mt-4 border-b border-neutral-800" />
+            <div className="mt-4 mb-3 border-b" />
 
             {/* Go to top button */}
             <div>
@@ -63,9 +63,9 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
         </nav>
       )}
 
-      <article className="min-w-0 flex-grow space-y-6" lang={post.lang}>
+      <article className="min-w-0 grow space-y-6" lang={post.lang}>
         <div className="space-y-2">
-          <h1 className="text-balance text-4xl font-bold text-neutral-300 md:text-5xl">
+          <h1 className="text-4xl font-bold text-balance text-neutral-300 md:text-5xl">
             {post.title}
           </h1>
 
