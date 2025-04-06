@@ -21,11 +21,11 @@ import {
   UnlinkIcon,
   FlipVerticalIcon,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { useEditor } from '~/hooks/use-editor'
-import { useToast } from '~/hooks/use-toast'
 import { EditorButton } from '~/components/post/editor-button'
 import { ImageDialog } from '~/components/post/image-dialog'
 
@@ -86,7 +86,6 @@ export function PostForm({
   })
 
   const { EditorContent, editor } = useEditor(defaultValues?.content)
-  const { toast } = useToast()
 
   const slug = asSlug(watch('title') ?? '')
   const published = watch('published')
@@ -100,9 +99,7 @@ export function PostForm({
       reset()
       editor?.commands.setContent('')
 
-      toast({
-        description: defaultValues ? 'Changes saved!' : 'Post published!',
-      })
+      toast(defaultValues ? 'Changes saved!' : 'Post published!')
     } catch (error) {
       let description = 'There was a problem with your request.'
 
@@ -110,11 +107,7 @@ export function PostForm({
         description = 'There is already a post with the same slug.'
       }
 
-      toast({
-        variant: 'destructive',
-        title: 'Something went wrong.',
-        description,
-      })
+      toast(description)
     }
   }
 

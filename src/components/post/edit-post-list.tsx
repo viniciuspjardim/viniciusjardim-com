@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
 import posthog from 'posthog-js'
+import { toast } from 'sonner'
 
 import { api } from '~/trpc/react'
 import { EditPostForm } from './edit-post-form'
@@ -22,7 +23,6 @@ import {
   AlertDialogAction,
 } from '~/components/ui/alert-dialog'
 import { formatAuthorName } from '~/helpers/format-author-name'
-import { useToast } from '~/hooks/use-toast'
 
 type PostWithActionsProps = {
   post: s.Post
@@ -36,9 +36,7 @@ function PostWithActions({
   userImageUrl,
 }: PostWithActionsProps) {
   const ctx = api.useUtils()
-
   const [isEditing, setIsEditing] = useState(false)
-  const { toast } = useToast()
 
   const { mutateAsync: remove, isPending: isRemovingPost } =
     api.posts.remove.useMutation({
@@ -68,12 +66,12 @@ function PostWithActions({
     <div className="flex w-full justify-between gap-3 px-4 py-2 transition-colors hover:bg-neutral-950">
       {post.published ? (
         <span
-          className="mr-1 mt-2 size-2.5 shrink-0 rounded-full bg-green-400"
+          className="mt-2 mr-1 size-2.5 shrink-0 rounded-full bg-green-400"
           title="Published"
         />
       ) : (
         <span
-          className="mr-1 mt-2 size-2.5 shrink-0 rounded-full bg-orange-400"
+          className="mt-2 mr-1 size-2.5 shrink-0 rounded-full bg-orange-400"
           title="Not published"
         />
       )}
@@ -118,16 +116,10 @@ function PostWithActions({
                   try {
                     await remove({ id })
                     posthog.capture('delete-post-success', { slug })
-                    toast({
-                      description: `Your post has been deleted.`,
-                    })
+                    toast('Your post has been deleted.')
                   } catch (error) {
                     posthog.capture('delete-post-error', { slug, error })
-                    toast({
-                      variant: 'destructive',
-                      description:
-                        'An error occurred while deleting your post.',
-                    })
+                    toast('An error occurred while deleting your post.')
                   }
                 }}
               >

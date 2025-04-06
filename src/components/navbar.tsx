@@ -24,6 +24,7 @@ export async function Navbar() {
             className="h-9 w-[108px] md:h-12 md:w-36"
             src="/logo.svg"
             alt="Vinícius Jardim home"
+            priority
             width={144}
             height={48}
           />
