@@ -1,24 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useParams } from 'next/navigation'
 
-export type CategoryPillProps = {
-  selectedSlug?: string
+type CategoryPillProps = {
   slug?: string
   title: string
 }
 
 export function CategoryPill({ slug, title }: CategoryPillProps) {
-  let selectedSlug
-  const paths = usePathname().split('/')
+  const { slug: selectedSlugParam } = useParams()
 
-  // Get the selected slug from the URL path
-  if (2 in paths) {
-    selectedSlug = paths[2]
-  }
-
-  const isSelected = selectedSlug === slug
+  // Next.js will return an array for params like [[...slug]]
+  const selectedSlug = selectedSlugParam?.[0]
+  const isSelected = slug === selectedSlug
   const href = slug ? `/categories/${slug}` : '/categories'
 
   return (
