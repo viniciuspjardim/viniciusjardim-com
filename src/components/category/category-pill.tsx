@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export type CategoryPillProps = {
   selectedSlug?: string
@@ -6,7 +9,15 @@ export type CategoryPillProps = {
   title: string
 }
 
-export function CategoryPill({ selectedSlug, slug, title }: CategoryPillProps) {
+export function CategoryPill({ slug, title }: CategoryPillProps) {
+  let selectedSlug
+  const paths = usePathname().split('/')
+
+  // Get the selected slug from the URL path
+  if (2 in paths) {
+    selectedSlug = paths[2]
+  }
+
   const isSelected = selectedSlug === slug
   const href = slug ? `/categories/${slug}` : '/categories'
 
