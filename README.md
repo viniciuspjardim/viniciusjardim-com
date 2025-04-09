@@ -4,6 +4,23 @@
 
 I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excuse to write some code outside of work! I'm sharing my thoughts about programming and other topics there. Check it out!
 
+### Debugging
+
+There are four debugging configurations:
+
+- `server debug`
+- `client debug` - run `bun run dev` before debugging
+- `full stack debug`
+- `unit test debug` - open the test file before debugging
+
+### Database
+
+To backup the database use:
+
+```
+pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
+```
+
 ### Tasks
 
 - [x] Display posts
@@ -68,11 +85,3 @@ I'm developing [viniciusjardim.com](https://www.viniciusjardim.com/) as an excus
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog
   - [ ] Create CategoryLog
-
-### Database
-
-To backup the database use:
-
-```
-pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
-```
