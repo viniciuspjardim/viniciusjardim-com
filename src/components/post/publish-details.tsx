@@ -68,7 +68,7 @@ const PublishDetails = ({
 
         <div>
           <span
-            className={`text-md block font-semibold ${hasUserName ? 'text-rose-800' : 'text-neutral-500'} `}
+            className={`block text-base font-semibold ${hasUserName ? 'text-rose-800' : 'text-neutral-500'} `}
           >
             {userName}
           </span>

@@ -3,6 +3,7 @@ import type { s } from '~/db'
 import Link from 'next/link'
 import Image from 'next/image'
 import { PublishDetails } from './publish-details'
+import { Skeleton } from '~/components/ui/skeleton'
 import { findPostNode } from '~/helpers/tiptap-utils'
 
 type PostCardProps = {
@@ -34,7 +35,7 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
         />
       )}
       <div className="shrink space-y-2">
-        <h2 className="text-balance text-3xl font-bold text-neutral-300 transition-colors group-hover:text-neutral-200">
+        <h2 className="text-3xl font-bold text-balance text-neutral-300 transition-colors group-hover:text-neutral-200">
           {post.title}
         </h2>
         {post.description && (
@@ -50,5 +51,24 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
         />
       </div>
     </Link>
+  )
+}
+
+export function PostCardSkeleton() {
+  return (
+    <div className="flex w-full flex-col items-start gap-x-8 gap-y-3 py-10 first:pt-0 last:pb-0 md:flex-row">
+      <Skeleton className="aspect-video w-full shrink-0 object-cover md:w-80" />
+      <div className="w-full grow-1 space-y-2">
+        <Skeleton className="h-9 w-8/12 rounded-full lg:w-6/12" />
+        <Skeleton className="h-6 w-10/12 rounded-full lg:w-10/12" />
+        <div className="flex gap-3 pt-2">
+          <Skeleton className="size-10 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-28 rounded-full" />
+            <Skeleton className="h-3 w-32 rounded-full" />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

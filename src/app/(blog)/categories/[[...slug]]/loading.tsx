@@ -1,10 +1,11 @@
-import { WidthContainer } from '~/components/width-container'
+import { PostCardSkeleton } from '~/components/post/post-card'
 
 // TODO: add a loading skeleton for the category page
 export default function LoadingCategoryPage() {
   return (
-    <WidthContainer className="flex w-full flex-col items-center">
-      Loading...
-    </WidthContainer>
+    <>
+      <PostCardSkeleton />
+      <PostCardSkeleton />
+    </>
   )
 }

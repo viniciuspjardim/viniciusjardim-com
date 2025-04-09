@@ -23,9 +23,7 @@ export default async function CategoriesLayout({
         ))}
       </div>
 
-      <div className="my-16 w-full divide-y divide-dashed divide-neutral-800">
-        {children}
-      </div>
+      <div className="my-16 w-full divide-y divide-dashed">{children}</div>
     </WidthContainer>
   )
 }
