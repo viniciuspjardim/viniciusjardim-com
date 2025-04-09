@@ -13,19 +13,13 @@
   },
 
   "search.exclude": {
-    "**/dist": true,
     "**/.git": true,
     "**/.next": true,
-    "**/.turbo": true,
-    "**/.vscode": true,
-    "**/.yarn": true,
     "**/node_modules": true
   },
 
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "css.lint.unknownAtRules": "ignore",
-  "scss.lint.unknownAtRules": "ignore",
 
   /*
    * Tailwind CSS IntelliSense extension config.
