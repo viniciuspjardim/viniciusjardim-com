@@ -1,6 +1,7 @@
 {
   "files.eol": "\n",
   "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "files.associations": {
     "*.env.example": "properties"
   },
@@ -53,6 +54,7 @@
     "cdata",
     "clsx",
     "esnext",
+    "happydom",
     "lucide",
     "middlewares",
     "neondatabase",
@@ -65,6 +67,7 @@
     "prosemirror",
     "puyo",
     "quokka",
+    "registrator",
     "robotnik",
     "runtimes",
     "shadcn",
