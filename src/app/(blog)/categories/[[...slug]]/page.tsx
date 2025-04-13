@@ -11,12 +11,9 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>
 }) {
   const slug = (await params).slug?.[0]
-  // TODO: fetch only the posts. This request is fetching also the categories
-  const { posts } = await api.pages.getAllPostsByCategorySlug({
+  const posts = await api.pages.getAllPostsByCategorySlug({
     categorySlug: slug,
   })
-
-  await new Promise((resolve) => setTimeout(resolve, 5000))
 
   return (
     <>

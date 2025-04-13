@@ -7,8 +7,7 @@ import { CategoryPill } from '~/components/category/category-pill'
 export default async function CategoriesLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // TODO: fetch only the categories. This request is fetching also the posts
-  const { categories } = await api.pages.getAllPostsByCategorySlug({})
+  const categories = await api.categories.getAllFlat()
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">

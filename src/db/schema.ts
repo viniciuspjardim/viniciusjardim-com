@@ -13,7 +13,10 @@ import {
   type AnyPgColumn,
 } from 'drizzle-orm/pg-core'
 
-export const logTypeEnum = pgEnum('LogType', ['CREATE', 'UPDATE', 'DELETE'])
+const logTypeArray = ['CREATE', 'UPDATE', 'DELETE'] as const
+export type LogType = (typeof logTypeArray)[number]
+
+export const logTypeEnum = pgEnum('LogType', logTypeArray)
 
 export const category = pgTable(
   'category',
