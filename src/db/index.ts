@@ -1,8 +1,7 @@
-import { idb } from './drizzle'
-import * as s from './schema'
+import { idb, s } from './drizzle'
 
-import * as category from './category'
-import * as post from './post'
+import * as category from './entities/category'
+import * as post from './entities/post'
 
 const db = {
   category,

@@ -1,6 +1,5 @@
 import { eq, asc, desc } from 'drizzle-orm'
-import { idb } from './drizzle'
-import * as s from './schema'
+import { idb, s } from '~/db/drizzle'
 
 /** Get all categories */
 export async function getAll() {

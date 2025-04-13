@@ -1,6 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { idb } from './drizzle'
-import type * as s from './schema'
+import { idb, type s } from '~/db/drizzle'
 
 /**
  * Get all posts from a category, including posts from subcategories
