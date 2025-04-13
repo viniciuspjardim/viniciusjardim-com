@@ -12,7 +12,7 @@ import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
 import { auth } from '@clerk/nextjs/server'
-import { db } from '~/db'
+import { idb } from '~/db'
 import { env } from '~/env'
 
 /*
@@ -28,7 +28,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   const isSiteOwner = authData.userId === env.SITE_OWNER_USER_ID
 
   return {
-    db,
+    idb,
     auth: authData,
     isSiteOwner,
     userId: authData.userId,

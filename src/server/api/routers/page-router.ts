@@ -11,7 +11,7 @@ export const pageRouter = createTRPCRouter({
     .input(z.object({ categorySlug: z.string().min(1).max(200).optional() }))
     .query(async ({ ctx, input }) => {
       // Get all categories
-      const flatCategories = await ctx.db
+      const flatCategories = await ctx.idb
         .select()
         .from(s.category)
         .orderBy(desc(s.category.rank), asc(s.category.createdAt))
@@ -34,7 +34,7 @@ export const pageRouter = createTRPCRouter({
       // When category slug is not provided get all posts
       const slug = input.categorySlug ?? '<all>'
 
-      const { rows: posts } = await ctx.db.execute<s.Post>(
+      const { rows: posts } = await ctx.idb.execute<s.Post>(
         sql`
           WITH RECURSIVE categoryTree AS (
             SELECT id

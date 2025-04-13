@@ -1,4 +1,4 @@
-import { db } from './drizzle'
+import { idb } from './drizzle'
 import * as s from './schema'
 
-export { db, s }
+export { idb, s }

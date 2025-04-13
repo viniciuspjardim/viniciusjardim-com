@@ -44,7 +44,7 @@ export const postRouter = createTRPCRouter({
         .optional()
     )
     .query(async ({ ctx, input }) => {
-      const posts = await ctx.db
+      const posts = await ctx.idb
         .select()
         .from(s.post)
         .where(input?.showUnpublished ? undefined : eq(s.post.published, true))
@@ -66,7 +66,7 @@ export const postRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const [post] = await ctx.db
+      const [post] = await ctx.idb
         .select()
         .from(s.post)
         .where(eq(s.post.id, input.id))
@@ -97,7 +97,7 @@ export const postRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ ctx, input }) => {
-      const [post] = await ctx.db
+      const [post] = await ctx.idb
         .select()
         .from(s.post)
         .where(eq(s.post.slug, input.slug))
@@ -143,7 +143,7 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId
 
-      return ctx.db.transaction(async (tx) => {
+      return ctx.idb.transaction(async (tx) => {
         const [post] = await tx
           .insert(s.post)
           .values({ ...input, authorId })
@@ -176,7 +176,7 @@ export const postRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.transaction(async (tx) => {
+      return ctx.idb.transaction(async (tx) => {
         const [post] = await tx
           .update(s.post)
           .set({ ...input })
@@ -200,7 +200,7 @@ export const postRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.transaction(async (tx) => {
+      return ctx.idb.transaction(async (tx) => {
         const [post] = await tx
           .select()
           .from(s.post)
@@ -251,7 +251,7 @@ export const postRouter = createTRPCRouter({
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.transaction(async (tx) => {
+      return ctx.idb.transaction(async (tx) => {
         const [post] = await tx
           .delete(s.post)
           .where(eq(s.post.id, input.id))

@@ -11,7 +11,7 @@ import { assembleCategories } from '~/helpers/assemble-categories'
 
 export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const flatCategories = await ctx.db
+    const flatCategories = await ctx.idb
       .select()
       .from(s.category)
       .orderBy(desc(s.category.rank), asc(s.category.createdAt))
@@ -22,7 +22,7 @@ export const categoryRouter = createTRPCRouter({
   }),
 
   getAllFlat: publicProcedure.query(async ({ ctx }) => {
-    const flatCategories = await ctx.db
+    const flatCategories = await ctx.idb
       .select()
       .from(s.category)
       .orderBy(desc(s.category.rank), asc(s.category.createdAt))
@@ -33,7 +33,7 @@ export const categoryRouter = createTRPCRouter({
   getOne: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const [category] = await ctx.db
+      const [category] = await ctx.idb
         .select()
         .from(s.category)
         .where(eq(s.category.id, input.id))
@@ -51,7 +51,7 @@ export const categoryRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ ctx, input }) => {
-      const [category] = await ctx.db
+      const [category] = await ctx.idb
         .select()
         .from(s.category)
         .where(eq(s.category.slug, input.slug))
@@ -78,7 +78,7 @@ export const categoryRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.db
+      const category = await ctx.idb
         .insert(s.category)
         .values({ ...input })
         .returning()
@@ -99,7 +99,7 @@ export const categoryRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.db
+      const category = await ctx.idb
         .update(s.category)
         .set({ ...input })
         .where(eq(s.category.id, input.id))
@@ -111,7 +111,7 @@ export const categoryRouter = createTRPCRouter({
   remove: ownerProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const category = await ctx.db
+      const category = await ctx.idb
         .delete(s.category)
         .where(eq(s.category.id, input.id))
         .returning()
