@@ -9,13 +9,10 @@ const config = {
   reactStrictMode: true,
 
   images: {
-    domains: ['images.clerk.dev', 'img.clerk.com'],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'oyd5i68yhz.ufs.sh',
-        pathname: '/f/*',
-      },
+      new URL('https://oyd5i68yhz.ufs.sh/f/**'),
+      new URL('https://images.clerk.dev/**'),
+      new URL('https://img.clerk.com/**'),
     ],
   },
 }
