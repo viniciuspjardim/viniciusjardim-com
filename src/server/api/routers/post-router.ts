@@ -4,7 +4,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 import { eq, desc } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
-import { s } from '~/db'
+import { db, s } from '~/db'
 import {
   createTRPCRouter,
   publicProcedure,
@@ -123,6 +123,26 @@ export const postRouter = createTRPCRouter({
           },
         }
       }
+    }),
+
+  getAllPostsByCategorySlug: publicProcedure
+    .input(z.object({ categorySlug: z.string().min(1).max(200).optional() }))
+    .query(async ({ input }) => {
+      const posts = await db.post.getAllFromCategory(input.categorySlug)
+
+      const clerk = await clerkClient()
+      const userList = await clerk.users.getUserList({
+        userId: posts.map((post) => post.authorId),
+      })
+
+      const users = userList.data.map(filterUserFields)
+
+      const postsWithAuthor = posts.map((post) => ({
+        ...post,
+        author: users.find((user) => user.id === post.authorId),
+      }))
+
+      return postsWithAuthor
     }),
 
   create: ownerProcedure
