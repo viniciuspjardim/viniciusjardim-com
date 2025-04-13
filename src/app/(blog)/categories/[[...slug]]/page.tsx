@@ -10,10 +10,8 @@ export default async function CategoryPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  const slug = (await params).slug?.[0]
-  const posts = await api.posts.getAllPostsByCategorySlug({
-    categorySlug: slug,
-  })
+  const categorySlug = (await params).slug?.[0]
+  const posts = await api.posts.getAllByCategorySlug({ categorySlug })
 
   return (
     <>

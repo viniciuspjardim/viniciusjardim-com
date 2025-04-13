@@ -70,7 +70,7 @@ export function PostForm({
   userImageUrl,
   extraActions,
 }: PostFormProps) {
-  const [categoriesData] = api.categories.getAllFlat.useSuspenseQuery()
+  const [categoriesData] = api.categories.getAll.useSuspenseQuery()
 
   const {
     register,

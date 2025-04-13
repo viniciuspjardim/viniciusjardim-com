@@ -18,7 +18,7 @@ export default async function PostsAdminPage() {
   }
 
   void api.posts.getAll.prefetch({ showUnpublished: true })
-  void api.categories.getAllFlat.prefetch()
+  void api.categories.getAll.prefetch()
 
   return (
     <HydrateClient>

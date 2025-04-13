@@ -7,7 +7,7 @@ import { CategoryPill } from '~/components/category/category-pill'
 export default async function CategoriesLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const categories = await api.categories.getAllFlat()
+  const categories = await api.categories.getAll()
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">

@@ -18,7 +18,7 @@ export default async function PostPage({
 }) {
   const { slug } = await params
   const [categories, post] = await Promise.all([
-    api.categories.getAllFlat(),
+    api.categories.getAll(),
     api.posts.getOneBySlug({ slug }),
   ])
 

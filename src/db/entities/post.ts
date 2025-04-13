@@ -1,5 +1,88 @@
-import { sql } from 'drizzle-orm'
-import { idb, type s } from '~/db/drizzle'
+import type { JSONContent } from '@tiptap/core'
+
+import { clerkClient } from '@clerk/nextjs/server'
+import { sql, eq, desc } from 'drizzle-orm'
+import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
+import { idb, s } from '~/db/drizzle'
+import { filterUserFields } from '~/helpers/user'
+
+const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
+  z
+    .object({
+      type: z.string().optional(),
+      attrs: z.record(z.any()).optional(),
+      content: z.array(JSONContentSchema).optional(),
+      marks: z
+        .array(
+          z
+            .object({
+              type: z.string(),
+              attrs: z.record(z.any()).optional(),
+            })
+            .catchall(z.any())
+        )
+        .optional(),
+      text: z.string().optional(),
+    })
+    .catchall(z.any())
+)
+
+async function postWithAuthor(post: s.Post) {
+  try {
+    const clerk = await clerkClient()
+    const user = await clerk.users.getUser(post.authorId)
+
+    return { ...post, author: filterUserFields(user) }
+  } catch (_error) {
+    return {
+      ...post,
+      author: {
+        id: post.authorId,
+        userName: null,
+        userImageUrl: null,
+        firstName: null,
+        lastName: null,
+      },
+    }
+  }
+}
+
+async function postsWithAuthor(posts: s.Post[]) {
+  const clerk = await clerkClient()
+  const userList = await clerk.users.getUserList({
+    userId: posts.map((post) => post.authorId),
+  })
+
+  const users = userList.data.map(filterUserFields)
+
+  return posts.map((post) => ({
+    ...post,
+    author: users.find((user) => user.id === post.authorId),
+  }))
+}
+
+/** Get one post by slug */
+export async function getOneBySlug(slug: string) {
+  const [post] = await idb.select().from(s.post).where(eq(s.post.slug, slug))
+
+  if (!post) {
+    throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+  }
+
+  return await postWithAuthor(post)
+}
+
+/** Get all posts */
+export async function getAll(showUnpublished = false) {
+  const posts = await idb
+    .select()
+    .from(s.post)
+    .where(showUnpublished ? undefined : eq(s.post.published, true))
+    .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
+
+  return await postsWithAuthor(posts)
+}
 
 /**
  * Get all posts from a category, including posts from subcategories
@@ -9,7 +92,7 @@ import { idb, type s } from '~/db/drizzle'
  * @param categorySlug - The slug of the category to get posts from.
  * @returns An array of posts.
  */
-export async function getAllFromCategory(categorySlug?: string) {
+export async function getAllByCategorySlug(categorySlug?: string) {
   const slug = categorySlug ?? '<all>'
 
   const { rows: posts } = await idb.execute<s.Post>(
@@ -32,5 +115,5 @@ export async function getAllFromCategory(categorySlug?: string) {
     `
   )
 
-  return posts
+  return await postsWithAuthor(posts)
 }

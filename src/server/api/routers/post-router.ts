@@ -1,7 +1,6 @@
 import type { JSONContent } from '@tiptap/core'
 
-import { clerkClient } from '@clerk/nextjs/server'
-import { eq, desc } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { db, s } from '~/db'
@@ -11,7 +10,6 @@ import {
   ownerProcedure,
 } from '~/server/api/trpc'
 import { upload } from '~/server/uploadthing'
-import { filterUserFields } from '~/helpers/user'
 import { createSpeech as generateSpeech } from '~/helpers/open-ai'
 import { addOrReplaceSpeechNode, getPostText } from '~/helpers/tiptap-utils'
 
@@ -37,112 +35,28 @@ const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
 )
 
 export const postRouter = createTRPCRouter({
-  getAll: publicProcedure
-    .input(
-      z
-        .object({ showUnpublished: z.boolean().optional().default(false) })
-        .optional()
-    )
-    .query(async ({ ctx, input }) => {
-      const posts = await ctx.idb
-        .select()
-        .from(s.post)
-        .where(input?.showUnpublished ? undefined : eq(s.post.published, true))
-        .orderBy(desc(s.post.rank), desc(s.post.writtenAt))
-
-      const clerk = await clerkClient()
-      const userList = await clerk.users.getUserList({
-        userId: posts.map((post) => post.authorId),
-      })
-
-      const users = userList.data.map(filterUserFields)
-
-      return posts.map((post) => ({
-        ...post,
-        author: users.find((user) => user.id === post.authorId),
-      }))
-    }),
-
-  getOne: publicProcedure
-    .input(z.object({ id: z.number() }))
-    .query(async ({ ctx, input }) => {
-      const [post] = await ctx.idb
-        .select()
-        .from(s.post)
-        .where(eq(s.post.id, input.id))
-
-      if (!post) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
-      }
-
-      try {
-        const clerk = await clerkClient()
-        const user = await clerk.users.getUser(post.authorId)
-
-        return { ...post, author: filterUserFields(user) }
-      } catch (_error) {
-        return {
-          ...post,
-          author: {
-            id: post.authorId,
-            userName: null,
-            userImageUrl: null,
-            firstName: null,
-            lastName: null,
-          },
-        }
-      }
-    }),
-
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
-    .query(async ({ ctx, input }) => {
-      const [post] = await ctx.idb
-        .select()
-        .from(s.post)
-        .where(eq(s.post.slug, input.slug))
+    .query(async ({ input }) => {
+      const post = await db.post.getOneBySlug(input.slug)
 
-      if (!post) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
-      }
-
-      try {
-        const clerk = await clerkClient()
-        const user = await clerk.users.getUser(post.authorId)
-
-        return { ...post, author: filterUserFields(user) }
-      } catch (_error) {
-        return {
-          ...post,
-          author: {
-            id: post.authorId,
-            userName: null,
-            userImageUrl: null,
-            firstName: null,
-            lastName: null,
-          },
-        }
-      }
+      return post
     }),
 
-  getAllPostsByCategorySlug: publicProcedure
+  getAll: publicProcedure
+    .input(z.object({ showUnpublished: z.boolean() }).optional())
+    .query(async ({ input }) => {
+      const posts = await db.post.getAll(input?.showUnpublished)
+
+      return posts
+    }),
+
+  getAllByCategorySlug: publicProcedure
     .input(z.object({ categorySlug: z.string().min(1).max(200).optional() }))
     .query(async ({ input }) => {
-      const posts = await db.post.getAllFromCategory(input.categorySlug)
+      const posts = await db.post.getAllByCategorySlug(input.categorySlug)
 
-      const clerk = await clerkClient()
-      const userList = await clerk.users.getUserList({
-        userId: posts.map((post) => post.authorId),
-      })
-
-      const users = userList.data.map(filterUserFields)
-
-      const postsWithAuthor = posts.map((post) => ({
-        ...post,
-        author: users.find((user) => user.id === post.authorId),
-      }))
-
-      return postsWithAuthor
+      return posts
     }),
 
   create: ownerProcedure
