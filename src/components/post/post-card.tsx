@@ -57,11 +57,11 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
 export function PostCardSkeleton() {
   return (
     <div className="flex w-full flex-col items-start gap-x-8 gap-y-3 py-10 first:pt-0 last:pb-0 md:flex-row">
-      <Skeleton className="aspect-video w-full shrink-0 object-cover md:w-80" />
-      <div className="w-full grow-1 space-y-2">
-        <Skeleton className="h-9 w-8/12 rounded-full lg:w-6/12" />
-        <Skeleton className="h-6 w-10/12 rounded-full lg:w-10/12" />
-        <div className="flex gap-3 pt-2">
+      <Skeleton className="aspect-video w-full shrink-0 md:w-80" />
+      <div className="w-full grow-1 space-y-4">
+        <Skeleton className="h-8 w-8/12 rounded-full lg:w-6/12" />
+        <Skeleton className="h-5 w-10/12 rounded-full lg:w-10/12" />
+        <div className="flex gap-3">
           <Skeleton className="size-10 rounded-full" />
           <div className="space-y-2">
             <Skeleton className="h-4 w-28 rounded-full" />

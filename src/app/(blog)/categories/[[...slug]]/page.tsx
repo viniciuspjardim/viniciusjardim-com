@@ -16,6 +16,8 @@ export default async function CategoryPage({
     categorySlug: slug,
   })
 
+  await new Promise((resolve) => setTimeout(resolve, 5000))
+
   return (
     <>
       {posts.map((post) => (
