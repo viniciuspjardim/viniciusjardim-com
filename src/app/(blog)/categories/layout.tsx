@@ -22,7 +22,7 @@ export default async function CategoriesLayout({
         ))}
       </div>
 
-      <div className="my-16 w-full divide-y divide-dashed">{children}</div>
+      <div className="my-6 w-full divide-y divide-dashed">{children}</div>
     </WidthContainer>
   )
 }

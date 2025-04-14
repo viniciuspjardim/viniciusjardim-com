@@ -14,7 +14,7 @@ export function ColorBeans() {
 
   return (
     <button
-      className="my-16 flex w-full items-center justify-center gap-4 rounded-full border px-12 py-4 text-left transition-all hover:bg-neutral-950 sm:w-auto"
+      className="mt-16 mb-6 flex w-full items-center justify-center gap-4 rounded-full border px-12 py-4 text-left transition-all hover:bg-neutral-950 sm:w-auto"
       onClick={() => router.push('/p/color-beans')}
     >
       <Link href="/p/color-beans">
