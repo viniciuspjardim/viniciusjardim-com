@@ -59,6 +59,8 @@ export const postRouter = createTRPCRouter({
       return posts
     }),
 
+  // TODO: move mutations below to db.post.*
+
   create: ownerProcedure
     .input(
       z.object({

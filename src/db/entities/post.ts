@@ -97,21 +97,21 @@ export async function getAllByCategorySlug(categorySlug?: string) {
 
   const { rows: posts } = await idb.execute<s.Post>(
     sql`
-      WITH RECURSIVE categoryTree AS (
-        SELECT id
-        FROM category
-        WHERE slug = ${slug} OR ${slug} = '<all>'
+      WITH RECURSIVE cTree AS (
+        SELECT ${s.category.id}
+        FROM ${s.category}
+        WHERE ${s.category.slug} = ${slug} OR ${slug} = '<all>'
         
         UNION ALL
         
-        SELECT c.id
-        FROM category c
-        INNER JOIN categoryTree ct ON c."parentId" = ct.id
+        SELECT ${s.category.id}
+        FROM ${s.category}
+        INNER JOIN cTree ON ${s.category.parentId} = cTree.id
       )
-      SELECT p.*
-      FROM post p
-      WHERE p.published = TRUE and p."categoryId" IN (SELECT id FROM categoryTree)
-      ORDER BY p.rank DESC, p."writtenAt" DESC
+      SELECT ${s.post}.*
+      FROM ${s.post}
+      WHERE ${s.post.published} = TRUE and ${s.post.categoryId} IN (SELECT id FROM cTree)
+      ORDER BY ${s.post.rank} DESC, ${s.post.writtenAt} DESC
     `
   )
 
