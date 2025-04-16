@@ -7,7 +7,7 @@ export const openAi = new OpenAI({
 
 export async function createSpeech(input: string) {
   const mp3 = await openAi.audio.speech.create({
-    model: 'tts-1',
+    model: 'gpt-4o-mini-tts',
     voice: 'nova',
     input,
   })
