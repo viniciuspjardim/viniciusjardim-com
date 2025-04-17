@@ -1,3 +1,5 @@
+'use cache'
+
 import 'server-only'
 
 import { InfoIcon } from 'lucide-react'

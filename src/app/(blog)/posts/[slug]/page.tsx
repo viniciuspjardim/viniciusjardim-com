@@ -1,3 +1,5 @@
+'use cache'
+
 import 'server-only'
 
 import type { Metadata } from 'next'
@@ -42,7 +44,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const post = await api.posts.getOneBySlug({ slug })
-  const baseUrl = new URL(env.NEXT_PUBLIC_SITE_URL)
+  const baseUrl = env.NEXT_PUBLIC_SITE_URL
 
   const imageNode = findPostNode(post.content, 'image')
   const imageSrc = imageNode?.attrs?.src as string | undefined
@@ -63,7 +65,6 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     applicationName: 'Vinícius Jardim Blog',
-    metadataBase: baseUrl,
     keywords: post.keywords,
     authors: { name: formatAuthorName(post.author), url: baseUrl },
     ...(imageProps

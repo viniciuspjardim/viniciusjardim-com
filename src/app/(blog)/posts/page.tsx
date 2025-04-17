@@ -1,3 +1,5 @@
+'use cache'
+
 import 'server-only'
 
 import { PostCard } from '~/components/post/post-card'
