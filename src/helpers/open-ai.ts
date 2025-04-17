@@ -10,6 +10,8 @@ export async function createSpeech(input: string) {
     model: 'gpt-4o-mini-tts',
     voice: 'nova',
     input,
+    // TODO: add model instructions
+    instructions: '',
   })
 
   return Buffer.from(await mp3.arrayBuffer())
