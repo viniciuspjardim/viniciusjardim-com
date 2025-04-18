@@ -1,5 +1,7 @@
 import type { JSONContent } from '@tiptap/core'
 
+import { revalidateTag } from 'next/cache'
+
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
@@ -91,6 +93,8 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...post, logType: 'CREATE' })
 
+        revalidateTag(db.post.baseTag)
+
         return post
       })
     }),
@@ -124,6 +128,8 @@ export const postRouter = createTRPCRouter({
         }
 
         await tx.insert(s.postLog).values({ ...post, logType: 'UPDATE' })
+
+        revalidateTag(db.post.baseTag)
 
         return post
       })
@@ -180,6 +186,8 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...updatedPost, logType: 'UPDATE' })
 
+        revalidateTag(db.post.baseTag)
+
         return { success: true }
       })
     }),
@@ -199,7 +207,14 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...post, logType: 'DELETE' })
 
+        revalidateTag(db.post.baseTag)
+
         return post
       })
     }),
+
+  invalidateCache: ownerProcedure.mutation(async () => {
+    revalidateTag(db.post.baseTag)
+    return { success: true }
+  }),
 })

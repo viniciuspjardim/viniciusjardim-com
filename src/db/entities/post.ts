@@ -1,3 +1,8 @@
+import {
+  unstable_cacheLife as cacheLife,
+  unstable_cacheTag as cacheTag,
+} from 'next/cache'
+
 import type { JSONContent } from '@tiptap/core'
 
 import { clerkClient } from '@clerk/nextjs/server'
@@ -6,6 +11,8 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { idb, s } from '~/db/drizzle'
 import { filterUserFields } from '~/helpers/user'
+
+export const baseTag = 'post'
 
 const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
   z
@@ -65,7 +72,9 @@ async function postsWithAuthor(posts: s.Post[]) {
 /** Get one post by slug */
 export async function getOneBySlug(slug: string) {
   'use cache'
-  console.log('db.posts.getOneBySlug')
+  cacheLife('weeks')
+  cacheTag(baseTag)
+  console.log('db.post.getOneBySlug')
 
   const [post] = await idb.select().from(s.post).where(eq(s.post.slug, slug))
 
@@ -79,7 +88,9 @@ export async function getOneBySlug(slug: string) {
 /** Get all posts */
 export async function getAll(showUnpublished = false) {
   'use cache'
-  console.log('db.posts.getAll')
+  cacheLife('weeks')
+  cacheTag(baseTag)
+  console.log('db.post.getAll')
 
   const posts = await idb
     .select()
@@ -100,7 +111,9 @@ export async function getAll(showUnpublished = false) {
  */
 export async function getAllByCategorySlug(categorySlug?: string) {
   'use cache'
-  console.log('db.posts.getAllByCategorySlug')
+  cacheLife('weeks')
+  cacheTag(baseTag)
+  console.log('db.post.getAllByCategorySlug')
 
   const slug = categorySlug ?? '<all>'
 
