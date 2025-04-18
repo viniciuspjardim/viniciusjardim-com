@@ -64,6 +64,9 @@ async function postsWithAuthor(posts: s.Post[]) {
 
 /** Get one post by slug */
 export async function getOneBySlug(slug: string) {
+  'use cache'
+  console.log('db.posts.getOneBySlug')
+
   const [post] = await idb.select().from(s.post).where(eq(s.post.slug, slug))
 
   if (!post) {
@@ -75,6 +78,9 @@ export async function getOneBySlug(slug: string) {
 
 /** Get all posts */
 export async function getAll(showUnpublished = false) {
+  'use cache'
+  console.log('db.posts.getAll')
+
   const posts = await idb
     .select()
     .from(s.post)
@@ -93,6 +99,9 @@ export async function getAll(showUnpublished = false) {
  * @returns An array of posts.
  */
 export async function getAllByCategorySlug(categorySlug?: string) {
+  'use cache'
+  console.log('db.posts.getAllByCategorySlug')
+
   const slug = categorySlug ?? '<all>'
 
   const { rows: posts } = await idb.execute<s.Post>(

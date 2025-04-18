@@ -85,3 +85,6 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog
   - [ ] Create CategoryLog
+- [ ] Cache
+  - [x] Cache database query results
+  - [ ] Replace the above cache by full page caches

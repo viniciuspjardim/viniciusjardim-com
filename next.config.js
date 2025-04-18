@@ -7,13 +7,15 @@ import './src/env.js'
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-
   images: {
     remotePatterns: [
       new URL('https://oyd5i68yhz.ufs.sh/f/**'),
       new URL('https://images.clerk.dev/**'),
       new URL('https://img.clerk.com/**'),
     ],
+  },
+  experimental: {
+    useCache: true,
   },
 }
 
