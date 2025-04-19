@@ -155,6 +155,19 @@ export function EditPostList() {
   const [posts, { isLoading: isPostsLoading, isError: isPostsError }] =
     api.posts.getAll.useSuspenseQuery({ showUnpublished: true })
 
+  const ctx = api.useUtils()
+
+  const { mutate: revalidateCacheTag, isPending: isRevalidateCacheTag } =
+    api.posts.revalidateCacheTag.useMutation({
+      onSuccess: async () => {
+        await ctx.posts.getAll.invalidate()
+        toast('Posts revalidated.')
+      },
+      onError: () => {
+        toast.error('Sorry, an error occurred while revalidating posts.')
+      },
+    })
+
   if (isPostsLoading) {
     return 'Loading...'
   }
@@ -166,15 +179,27 @@ export function EditPostList() {
   }
 
   return (
-    <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
-      {posts.map((post) => (
-        <PostWithActions
-          key={post.id}
-          post={post}
-          userName={formatAuthorName(post.author)}
-          userImageUrl={post.author?.userImageUrl}
-        />
-      ))}
-    </div>
+    <>
+      <div className="pb-4">
+        <Button
+          disabled={isRevalidateCacheTag}
+          onClick={() => {
+            revalidateCacheTag()
+          }}
+        >
+          Revalidate Posts
+        </Button>
+      </div>
+      <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
+        {posts.map((post) => (
+          <PostWithActions
+            key={post.id}
+            post={post}
+            userName={formatAuthorName(post.author)}
+            userImageUrl={post.author?.userImageUrl}
+          />
+        ))}
+      </div>
+    </>
   )
 }

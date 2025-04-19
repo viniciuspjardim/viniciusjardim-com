@@ -213,7 +213,9 @@ export const postRouter = createTRPCRouter({
       })
     }),
 
-  invalidateCache: ownerProcedure.mutation(async () => {
+  revalidateCacheTag: ownerProcedure.mutation(async () => {
+    console.log('trpc.post-router.revalidateCacheTag')
+
     revalidateTag(db.post.baseTag)
     return { success: true }
   }),
