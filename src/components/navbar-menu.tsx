@@ -37,11 +37,8 @@ export function NavbarMenu({ categories }: NavbarMenuProps) {
       {showAdmin && (
         <DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuLabel className="text-sm text-neutral-400">
-            Admin
-          </DropdownMenuLabel>
           <DropdownMenuItem asChild>
-            <Link href="/admin/posts">Posts</Link>
+            <Link href="/admin">Admin</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       )}

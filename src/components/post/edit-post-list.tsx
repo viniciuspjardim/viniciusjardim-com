@@ -4,6 +4,7 @@ import type { s } from '~/db'
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
 import posthog from 'posthog-js'
 import { toast } from 'sonner'
@@ -83,7 +84,7 @@ function PostWithActions({
         )}
       </Link>
 
-      <div className="flex justify-center gap-3">
+      <div className="flex justify-center gap-2">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
@@ -152,21 +153,38 @@ function PostWithActions({
 }
 
 export function EditPostList() {
+  const router = useRouter()
+
   const [posts, { isLoading: isPostsLoading, isError: isPostsError }] =
     api.posts.getAll.useSuspenseQuery({ showUnpublished: true })
 
   const ctx = api.useUtils()
 
-  const { mutate: revalidateCacheTag, isPending: isRevalidateCacheTag } =
+  const { mutate: revalidatePosts, isPending: isRevalidatePostsLoading } =
     api.posts.revalidateCacheTag.useMutation({
       onSuccess: async () => {
-        await ctx.posts.getAll.invalidate()
+        await ctx.posts.invalidate()
+        router.refresh()
         toast('Posts revalidated.')
       },
       onError: () => {
-        toast.error('Sorry, an error occurred while revalidating posts.')
+        toast.error('Sorry, an error occurred while revalidating the posts.')
       },
     })
+
+  const {
+    mutate: revalidateCategories,
+    isPending: isRevalidateCategoriesLoading,
+  } = api.categories.revalidateCacheTag.useMutation({
+    onSuccess: async () => {
+      await ctx.categories.invalidate()
+      router.refresh()
+      toast('Categories revalidated.')
+    },
+    onError: () => {
+      toast.error('Sorry, an error occurred while revalidating the categories.')
+    },
+  })
 
   if (isPostsLoading) {
     return 'Loading...'
@@ -180,15 +198,24 @@ export function EditPostList() {
 
   return (
     <>
-      <div className="pb-4">
-        <Button
-          disabled={isRevalidateCacheTag}
-          onClick={() => {
-            revalidateCacheTag()
-          }}
-        >
-          Revalidate Posts
-        </Button>
+      <div className="mb-6 flex flex-wrap justify-between gap-4">
+        <h2 className="text-2xl font-semibold">Edit posts</h2>
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            disabled={isRevalidatePostsLoading}
+            onClick={() => revalidatePosts()}
+          >
+            Revalidate Posts
+          </Button>
+          <Button
+            variant="outline"
+            disabled={isRevalidateCategoriesLoading}
+            onClick={() => revalidateCategories()}
+          >
+            Revalidate Categories
+          </Button>
+        </div>
       </div>
       <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
         {posts.map((post) => (

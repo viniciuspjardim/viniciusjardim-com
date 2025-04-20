@@ -33,10 +33,7 @@ export default async function PostsAdminPage() {
           />
         </div>
 
-        <div>
-          <h2 className="mb-6 text-2xl font-semibold">Edit posts</h2>
-          <EditPostList />
-        </div>
+        <EditPostList />
       </WidthContainer>
     </HydrateClient>
   )

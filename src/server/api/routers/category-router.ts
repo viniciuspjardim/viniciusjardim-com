@@ -1,6 +1,12 @@
+import { revalidateTag } from 'next/cache'
+
 import { z } from 'zod'
 import { db } from '~/db'
-import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
+import {
+  createTRPCRouter,
+  publicProcedure,
+  ownerProcedure,
+} from '~/server/api/trpc'
 
 export const categoryRouter = createTRPCRouter({
   getOneBySlug: publicProcedure
@@ -15,5 +21,12 @@ export const categoryRouter = createTRPCRouter({
     const categories = await db.category.getAll()
 
     return categories
+  }),
+
+  revalidateCacheTag: ownerProcedure.mutation(async () => {
+    console.log('trpc.categoryRouter.revalidateCacheTag')
+
+    revalidateTag(db.category.baseTag)
+    return { success: true }
   }),
 })
