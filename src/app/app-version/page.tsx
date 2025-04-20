@@ -39,7 +39,7 @@ export default function AppVersionPage() {
         </div>
         <div>
           <Label>URL:</Label>
-          <Value>{env.NEXT_PUBLIC_VERCEL_URL}</Value>
+          <Value>{env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}</Value>
         </div>
         <div>
           <Label>Environment:</Label>

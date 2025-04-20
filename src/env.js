@@ -21,7 +21,7 @@ export const env = createEnv({
     NEXT_PUBLIC_VERCEL_ENV: z.string(),
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF: z.string(),
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: z.string(),
-    NEXT_PUBLIC_VERCEL_URL: z.string(),
+    NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: z.string(),
   },
 
   /**
@@ -52,7 +52,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF,
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA:
       process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
-    NEXT_PUBLIC_VERCEL_URL: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`,
+    NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
   },
 
   /**
