@@ -5,6 +5,14 @@ import Link from 'next/link'
 import { env } from '~/env'
 import { WidthContainer } from '~/components/width-container'
 
+function Label({ children }: { children: React.ReactNode }) {
+  return <span className="block text-neutral-400">{children}</span>
+}
+
+function Value({ children }: { children: React.ReactNode }) {
+  return <span className="block font-semibold">{children}</span>
+}
+
 export default function AppVersionPage() {
   return (
     <WidthContainer className="flex w-full flex-col items-center py-16">
@@ -18,20 +26,24 @@ export default function AppVersionPage() {
           </Link>
         </nav>
         <div>
-          <span className="block text-neutral-400">Build at:</span>
-          <span className="block">{new Date().toISOString()}</span>
+          <Label>Build at:</Label>
+          <Value>{new Date().toISOString()}</Value>
         </div>
         <div>
-          <span className="block text-neutral-400">Deploy branch:</span>
-          <span className="block">{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}</span>
+          <Label>Deploy branch:</Label>
+          <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}</Value>
         </div>
         <div>
-          <span className="block text-neutral-400">Commit hash:</span>
-          <span className="block">{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}</span>
+          <Label>Commit hash:</Label>
+          <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}</Value>
         </div>
         <div>
-          <span className="block text-neutral-400">Environment:</span>
-          <span className="block">{env.NEXT_PUBLIC_VERCEL_ENV}</span>
+          <Label>URL:</Label>
+          <Value>{env.NEXT_PUBLIC_VERCEL_URL}</Value>
+        </div>
+        <div>
+          <Label>Environment:</Label>
+          <Value>{env.NEXT_PUBLIC_VERCEL_ENV}</Value>
         </div>
       </div>
     </WidthContainer>
