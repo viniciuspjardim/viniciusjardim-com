@@ -18,7 +18,10 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string(),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().url(),
     NEXT_PUBLIC_POSTHOG_KEY: z.string(),
-    NEXT_PUBLIC_SITE_URL: z.string().url(),
+    NEXT_PUBLIC_VERCEL_VERCEL_ENV: z.string(),
+    NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF: z.string(),
+    NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: z.string(),
+    NEXT_PUBLIC_VERCEL_URL: z.string(),
   },
 
   /**
@@ -41,7 +44,15 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+
+    // Public variables from Vercel
+    // (see https://vercel.com/docs/environment-variables/system-environment-variables)
+    NEXT_PUBLIC_VERCEL_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_VERCEL_ENV,
+    NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF:
+      process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF,
+    NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA:
+      process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
+    NEXT_PUBLIC_VERCEL_URL: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`,
   },
 
   /**
