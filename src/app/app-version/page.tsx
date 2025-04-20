@@ -31,7 +31,7 @@ export default function AppVersionPage() {
         </div>
         <div>
           <span className="block text-neutral-400">Environment:</span>
-          <span className="block">{env.NEXT_PUBLIC_VERCEL_VERCEL_ENV}</span>
+          <span className="block">{env.NEXT_PUBLIC_VERCEL_ENV}</span>
         </div>
       </div>
     </WidthContainer>
