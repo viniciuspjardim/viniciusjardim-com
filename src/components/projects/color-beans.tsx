@@ -31,7 +31,7 @@ export function ColorBeans() {
           Play Color Beans
         </Link>
         <Link
-          className="inline-flex items-center gap-1 text-sm text-neutral-500 transition-colors hover:text-neutral-400"
+          className="inline-flex items-center gap-1 text-sm text-neutral-400 transition-colors hover:text-neutral-300"
           href="https://github.com/viniciuspjardim/color-beans"
           target="_blank"
           onClick={(event) => event.stopPropagation()}

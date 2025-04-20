@@ -36,6 +36,7 @@ export async function Navbar() {
               className="flex items-center gap-1 rounded-md px-2 py-0 text-sm font-medium transition-all hover:bg-neutral-800 hover:text-white"
               href="https://github.com/viniciuspjardim"
               target="_blank"
+              aria-label="GitHub"
             >
               <GitHubLogoIcon className="size-5" />
               <span className="hidden md:block">GitHub</span>
@@ -46,7 +47,12 @@ export async function Navbar() {
 
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button className="group px-1" variant="ghost" size="sm">
+              <Button
+                className="group px-1"
+                variant="ghost"
+                size="sm"
+                aria-label="Menu"
+              >
                 <MenuIcon className="size-6 group-data-[state=open]:hidden" />
                 <XIcon className="size-6 group-data-[state=closed]:hidden" />
               </Button>
