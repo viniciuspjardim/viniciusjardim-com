@@ -22,6 +22,7 @@ export function ColorBeans() {
           className="pb-1"
           src="/color-beans-2-icon.png"
           alt="Color Beans logo"
+          priority
           width={48}
           height={48}
         />

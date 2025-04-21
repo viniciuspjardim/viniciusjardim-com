@@ -48,6 +48,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
   const [error, setError] = useState('')
 
   const [imageSrc, setImageSrc] = useState('')
+  const [imageDescription, setImageDescription] = useState('')
   const [imageAlt, setImageAlt] = useState('')
   const [imageIsPriority, setImageIsPriority] = useState(false)
   const [imageWidth, setImageWidth] = useState('')
@@ -59,6 +60,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
     setError('')
 
     setImageSrc('')
+    setImageDescription('')
     setImageAlt('')
     setImageIsPriority(false)
     setImageWidth('')
@@ -81,6 +83,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
 
     const attributes: ImageAttributes = {
       src: imageSrc,
+      description: imageDescription || undefined,
       alt: imageAlt || undefined,
       isPriority: imageIsPriority || undefined,
       width: imageWidth || undefined,
@@ -99,6 +102,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
           onClick={() => {
             const attributes = getSelectedImageAttributes(editor)
             setImageSrc(attributes?.src || '')
+            setImageDescription(attributes?.description || '')
             setImageAlt(attributes?.alt || '')
             setImageIsPriority(attributes?.isPriority || false)
             setImageWidth(attributes?.width || '')
@@ -185,7 +189,17 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="imageAlt">Description:</Label>
+            <Label htmlFor="imageDescription">Description:</Label>
+            <Textarea
+              className="block w-full"
+              id="imageDescription"
+              maxLength={200}
+              value={imageDescription}
+              onChange={(event) => setImageDescription(event.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="imageAlt">Alt:</Label>
             <Textarea
               className="block w-full"
               id="imageAlt"

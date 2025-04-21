@@ -145,7 +145,7 @@ export function JsonParser(node: JSONContent) {
       )
     case 'image':
       return (
-        <div className="py-2">
+        <div className="space-y-2 py-2">
           <Image
             className="rounded-md bg-neutral-950"
             src={node.attrs?.src as string}
@@ -155,6 +155,11 @@ export function JsonParser(node: JSONContent) {
             height={(node.attrs?.height as `${number}`) ?? '432'}
             quality={90}
           />
+          {node.attrs?.description && (
+            <p className="text-muted-foreground text-lg font-medium">
+              {node.attrs?.description}
+            </p>
+          )}
         </div>
       )
     case 'video':

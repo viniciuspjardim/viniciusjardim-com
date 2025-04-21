@@ -2,6 +2,7 @@ import Image from '@tiptap/extension-image'
 
 export type ImageAttributes = {
   src: string
+  description?: string
   alt?: string
   title?: string
   isPriority?: boolean
@@ -14,6 +15,9 @@ export const TipTapImage = Image.extend({
     return {
       src: {
         default: '',
+      },
+      description: {
+        default: undefined,
       },
       alt: {
         default: undefined,
