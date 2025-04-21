@@ -150,6 +150,7 @@ export function JsonParser(node: JSONContent) {
             className="rounded-md bg-neutral-950"
             src={node.attrs?.src as string}
             alt={node.attrs?.alt as string}
+            priority={(node.attrs?.isPriority as boolean) ?? false}
             width={(node.attrs?.width as `${number}`) ?? '768'}
             height={(node.attrs?.height as `${number}`) ?? '432'}
             quality={90}

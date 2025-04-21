@@ -41,30 +41,37 @@ function getSelectedImageAttributes(editor: Editor) {
 }
 
 export function ImageDialog({ editor }: ImageDialogProps) {
-  const [imgHeight, setImgHeight] = useState(0)
-  const [imgWidth, setImgWidth] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
-  const [imageSrc, setImageSrc] = useState('')
-  const [imageAlt, setImageAlt] = useState('')
-  const [imageWidth, setImageWidth] = useState('')
-  const [imageHeight, setImageHeight] = useState('')
+  const [sourceImageHeight, setSourceImageHeight] = useState(0)
+  const [sourceImageWidth, setSourceImageWidth] = useState(0)
   const [keepAspect, setKeepAspect] = useState(true)
   const [error, setError] = useState('')
 
+  const [imageSrc, setImageSrc] = useState('')
+  const [imageAlt, setImageAlt] = useState('')
+  const [imageIsPriority, setImageIsPriority] = useState(false)
+  const [imageWidth, setImageWidth] = useState('')
+  const [imageHeight, setImageHeight] = useState('')
+
   const resetState = () => {
     setIsOpen(false)
-    setImageSrc('')
-    setImageAlt('')
-    setImageWidth('')
-    setImageHeight('')
     setKeepAspect(true)
     setError('')
+
+    setImageSrc('')
+    setImageAlt('')
+    setImageIsPriority(false)
+    setImageWidth('')
+    setImageHeight('')
   }
 
   const isDisabled = !editor || !imageSrc
-  const imgAspect = imgWidth && imgHeight ? imgWidth / imgHeight : null
+  const imgAspect =
+    sourceImageWidth && sourceImageHeight
+      ? sourceImageWidth / sourceImageHeight
+      : null
   const imgProperties = imgAspect
-    ? `${imgWidth}w X ${imgHeight}h • Aspect: ${imgAspect.toFixed(4)}`
+    ? `${sourceImageWidth}w X ${sourceImageHeight}h • Aspect: ${imgAspect.toFixed(4)}`
     : null
 
   const addImage = () => {
@@ -74,9 +81,10 @@ export function ImageDialog({ editor }: ImageDialogProps) {
 
     const attributes: ImageAttributes = {
       src: imageSrc,
-      alt: imageAlt ? imageAlt : undefined,
-      width: imageWidth ? imageWidth : undefined,
-      height: imageHeight ? imageHeight : undefined,
+      alt: imageAlt || undefined,
+      isPriority: imageIsPriority || undefined,
+      width: imageWidth || undefined,
+      height: imageHeight || undefined,
     }
 
     editor.chain().focus().setImage(attributes).run()
@@ -92,6 +100,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             const attributes = getSelectedImageAttributes(editor)
             setImageSrc(attributes?.src || '')
             setImageAlt(attributes?.alt || '')
+            setImageIsPriority(attributes?.isPriority || false)
             setImageWidth(attributes?.width || '')
             setImageHeight(attributes?.height || '')
           }}
@@ -113,8 +122,8 @@ export function ImageDialog({ editor }: ImageDialogProps) {
                   src={imageSrc}
                   alt={imageAlt}
                   onLoad={(event) => {
-                    setImgWidth(event.currentTarget.naturalWidth)
-                    setImgHeight(event.currentTarget.naturalHeight)
+                    setSourceImageWidth(event.currentTarget.naturalWidth)
+                    setSourceImageHeight(event.currentTarget.naturalHeight)
 
                     if (imageWidth || imageHeight) {
                       return
@@ -185,11 +194,29 @@ export function ImageDialog({ editor }: ImageDialogProps) {
               onChange={(event) => setImageAlt(event.target.value)}
             />
           </div>
+          <div className="space-y-1">
+            <div className="flex gap-2">
+              <input
+                className="size-4"
+                type="checkbox"
+                id="isPriority"
+                name="ratio"
+                checked={imageIsPriority}
+                onChange={(event) => setImageIsPriority(event.target.checked)}
+              />
+              <Label htmlFor="isPriority">Priority image</Label>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              Select this option for images that appear above the fold. The
+              image will preload and won&apos;t use lazy loading.
+            </p>
+          </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="imageWidth">Width:</Label>
-              <div className="flex gap-1.5">
+              <div className="flex gap-2">
                 <input
+                  className="size-4"
                   type="checkbox"
                   id="ratio"
                   name="ratio"

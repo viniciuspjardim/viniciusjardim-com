@@ -4,6 +4,7 @@ export type ImageAttributes = {
   src: string
   alt?: string
   title?: string
+  isPriority?: boolean
   width?: string
   height?: string
 }
@@ -18,6 +19,9 @@ export const TipTapImage = Image.extend({
         default: undefined,
       },
       title: {
+        default: undefined,
+      },
+      isPriority: {
         default: undefined,
       },
       width: {
