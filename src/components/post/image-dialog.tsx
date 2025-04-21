@@ -18,10 +18,6 @@ import { EditorButton } from '~/components/post/editor-button'
 import { type ImageAttributes } from '~/helpers/tiptap-image'
 import { UploadButton } from '~/utils/uploadthing'
 
-type ImageDialogProps = {
-  editor: Editor
-}
-
 function getSelectedImageAttributes(editor: Editor) {
   if (!editor) {
     return null
@@ -38,6 +34,10 @@ function getSelectedImageAttributes(editor: Editor) {
   }
 
   return null
+}
+
+type ImageDialogProps = {
+  editor: Editor
 }
 
 export function ImageDialog({ editor }: ImageDialogProps) {
@@ -98,7 +98,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <EditorButton
-          title="Add image"
+          title="Image"
           onClick={() => {
             const attributes = getSelectedImageAttributes(editor)
             setImageSrc(attributes?.src || '')

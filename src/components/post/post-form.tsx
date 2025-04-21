@@ -10,7 +10,6 @@ import {
   Undo2Icon,
   Redo2Icon,
   CodeIcon,
-  BracesIcon,
   LinkIcon,
   Heading3Icon,
   Heading4Icon,
@@ -40,6 +39,7 @@ import { Textarea } from '~/components/ui/textarea'
 import { useEditor } from '~/hooks/use-editor'
 import { EditorButton } from '~/components/post/editor-button'
 import { ImageDialog } from '~/components/post/image-dialog'
+import { CodeBlockDialog } from '~/components/post/code-block-dialog'
 
 export interface PostFormInputs {
   title: string
@@ -327,13 +327,7 @@ export function PostForm({
           >
             <CodeIcon className="size-5" />
           </EditorButton>
-          <EditorButton
-            title="Code block"
-            isActive={editor?.isActive('codeBlock')}
-            onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
-          >
-            <BracesIcon className="size-5" />
-          </EditorButton>
+          <CodeBlockDialog editor={editor} />
           <EditorButton
             title="Link"
             isActive={editor?.isActive('link')}
@@ -347,7 +341,7 @@ export function PostForm({
           >
             br
           </EditorButton>
-          <EditorButton title="Add video" onClick={addVideo}>
+          <EditorButton title="Video" onClick={addVideo}>
             <VideoIcon className="size-5" />
           </EditorButton>
           <EditorButton
