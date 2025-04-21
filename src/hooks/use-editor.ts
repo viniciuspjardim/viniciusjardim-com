@@ -5,6 +5,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
 import { TipTapImage } from '~/helpers/tiptap-image'
+import { TipTapCodeBlock } from '~/helpers/tiptap-code-block'
 import { Speech } from '~/helpers/tiptap-speech'
 import { Video } from '~/helpers/tiptap-video'
 
@@ -17,7 +18,7 @@ export function useEditor(content?: JSONContent) {
       },
     },
     extensions: [
-      StarterKit,
+      StarterKit.configure({ codeBlock: false }),
       Placeholder.configure({ placeholder: 'Write your post here...' }),
       Link.configure({
         openOnClick: false,
@@ -25,6 +26,7 @@ export function useEditor(content?: JSONContent) {
         defaultProtocol: 'https',
       }),
       TipTapImage,
+      TipTapCodeBlock,
       Speech,
       Video,
     ],

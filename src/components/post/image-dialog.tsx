@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { NodeSelection } from 'prosemirror-state'
 import { ImageIcon } from 'lucide-react'
-import { type Editor } from '~/hooks/use-editor'
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogTrigger,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
@@ -15,26 +14,12 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Textarea } from '~/components/ui/textarea'
 import { EditorButton } from '~/components/post/editor-button'
-import { type ImageAttributes } from '~/helpers/tiptap-image'
 import { UploadButton } from '~/utils/uploadthing'
-
-function getSelectedImageAttributes(editor: Editor) {
-  if (!editor) {
-    return null
-  }
-
-  const { selection } = editor.state
-
-  if (selection instanceof NodeSelection) {
-    const node = selection.node
-
-    if (node.type.name === 'image') {
-      return { ...node.attrs } as ImageAttributes
-    }
-  }
-
-  return null
-}
+import {
+  getSelectedImageAttributes,
+  type ImageAttributes,
+} from '~/helpers/tiptap-image'
+import { type Editor } from '~/hooks/use-editor'
 
 type ImageDialogProps = {
   editor: Editor
@@ -115,6 +100,9 @@ export function ImageDialog({ editor }: ImageDialogProps) {
       <DialogContent className="bg-card flex max-h-svh flex-col gap-0 rounded-md p-0">
         <DialogHeader className="border-b px-6 py-5">
           <DialogTitle>Image properties</DialogTitle>
+          <DialogDescription>
+            Configure your code block properties.
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 overflow-y-auto px-6 py-5">
           <div className="dark:bg-input/30 relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border">
@@ -214,7 +202,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
                 className="size-4"
                 type="checkbox"
                 id="isPriority"
-                name="ratio"
+                name="isPriority"
                 checked={imageIsPriority}
                 onChange={(event) => setImageIsPriority(event.target.checked)}
               />
