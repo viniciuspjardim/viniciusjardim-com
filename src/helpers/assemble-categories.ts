@@ -1,18 +1,18 @@
-export type Category = {
+export type RecursiveCategory = {
   id: number
   slug: string
   title: string
   description: string | null
   keywords: string | null
   parentId: number | null
-  subcategories: Category[]
+  subcategories: RecursiveCategory[]
 }
 
-export type FlatCategory = Omit<Category, 'subcategories'>
+export type Category = Omit<RecursiveCategory, 'subcategories'>
 
-export const withSubcategory = (flatCategory: FlatCategory): Category => {
-  const subcategories: Category[] = []
-  return { ...flatCategory, subcategories }
+export const withSubcategory = (category: Category): RecursiveCategory => {
+  const subcategories: RecursiveCategory[] = []
+  return { ...category, subcategories }
 }
 
 export function indexCategories<T extends { id: number }>(categories: T[]) {
@@ -22,12 +22,12 @@ export function indexCategories<T extends { id: number }>(categories: T[]) {
   return index
 }
 
-export function assembleCategories(flatCategories: FlatCategory[]) {
-  const categories = flatCategories.map(withSubcategory)
-  const index = indexCategories(categories)
-  const rootCategories: Category[] = []
+export function assembleCategories(categories: Category[]) {
+  const recursiveCategories = categories.map(withSubcategory)
+  const index = indexCategories(recursiveCategories)
+  const rootCategories: RecursiveCategory[] = []
 
-  categories.forEach((category) => {
+  recursiveCategories.forEach((category) => {
     if (!category.parentId) {
       rootCategories.push(category)
       return
@@ -41,11 +41,11 @@ export function assembleCategories(flatCategories: FlatCategory[]) {
 }
 
 export function getCategoriesBreadcrumbs(
-  flatCategories: FlatCategory[],
+  categories: Category[],
   categoryId: number
 ) {
-  const index = indexCategories(flatCategories)
-  const breadcrumbs: FlatCategory[] = []
+  const index = indexCategories(categories)
+  const breadcrumbs: Category[] = []
 
   let currentCategory = index.get(categoryId)
 

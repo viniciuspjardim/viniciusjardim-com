@@ -2,7 +2,7 @@ import { describe, it, expect } from 'bun:test'
 import { assembleCategories, type Category } from './assemble-categories'
 
 describe('assembleCategories', () => {
-  const flatCategories: Category[] = [
+  const categories: Category[] = [
     {
       id: 1,
       slug: 'default',
@@ -10,7 +10,6 @@ describe('assembleCategories', () => {
       description: null,
       keywords: null,
       parentId: null,
-      subcategories: [],
     },
     {
       id: 2,
@@ -19,7 +18,6 @@ describe('assembleCategories', () => {
       description: null,
       keywords: null,
       parentId: null,
-      subcategories: [],
     },
     {
       id: 3,
@@ -28,7 +26,6 @@ describe('assembleCategories', () => {
       description: null,
       keywords: null,
       parentId: 2,
-      subcategories: [],
     },
     {
       id: 4,
@@ -37,12 +34,11 @@ describe('assembleCategories', () => {
       description: null,
       keywords: null,
       parentId: 2,
-      subcategories: [],
     },
   ]
 
   it('should assemble categories with subcategories', () => {
-    const { rootCategories, index } = assembleCategories(flatCategories)
+    const { rootCategories, index } = assembleCategories(categories)
 
     expect(rootCategories.length).toEqual(2)
     expect(index.size).toEqual(4)

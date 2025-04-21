@@ -6,7 +6,7 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react'
 import { cn } from '~/lib/utils'
 import {
   getCategoriesBreadcrumbs,
-  type FlatCategory,
+  type Category,
 } from '~/helpers/assemble-categories'
 
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
@@ -104,7 +104,7 @@ function BreadcrumbEllipsis({
 }
 
 type PostBreadcrumbProps = {
-  categories: FlatCategory[]
+  categories: Category[]
   categoryId: number
 }
 

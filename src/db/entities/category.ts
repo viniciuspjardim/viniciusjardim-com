@@ -35,10 +35,10 @@ export async function getAll() {
   cacheTag(baseTag)
   console.log('db.category.getAll')
 
-  const flatCategories = await idb
+  const categories = await idb
     .select()
     .from(s.category)
     .orderBy(desc(s.category.rank), asc(s.category.createdAt))
 
-  return flatCategories
+  return categories
 }
