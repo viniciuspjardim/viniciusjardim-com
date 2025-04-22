@@ -2,7 +2,7 @@ import type { JSONContent } from '@tiptap/core'
 
 import React from 'react'
 import Image from 'next/image'
-import { FileIcon } from 'lucide-react'
+import { FileIcon, TerminalIcon } from 'lucide-react'
 
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
@@ -96,6 +96,13 @@ function CodeBlock({
     <code>{contentText}</code>
   )
 
+  const fileIcon =
+    fileName === 'Terminal' ? (
+      <TerminalIcon className="size-4" />
+    ) : (
+      <FileIcon className="size-4" />
+    )
+
   return (
     <div className="overflow-clip rounded-md border">
       <div
@@ -104,7 +111,7 @@ function CodeBlock({
       >
         {fileName ? (
           <span className="text-muted-foreground inline-flex items-center gap-2 text-sm font-medium">
-            <FileIcon className="size-4" />
+            {fileIcon}
             <span>{fileName}</span>
           </span>
         ) : (
