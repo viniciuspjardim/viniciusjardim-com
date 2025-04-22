@@ -2,6 +2,7 @@ import type { JSONContent } from '@tiptap/core'
 
 import React from 'react'
 import Image from 'next/image'
+import { FileIcon } from 'lucide-react'
 
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
@@ -18,6 +19,7 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-zig'
 
+import { CopyButton } from '~/components/post/copy-button'
 import { sanitizeHtml } from '~/helpers/sanitize-html'
 import { generateHeadingItem } from '~/helpers/tiptap-utils'
 
@@ -70,31 +72,48 @@ function Heading({ level = 1, id, children }: HeadingProps) {
 type CodeBlockProps = {
   language?: string
   contentText?: string
+  fileName?: string
+  showCopyButton?: boolean
 }
 
 function CodeBlock({
-  language = 'plaintext',
   contentText = '',
+  language = 'plaintext',
+  fileName,
+  showCopyButton,
 }: CodeBlockProps) {
   const gramar = Prism.languages?.[language]
+  const headerState = fileName || showCopyButton ? 'visible' : 'hidden'
 
-  if (!gramar) {
-    return (
-      <pre>
-        <code>{contentText}</code>
-      </pre>
-    )
-  }
+  const codeContent = gramar ? (
+    <code
+      className={`language-${language}`}
+      dangerouslySetInnerHTML={{
+        __html: sanitizeHtml(Prism.highlight(contentText, gramar, language)),
+      }}
+    />
+  ) : (
+    <code>{contentText}</code>
+  )
 
   return (
-    <pre>
-      <code
-        className={`language-${language}`}
-        dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(Prism.highlight(contentText, gramar, language)),
-        }}
-      />
-    </pre>
+    <div className="overflow-clip rounded-md border">
+      <div
+        className="flex min-h-10 items-center justify-between border-b px-4 py-1 data-[state=hidden]:hidden"
+        data-state={headerState}
+      >
+        {fileName ? (
+          <span className="text-muted-foreground inline-flex items-center gap-2 text-sm font-medium">
+            <FileIcon className="size-4" />
+            <span>{fileName}</span>
+          </span>
+        ) : (
+          <span />
+        )}
+        {showCopyButton && <CopyButton textToCopy={contentText} />}
+      </div>
+      <pre>{codeContent}</pre>
+    </div>
   )
 }
 
@@ -139,8 +158,10 @@ export function JsonParser(node: JSONContent) {
     case 'codeBlock':
       return (
         <CodeBlock
-          language={node.attrs?.language as string}
           contentText={node.content?.[0]?.text}
+          language={node.attrs?.language as string}
+          fileName={node.attrs?.fileName as string}
+          showCopyButton={node.attrs?.showCopyButton as boolean}
         />
       )
     case 'image':

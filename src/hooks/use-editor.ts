@@ -26,7 +26,11 @@ export function useEditor(content?: JSONContent) {
         defaultProtocol: 'https',
       }),
       TipTapImage,
-      TipTapCodeBlock,
+      TipTapCodeBlock.configure({
+        HTMLAttributes: {
+          class: 'rounded-md border',
+        },
+      }),
       Speech,
       Video,
     ],
