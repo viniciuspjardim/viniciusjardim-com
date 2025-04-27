@@ -21,6 +21,24 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Create test env file
+        run: |
+          cat > .env << EOL
+          CLERK_SECRET_KEY="test"
+          DATABASE_URL="postgres://test:test@localhost:5432/test"
+          OPEN_AI_API_KEY="test"
+          SITE_OWNER_USER_ID="test"
+          UPLOADTHING_TOKEN="test"
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="test"
+          NEXT_PUBLIC_CLERK_SIGN_IN_URL="test"
+          NEXT_PUBLIC_POSTHOG_HOST="https://test.com"
+          NEXT_PUBLIC_POSTHOG_KEY="test"
+          NEXT_PUBLIC_VERCEL_ENV="test"
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF="test"
+          NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA="test"
+          NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL="test.com"
+          EOL
+
       - name: Run tests
         run: bun test
 
