@@ -28,9 +28,7 @@ export default async function EditorPage({
 
   return (
     <HydrateClient>
-      <WidthContainer className="space-y-8 py-16">
-        <h1 className="text-3xl font-semibold">Editor</h1>
-
+      <WidthContainer className="py-4">
         <PostForm
           initialPostData={post}
           userName={user.fullName || 'Anonymous'}

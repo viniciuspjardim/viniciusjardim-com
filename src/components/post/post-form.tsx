@@ -4,6 +4,7 @@ import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
 import { useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import {
@@ -66,8 +67,11 @@ export function PostForm({
   userName,
   userImageUrl,
 }: PostFormProps) {
+  const postIdParam = useSearchParams().get('postId')
+  const postId = postIdParam ? parseInt(postIdParam, 10) : undefined
   const [categoriesData] = api.categories.getAll.useSuspenseQuery()
 
+  // Create post mutation
   const { mutateAsync: createPost, isPending: isCreatePostLoading } =
     api.posts.create.useMutation()
 
@@ -86,16 +90,17 @@ export function PostForm({
     })
   }
 
+  // Edit post mutation
   const { mutateAsync: editPost, isPending: isEditPostLoading } =
     api.posts.update.useMutation()
 
   async function handleEditPost(form: PostFormInputs, content: string) {
-    if (!initialPostData) {
+    if (!postId) {
       throw new Error('Initial post data is required for editing')
     }
 
     return editPost({
-      id: initialPostData.id,
+      id: postId,
       slug: asSlug(form.title),
       title: form.title,
       description: form.description || undefined,
@@ -109,9 +114,8 @@ export function PostForm({
     })
   }
 
-  const defaultValues = initialPostData ? { ...initialPostData } : undefined
-  const isPosting = initialPostData ? isEditPostLoading : isCreatePostLoading
-  const onSubmit = initialPostData ? handleEditPost : handleCreatePost
+  const isPosting = postId ? isEditPostLoading : isCreatePostLoading
+  const onSubmit = postId ? handleEditPost : handleCreatePost
 
   const {
     register,
@@ -121,23 +125,23 @@ export function PostForm({
     formState: { isValid: isFormValid },
   } = useForm<PostFormInputs>({
     defaultValues: {
-      title: defaultValues?.title ?? '',
-      description: defaultValues?.description ?? '',
-      keywords: defaultValues?.keywords ?? '',
-      rank: defaultValues?.rank ? defaultValues.rank.toString() : '',
-      categoryId: defaultValues?.categoryId
-        ? defaultValues.categoryId.toString()
+      title: initialPostData?.title ?? '',
+      description: initialPostData?.description ?? '',
+      keywords: initialPostData?.keywords ?? '',
+      rank: initialPostData?.rank ? initialPostData.rank.toString() : '',
+      categoryId: initialPostData?.categoryId
+        ? initialPostData.categoryId.toString()
         : '1',
-      lang: defaultValues?.lang ?? 'en-US',
-      writtenAt: defaultValues?.writtenAt
-        ? defaultValues.writtenAt.toISOString()
+      lang: initialPostData?.lang ?? 'en-US',
+      writtenAt: initialPostData?.writtenAt
+        ? initialPostData.writtenAt.toISOString()
         : '',
-      content: defaultValues?.content,
-      published: defaultValues?.published ?? false,
+      content: initialPostData?.content,
+      published: initialPostData?.published ?? false,
     },
   })
 
-  const { EditorContent, editor } = useEditor(defaultValues?.content)
+  const { EditorContent, editor } = useEditor(initialPostData?.content)
 
   const slug = asSlug(watch('title') ?? '')
   const published = watch('published')
@@ -147,8 +151,15 @@ export function PostForm({
     const editorJson = JSON.stringify(editor?.getJSON() ?? {})
 
     try {
-      await onSubmit(formData, editorJson)
-      toast(defaultValues ? 'Changes saved!' : 'Post published!')
+      const post = await onSubmit(formData, editorJson)
+      toast(postId ? 'Post changes were saved' : 'Post created successfully')
+
+      // After creating the post add the postId query param without reloading the page
+      if (!postId) {
+        const params = new URLSearchParams()
+        params.set('postId', post.id.toString())
+        window.history.replaceState(null, '', `?${params.toString()}`)
+      }
     } catch (error) {
       let description = 'There was a problem with your request.'
 
