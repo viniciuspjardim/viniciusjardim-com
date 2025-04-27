@@ -1,7 +1,9 @@
+'use client'
+
 import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
-import { useCallback, type ReactNode } from 'react'
+import { useCallback } from 'react'
 import Image from 'next/image'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import {
@@ -54,30 +56,68 @@ export interface PostFormInputs {
 }
 
 export interface PostFormProps {
-  defaultValues?: s.Post
-  isPosting: boolean
-  onSubmit: (form: PostFormInputs, editorJson: string) => Promise<s.Post>
+  initialPostData?: s.Post
   userName?: string
   userImageUrl?: string
-  extraActions?: ReactNode
 }
 
 export function PostForm({
-  defaultValues,
-  isPosting,
-  onSubmit,
+  initialPostData,
   userName,
   userImageUrl,
-  extraActions,
 }: PostFormProps) {
   const [categoriesData] = api.categories.getAll.useSuspenseQuery()
+
+  const { mutateAsync: createPost, isPending: isCreatePostLoading } =
+    api.posts.create.useMutation()
+
+  async function handleCreatePost(form: PostFormInputs, content: string) {
+    return createPost({
+      slug: asSlug(form.title),
+      title: form.title,
+      description: form.description || undefined,
+      keywords: form.keywords || undefined,
+      content: JSON.parse(content) as JSONContent,
+      rank: form.rank ? parseInt(form.rank, 10) : undefined,
+      categoryId: parseInt(form.categoryId, 10),
+      lang: form.lang ? form.lang : undefined,
+      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
+      published: form.published ?? false,
+    })
+  }
+
+  const { mutateAsync: editPost, isPending: isEditPostLoading } =
+    api.posts.update.useMutation()
+
+  async function handleEditPost(form: PostFormInputs, content: string) {
+    if (!initialPostData) {
+      throw new Error('Initial post data is required for editing')
+    }
+
+    return editPost({
+      id: initialPostData.id,
+      slug: asSlug(form.title),
+      title: form.title,
+      description: form.description || undefined,
+      keywords: form.keywords || undefined,
+      content: JSON.parse(content) as JSONContent,
+      rank: form.rank ? parseInt(form.rank, 10) : undefined,
+      lang: form.lang ? form.lang : undefined,
+      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
+      categoryId: parseInt(form.categoryId, 10),
+      published: form.published ?? false,
+    })
+  }
+
+  const defaultValues = initialPostData ? { ...initialPostData } : undefined
+  const isPosting = initialPostData ? isEditPostLoading : isCreatePostLoading
+  const onSubmit = initialPostData ? handleEditPost : handleCreatePost
 
   const {
     register,
     handleSubmit,
     control,
     watch,
-    reset,
     formState: { isValid: isFormValid },
   } = useForm<PostFormInputs>({
     defaultValues: {
@@ -108,9 +148,6 @@ export function PostForm({
 
     try {
       await onSubmit(formData, editorJson)
-      reset()
-      editor?.commands.setContent('')
-
       toast(defaultValues ? 'Changes saved!' : 'Post published!')
     } catch (error) {
       let description = 'There was a problem with your request.'
@@ -464,9 +501,6 @@ export function PostForm({
 
         {/* Editor footer */}
         <div className="sticky bottom-0 flex justify-end space-x-2 p-2">
-          {/* Insert extra actions (like a Cancel button) if needed */}
-          {extraActions}
-
           <Button
             variant="outline"
             disabled={isPosting || !isValid}

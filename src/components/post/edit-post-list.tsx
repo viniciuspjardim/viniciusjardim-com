@@ -2,15 +2,12 @@
 
 import type { s } from '~/db'
 
-import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
 import posthog from 'posthog-js'
 import { toast } from 'sonner'
 
 import { api } from '~/trpc/react'
-import { EditPostForm } from './edit-post-form'
 import { Button } from '~/components/ui/button'
 import {
   AlertDialog,
@@ -23,22 +20,13 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '~/components/ui/alert-dialog'
-import { formatAuthorName } from '~/helpers/format-author-name'
 
 type PostWithActionsProps = {
   post: s.Post
-  userName: string
-  userImageUrl?: string
 }
 
-function PostWithActions({
-  post,
-  userName,
-  userImageUrl,
-}: PostWithActionsProps) {
+function PostWithActions({ post }: PostWithActionsProps) {
   const ctx = api.useUtils()
-  const [isEditing, setIsEditing] = useState(false)
-
   const { mutateAsync: remove, isPending: isRemovingPost } =
     api.posts.remove.useMutation({
       onSuccess: async () => {
@@ -48,18 +36,6 @@ function PostWithActions({
 
   const { mutate: generateSpeech, isPending: isGenerateSpeechLoading } =
     api.posts.generateSpeech.useMutation()
-
-  if (isEditing)
-    return (
-      <div className="mb-6 px-4 py-16">
-        <EditPostForm
-          post={post}
-          userName={userName}
-          userImageUrl={userImageUrl}
-          closeForm={() => setIsEditing(false)}
-        />
-      </div>
-    )
 
   const { id, slug } = post
 
@@ -140,12 +116,10 @@ function PostWithActions({
           {isGenerateSpeechLoading ? '...' : '🔊'}
         </Button>
 
-        <Button
-          className="px-2"
-          disabled={isRemovingPost}
-          onClick={() => setIsEditing(true)}
-        >
-          <Edit3Icon className="size-5" />
+        <Button className="px-2" disabled={isRemovingPost} asChild>
+          <Link href={{ pathname: '/admin/editor', query: { slug } }}>
+            <Edit3Icon className="size-5" />
+          </Link>
         </Button>
       </div>
     </div>
@@ -153,38 +127,8 @@ function PostWithActions({
 }
 
 export function EditPostList() {
-  const router = useRouter()
-
   const [posts, { isLoading: isPostsLoading, isError: isPostsError }] =
     api.posts.getAll.useSuspenseQuery({ showUnpublished: true })
-
-  const ctx = api.useUtils()
-
-  const { mutate: revalidatePosts, isPending: isRevalidatePostsLoading } =
-    api.posts.revalidateCacheTag.useMutation({
-      onSuccess: async () => {
-        await ctx.posts.invalidate()
-        router.refresh()
-        toast('Posts revalidated.')
-      },
-      onError: () => {
-        toast.error('Sorry, an error occurred while revalidating the posts.')
-      },
-    })
-
-  const {
-    mutate: revalidateCategories,
-    isPending: isRevalidateCategoriesLoading,
-  } = api.categories.revalidateCacheTag.useMutation({
-    onSuccess: async () => {
-      await ctx.categories.invalidate()
-      router.refresh()
-      toast('Categories revalidated.')
-    },
-    onError: () => {
-      toast.error('Sorry, an error occurred while revalidating the categories.')
-    },
-  })
 
   if (isPostsLoading) {
     return 'Loading...'
@@ -197,36 +141,10 @@ export function EditPostList() {
   }
 
   return (
-    <>
-      <div className="mb-6 flex flex-wrap justify-between gap-4">
-        <h2 className="text-2xl font-semibold">Edit posts</h2>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            disabled={isRevalidatePostsLoading}
-            onClick={() => revalidatePosts()}
-          >
-            Revalidate Posts
-          </Button>
-          <Button
-            variant="outline"
-            disabled={isRevalidateCategoriesLoading}
-            onClick={() => revalidateCategories()}
-          >
-            Revalidate Categories
-          </Button>
-        </div>
-      </div>
-      <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
-        {posts.map((post) => (
-          <PostWithActions
-            key={post.id}
-            post={post}
-            userName={formatAuthorName(post.author)}
-            userImageUrl={post.author?.userImageUrl}
-          />
-        ))}
-      </div>
-    </>
+    <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
+      {posts.map((post) => (
+        <PostWithActions key={post.id} post={post} />
+      ))}
+    </div>
   )
 }

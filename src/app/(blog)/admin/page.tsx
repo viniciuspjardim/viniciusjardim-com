@@ -2,13 +2,13 @@ import { redirect } from 'next/navigation'
 import { currentUser } from '@clerk/nextjs/server'
 import { RedirectToSignIn } from '@clerk/nextjs'
 
-import { CreatePostForm } from '~/components/post/create-post-form'
-import { EditPostList } from '~/components/post/edit-post-list'
-import { WidthContainer } from '~/components/width-container'
 import { env } from '~/env'
 import { api, HydrateClient } from '~/trpc/server'
+import { AdminNav } from '~/components/admin-nav'
+import { WidthContainer } from '~/components/width-container'
+import { EditPostList } from '~/components/post/edit-post-list'
 
-export default async function PostsAdminPage() {
+export default async function AdminPage() {
   const user = await currentUser()
 
   if (!user) {
@@ -22,17 +22,8 @@ export default async function PostsAdminPage() {
 
   return (
     <HydrateClient>
-      <WidthContainer className="space-y-12 py-12">
-        <h1 className="text-3xl font-semibold">Posts</h1>
-
-        <div>
-          <h2 className="mb-6 text-2xl font-semibold">Create post</h2>
-          <CreatePostForm
-            userName={user.fullName || 'Anonymous'}
-            userImageUrl={user.imageUrl}
-          />
-        </div>
-
+      <WidthContainer className="space-y-8 py-16">
+        <AdminNav />
         <EditPostList />
       </WidthContainer>
     </HydrateClient>
