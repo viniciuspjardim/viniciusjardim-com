@@ -37,6 +37,14 @@ const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
 )
 
 export const postRouter = createTRPCRouter({
+  getOneById: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ input }) => {
+      const post = await db.post.getOneById(input.id)
+
+      return post
+    }),
+
   getOneBySlug: publicProcedure
     .input(z.object({ slug: z.string().min(1).max(200) }))
     .query(async ({ input }) => {

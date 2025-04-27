@@ -37,8 +37,6 @@ function PostWithActions({ post }: PostWithActionsProps) {
   const { mutate: generateSpeech, isPending: isGenerateSpeechLoading } =
     api.posts.generateSpeech.useMutation()
 
-  const { id, slug } = post
-
   return (
     <div className="flex w-full justify-between gap-3 px-4 py-2 transition-colors hover:bg-neutral-950">
       {post.published ? (
@@ -68,7 +66,7 @@ function PostWithActions({ post }: PostWithActionsProps) {
               variant="destructive"
               disabled={isRemovingPost}
               onClick={() => {
-                posthog.capture('delete-post-dialog-open', { slug: 'slug' })
+                posthog.capture('delete-post-dialog-open', { slug: post.slug })
               }}
             >
               <TrashIcon className="size-5" />
@@ -91,11 +89,14 @@ function PostWithActions({ post }: PostWithActionsProps) {
                 disabled={isRemovingPost}
                 onClick={async () => {
                   try {
-                    await remove({ id })
-                    posthog.capture('delete-post-success', { slug })
+                    await remove({ id: post.id })
+                    posthog.capture('delete-post-success', { slug: post.slug })
                     toast('Your post has been deleted.')
                   } catch (error) {
-                    posthog.capture('delete-post-error', { slug, error })
+                    posthog.capture('delete-post-error', {
+                      slug: post.slug,
+                      error,
+                    })
                     toast('An error occurred while deleting your post.')
                   }
                 }}
@@ -111,13 +112,15 @@ function PostWithActions({ post }: PostWithActionsProps) {
           className="px-2"
           variant="outline"
           disabled={isGenerateSpeechLoading}
-          onClick={() => generateSpeech({ slug })}
+          onClick={() => generateSpeech({ slug: post.slug })}
         >
           {isGenerateSpeechLoading ? '...' : '🔊'}
         </Button>
 
         <Button className="px-2" disabled={isRemovingPost} asChild>
-          <Link href={{ pathname: '/admin/editor', query: { slug } }}>
+          <Link
+            href={{ pathname: '/admin/editor', query: { postId: post.id } }}
+          >
             <Edit3Icon className="size-5" />
           </Link>
         </Button>

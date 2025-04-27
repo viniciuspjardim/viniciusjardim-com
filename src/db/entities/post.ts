@@ -69,6 +69,19 @@ async function postsWithAuthor(posts: s.Post[]) {
   }))
 }
 
+/** Get one post by id */
+export async function getOneById(id: number) {
+  console.log('db.post.getOneById')
+
+  const [post] = await idb.select().from(s.post).where(eq(s.post.id, id))
+
+  if (!post) {
+    throw new TRPCError({ code: 'NOT_FOUND', message: 'Post not found' })
+  }
+
+  return await postWithAuthor(post)
+}
+
 /** Get one post by slug */
 export async function getOneBySlug(slug: string) {
   'use cache'

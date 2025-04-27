@@ -12,7 +12,7 @@ export default async function EditorPage({
 }: {
   searchParams: Promise<Record<string, string | undefined>>
 }) {
-  const slug = (await searchParams).slug
+  const postId = (await searchParams).postId
   const user = await currentUser()
 
   if (!user) {
@@ -21,7 +21,9 @@ export default async function EditorPage({
     return redirect('/')
   }
 
-  const post = slug ? await api.posts.getOneBySlug({ slug }) : undefined
+  const post = postId
+    ? await api.posts.getOneById({ id: parseInt(postId, 10) })
+    : undefined
   void api.categories.getAll.prefetch()
 
   return (
