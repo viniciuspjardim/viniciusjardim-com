@@ -24,7 +24,7 @@ jobs:
       - name: Create test env file
         run: |
           cp .env.example .env
-          sed -i 's/=""/"test"/g' .env
+          perl -pi -e 's/=""/="test"/g' .env
 
       - name: Run tests
         run: bun test
