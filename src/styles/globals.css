@@ -5,6 +5,7 @@
 @theme {
   --default-transition-duration: 200ms;
   --animate-move-right-100: move-right-100 2s linear infinite;
+  --spacing-nav: 3rem;
 
   @keyframes move-right-100 {
     from {
@@ -20,6 +21,13 @@
   /* Always use dark mode */
   :root {
     color-scheme: dark;
+  }
+
+  /* Bigger navbar height for break points of 768px and above */
+  @media (width >= 48rem) {
+    :root {
+      --spacing-nav: 3.5rem /* 56px */;
+    }
   }
 }
 

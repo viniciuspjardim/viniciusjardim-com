@@ -14,19 +14,19 @@ export async function Navbar() {
   const categories = await api.categories.getAll()
 
   return (
-    <nav className="w-full border-b">
-      <WidthContainer className="flex h-12 items-center justify-between gap-4 py-1.5 md:h-16 md:py-2">
+    <nav className="h-nav border-b">
+      <WidthContainer className="flex h-full items-center justify-between gap-4">
         <Link
           className="flex items-center gap-4 rounded-md transition-all hover:brightness-125"
           href="/"
         >
           <Image
-            className="h-9 w-[108px] md:h-12 md:w-36"
+            className="h-9 w-27 md:h-10 md:w-30"
             src="/logo.svg"
             alt="Vinícius Jardim home"
             priority
-            width={144}
-            height={48}
+            width={120}
+            height={40}
           />
         </Link>
 
