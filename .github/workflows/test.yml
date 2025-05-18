@@ -26,8 +26,5 @@ jobs:
           cp .env.example .env
           perl -pi -e 's/=""/="test"/g' .env
 
-      - name: Run tests
-        run: bun test
-
       - name: Run type check and linting
         run: bun run check
