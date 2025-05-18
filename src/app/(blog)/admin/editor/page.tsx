@@ -3,7 +3,6 @@ import { currentUser } from '@clerk/nextjs/server'
 import { RedirectToSignIn } from '@clerk/nextjs'
 
 import { PostForm } from '~/components/post/post-form'
-import { WidthContainer } from '~/components/width-container'
 import { env } from '~/env'
 import { api, HydrateClient } from '~/trpc/server'
 
@@ -28,13 +27,11 @@ export default async function EditorPage({
 
   return (
     <HydrateClient>
-      <WidthContainer className="py-4">
-        <PostForm
-          initialPostData={post}
-          userName={user.fullName || 'Anonymous'}
-          userImageUrl={user.imageUrl}
-        />
-      </WidthContainer>
+      <PostForm
+        initialPostData={post}
+        userName={user.fullName || 'Anonymous'}
+        userImageUrl={user.imageUrl}
+      />
     </HydrateClient>
   )
 }
