@@ -64,7 +64,7 @@ export function PostFormEditor({
   return (
     <>
       {/* Editor toolbar */}
-      <div className="flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b bg-black p-1 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
+      <div className="bg-background sticky top-0 z-10 flex items-center gap-x-1.5 gap-y-1 overflow-x-auto border-b px-1 py-2 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
         <EditorButton
           title="Paragraph"
           isActive={editor?.isActive('paragraph')}
@@ -218,13 +218,7 @@ export function PostFormEditor({
       </div>
 
       {/* Content of the post in the editor */}
-      <div className="flex-grow overflow-y-auto">
-        {editor ? (
-          <EditorContent editor={editor} />
-        ) : (
-          <div className="min-h-48" />
-        )}
-      </div>
+      <div>{editor && <EditorContent editor={editor} />}</div>
 
       {/* Editor footer */}
       <div className="sticky bottom-0 flex justify-end space-x-2 p-2">
