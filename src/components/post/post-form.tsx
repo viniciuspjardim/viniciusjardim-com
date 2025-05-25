@@ -3,6 +3,7 @@
 import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
+import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -24,9 +25,33 @@ import {
 } from '~/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { Textarea } from '~/components/ui/textarea'
+import { Post } from '~/components/post/post'
 import { useEditor } from '~/hooks/use-editor'
 import { PostFormEditor } from './post-form-editor'
 import { WidthContainer } from '../width-container'
+import { parseISO } from 'date-fns'
+
+function createPostObject<T>(
+  postId: T,
+  form: PostFormInputs,
+  content: JSONContent
+) {
+  return {
+    id: postId,
+    slug: asSlug(form.title),
+    title: form.title,
+    description: form.description || undefined,
+    keywords: form.keywords || undefined,
+    content,
+    rank: form.rank ? parseInt(form.rank, 10) : undefined,
+    lang: form.lang ? form.lang : undefined,
+    writtenAt: form.writtenAt ? parseISO(form.writtenAt) : undefined,
+    categoryId: parseInt(form.categoryId, 10),
+    published: form.published ?? false,
+  }
+}
+
+type PostObject = ReturnType<typeof createPostObject<number | undefined>>
 
 export interface PostFormInputs {
   title: string
@@ -54,48 +79,26 @@ export function PostForm({
   const postIdParam = useSearchParams().get('postId')
   const postId = postIdParam ? parseInt(postIdParam, 10) : undefined
   const [categoriesData] = api.categories.getAll.useSuspenseQuery()
+  const [postPreview, setPostPreview] = useState<PostObject | null>(null)
 
   // Create post mutation
   const { mutateAsync: createPost, isPending: isCreatePostLoading } =
     api.posts.create.useMutation()
 
-  async function handleCreatePost(form: PostFormInputs, content: string) {
-    return createPost({
-      slug: asSlug(form.title),
-      title: form.title,
-      description: form.description || undefined,
-      keywords: form.keywords || undefined,
-      content: JSON.parse(content) as JSONContent,
-      rank: form.rank ? parseInt(form.rank, 10) : undefined,
-      categoryId: parseInt(form.categoryId, 10),
-      lang: form.lang ? form.lang : undefined,
-      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
-      published: form.published ?? false,
-    })
+  async function handleCreatePost(form: PostFormInputs, content: JSONContent) {
+    return createPost(createPostObject(postId, form, content))
   }
 
   // Edit post mutation
   const { mutateAsync: editPost, isPending: isEditPostLoading } =
     api.posts.update.useMutation()
 
-  async function handleEditPost(form: PostFormInputs, content: string) {
+  async function handleEditPost(form: PostFormInputs, content: JSONContent) {
     if (!postId) {
       throw new Error('Initial post data is required for editing')
     }
 
-    return editPost({
-      id: postId,
-      slug: asSlug(form.title),
-      title: form.title,
-      description: form.description || undefined,
-      keywords: form.keywords || undefined,
-      content: JSON.parse(content) as JSONContent,
-      rank: form.rank ? parseInt(form.rank, 10) : undefined,
-      lang: form.lang ? form.lang : undefined,
-      writtenAt: form.writtenAt ? new Date(form.writtenAt) : undefined,
-      categoryId: parseInt(form.categoryId, 10),
-      published: form.published ?? false,
-    })
+    return editPost(createPostObject(postId, form, content))
   }
 
   const isPosting = postId ? isEditPostLoading : isCreatePostLoading
@@ -132,10 +135,10 @@ export function PostForm({
   const isValid = isFormValid && !editor?.isEmpty
 
   const handleFormSubmit: SubmitHandler<PostFormInputs> = async (formData) => {
-    const editorJson = JSON.stringify(editor?.getJSON() ?? {})
+    const content = editor?.getJSON() ?? {}
 
     try {
-      const post = await onSubmit(formData, editorJson)
+      const post = await onSubmit(formData, content)
       toast(postId ? 'Post changes were saved' : 'Post created successfully')
 
       // After creating the post add the postId query param without reloading the page
@@ -159,6 +162,7 @@ export function PostForm({
     <form
       className="h-[calc(100dvh-var(--spacing-nav))] space-y-3"
       onSubmit={handleSubmit(handleFormSubmit)}
+      name="post-form"
     >
       <Tabs className="flex h-full flex-col gap-0" defaultValue="meta">
         <div className="shrink-0 border-b">
@@ -174,7 +178,16 @@ export function PostForm({
               <TabsTrigger className="border-2 text-base" value="editor">
                 Editor
               </TabsTrigger>
-              <TabsTrigger className="border-2 text-base" value="preview">
+              <TabsTrigger
+                className="border-2 text-base"
+                value="preview"
+                onClick={handleSubmit((formData) => {
+                  console.log('Preview clicked')
+                  const content = editor?.getJSON() ?? {}
+                  const post = createPostObject(postId, formData, content)
+                  setPostPreview(post)
+                })}
+              >
                 Preview
               </TabsTrigger>
             </TabsList>
@@ -342,7 +355,26 @@ export function PostForm({
         </TabsContent>
 
         {/* Preview */}
-        <TabsContent value="preview">TODO: preview tab</TabsContent>
+        <TabsContent className="py-16" value="preview">
+          {postPreview && (
+            <Post
+              post={{
+                ...postPreview,
+                id: postPreview.id ?? 1,
+                description: postPreview.description ?? '',
+                keywords: postPreview.keywords ?? '',
+                rank: postPreview.rank ?? 0,
+                lang: postPreview.lang ?? 'en-US',
+                writtenAt: postPreview.writtenAt ?? parseISO('2025-01-01'),
+                authorId: initialPostData?.authorId ?? '1',
+                createdAt: initialPostData?.createdAt ?? parseISO('2025-01-01'),
+                updatedAt: initialPostData?.updatedAt ?? parseISO('2025-01-01'),
+              }}
+              userName={userName ?? 'Abc'}
+              userImageUrl={userImageUrl}
+            />
+          )}
+        </TabsContent>
       </Tabs>
     </form>
   )

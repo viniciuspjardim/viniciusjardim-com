@@ -26,7 +26,6 @@ export default async function PostPage({
     <WidthContainer className="w-full py-16">
       <PostBreadcrumb categories={categories} categoryId={post.categoryId} />
       <Post
-        key={post.id}
         post={post}
         userName={formatAuthorName(post.author)}
         userImageUrl={post.author?.userImageUrl}
