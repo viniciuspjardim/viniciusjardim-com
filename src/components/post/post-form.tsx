@@ -182,7 +182,6 @@ export function PostForm({
                 className="border-2 text-base"
                 value="preview"
                 onClick={handleSubmit((formData) => {
-                  console.log('Preview clicked')
                   const content = editor?.getJSON() ?? {}
                   const post = createPostObject(postId, formData, content)
                   setPostPreview(post)
