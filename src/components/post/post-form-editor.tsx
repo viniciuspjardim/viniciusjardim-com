@@ -212,7 +212,7 @@ export function PostFormEditor({ editor }: PostFormEditorProps) {
       </div>
 
       {/* Content of the post in the editor */}
-      <WidthContainer>
+      <WidthContainer className="py-4">
         {editor && <EditorContent editor={editor} />}
       </WidthContainer>
     </>

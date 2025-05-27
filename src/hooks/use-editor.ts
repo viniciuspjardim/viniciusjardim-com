@@ -14,7 +14,7 @@ export function useEditor(content?: JSONContent) {
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        class: 'blog-post w-full p-2 focus:outline-hidden',
+        class: 'blog-post w-full focus:outline-hidden',
       },
     },
     extensions: [
