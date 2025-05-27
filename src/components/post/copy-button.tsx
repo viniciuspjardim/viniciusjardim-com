@@ -20,6 +20,7 @@ export function CopyButton({ textToCopy }: { textToCopy: string }) {
       title="Copy code"
       variant="ghost"
       size="sm"
+      type="button"
       onClick={handleCopy}
     >
       {copied ? (

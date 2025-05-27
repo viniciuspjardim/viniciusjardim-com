@@ -39,7 +39,7 @@
   }
 
   .gutter-stable {
-    scrollbar-gutter: stable both-edges;
+    scrollbar-gutter: stable;
   }
 
   button:not(:disabled),

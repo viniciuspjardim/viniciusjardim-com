@@ -33,6 +33,7 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
       />
       <button
         className={buttonClasses}
+        type="button"
         onClick={async () => {
           if (!audioRef.current) return
 
