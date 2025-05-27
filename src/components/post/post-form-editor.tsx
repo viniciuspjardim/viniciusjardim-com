@@ -18,7 +18,6 @@ import {
   UnlinkIcon,
   FlipVerticalIcon,
 } from 'lucide-react'
-import { Button } from '~/components/ui/button'
 import { EditorButton } from '~/components/post/editor-button'
 import { ImageDialog } from '~/components/post/image-dialog'
 import { CodeBlockDialog } from '~/components/post/code-block-dialog'
@@ -27,17 +26,9 @@ import { WidthContainer } from '../width-container'
 
 export interface PostFormEditorProps {
   editor: Editor
-  isPosting: boolean
-  isValid: boolean
-  published: boolean
 }
 
-export function PostFormEditor({
-  editor,
-  isPosting,
-  isValid,
-  published,
-}: PostFormEditorProps) {
+export function PostFormEditor({ editor }: PostFormEditorProps) {
   const addVideo = useCallback(() => {
     const url = window.prompt('URL')
 
@@ -224,17 +215,6 @@ export function PostFormEditor({
       <WidthContainer>
         {editor && <EditorContent editor={editor} />}
       </WidthContainer>
-
-      {/* Editor footer */}
-      <div className="sticky bottom-0 flex justify-end space-x-2 p-2">
-        <Button
-          variant="outline"
-          disabled={isPosting || !isValid}
-          type="submit"
-        >
-          {published ? 'Save and publish' : 'Save draft'}
-        </Button>
-      </div>
     </>
   )
 }

@@ -8,10 +8,11 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
-import { ChevronLeftIcon } from 'lucide-react'
+import { ChevronLeftIcon, SaveIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
+import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import {
@@ -131,7 +132,6 @@ export function PostForm({
   const { editor } = useEditor(initialPostData?.content)
 
   const slug = asSlug(watch('title') ?? '')
-  const published = watch('published')
   const isValid = isFormValid && !editor?.isEmpty
 
   const handleFormSubmit: SubmitHandler<PostFormInputs> = async (formData) => {
@@ -171,7 +171,7 @@ export function PostForm({
               <ChevronLeftIcon />
             </Link>
 
-            <TabsList className="h-10 p-0 text-lg">
+            <TabsList className="h-12 p-0 text-lg">
               <TabsTrigger className="border-2 text-base" value="meta">
                 Meta
               </TabsTrigger>
@@ -190,6 +190,11 @@ export function PostForm({
                 Preview
               </TabsTrigger>
             </TabsList>
+
+            <Button size="sm" disabled={isPosting || !isValid} type="submit">
+              <SaveIcon />
+              <span>Save</span>
+            </Button>
           </WidthContainer>
         </div>
 
@@ -347,12 +352,7 @@ export function PostForm({
 
         {/* Editor */}
         <TabsContent className="max-h-full overflow-y-auto" value="editor">
-          <PostFormEditor
-            editor={editor}
-            isPosting={isPosting}
-            isValid={isValid}
-            published={published}
-          />
+          <PostFormEditor editor={editor} />
         </TabsContent>
 
         {/* Preview */}
