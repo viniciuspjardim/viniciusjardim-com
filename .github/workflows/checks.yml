@@ -1,12 +1,12 @@
-name: Test
+name: Checks
 on:
   push:
     branches: ['main']
   pull_request:
     branches: ['main']
 jobs:
-  test:
-    name: Checks
+  build:
+    name: Build and check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,5 +19,5 @@ jobs:
         run: |
           cp .env.example .env
           perl -pi -e 's/=""/="test"/g' .env
-      - name: Run lint, type check, and tests
+      - name: Lint, type check, and tests
         run: bun run check
