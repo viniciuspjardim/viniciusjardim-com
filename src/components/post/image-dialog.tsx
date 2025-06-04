@@ -133,8 +133,8 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             ) : (
               <UploadButton
                 appearance={{
-                  button: 'bg-blue-900',
-                  allowedContent: 'text-neutral-300',
+                  button:
+                    'w-30 cursor-pointer bg-blue-900 text-white transition-colors hover:bg-blue-800',
                 }}
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
