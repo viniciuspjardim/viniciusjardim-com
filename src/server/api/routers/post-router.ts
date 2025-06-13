@@ -166,7 +166,7 @@ export const postRouter = createTRPCRouter({
           titlesSeparator: '.\n\n',
         })
 
-        const content = z.string().min(1).max(4096).parse(postText)
+        const content = z.string().min(1).parse(postText)
         const speechBuffer = await generateSpeech(content)
         const [utFile] = await upload(speechBuffer, input.slug)
 
