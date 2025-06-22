@@ -48,8 +48,8 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Integrate with OpenAI TTS model
   - [x] Generate post audio and store the MP3 file on UploadThing
   - [x] Create audio player and show it on the post
-  - [ ] Workaround TTS only supporting 4096 characters in length
-    - [ ] Generate two or more files per post when necessary - append the files or allow the player to play files in sequence
+  - [x] Workaround TTS only supporting 4096 characters in length
+    - [x] Generate two or more files per post when necessary - append the files in one mp3 file
 - [x] Manage files from UploadThing in the admin upload page
   - [x] Upload new file
   - [ ] List files
