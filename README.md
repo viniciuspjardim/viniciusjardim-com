@@ -44,6 +44,11 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Replace editor buttons text with their icons
   - [x] Refactor code to only have one editor component
   - [x] Refactor code to pass full post object to post component
+  - [x] Refactor layout to make editor full height and make toolbar always visible on mobile
+    - [x] Move the scroll area to the tab content section
+    - [x] Move editor toolbar to the header with the tabs
+    - [x] Detect virtual keyboard and reserve space to it
+    - [ ] Reserve space to virtual keyboard on editor modals
 - [x] Text to speech (TTS)
   - [x] Integrate with OpenAI TTS model
   - [x] Generate post audio and store the MP3 file on UploadThing

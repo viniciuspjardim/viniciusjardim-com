@@ -7,19 +7,20 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { EditorContent } from '@tiptap/react'
+import { parseISO } from 'date-fns'
 import { ChevronLeftIcon, SaveIcon } from 'lucide-react'
 import { toast } from 'sonner'
+import { EditorContent } from '@tiptap/react'
 import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { useEditor } from '~/hooks/use-editor'
+import { useVirtualKeyboardBounds } from '~/hooks/use-virtual-keyboard-bounds'
 import { PostFormEditorToolbar } from './post-form-editor-toolbar'
 import { PostFormMeta } from './post-form-meta'
 import { PostFormPreview } from './post-form-preview'
 import { WidthContainer } from '../width-container'
-import { parseISO } from 'date-fns'
 
 function createPostObject<T>(
   postId: T,
@@ -69,6 +70,7 @@ export function PostForm({
   userImageUrl,
 }: PostFormProps) {
   const searchParams = useSearchParams()
+  const bounds = useVirtualKeyboardBounds()
 
   const postIdParam = searchParams.get('postId')
   const postId = postIdParam ? parseInt(postIdParam, 10) : undefined
@@ -248,6 +250,12 @@ export function PostForm({
             />
           </TabsContent>
         </WidthContainer>
+
+        {/* Virtual keyboard placeholder, it will grow to take virtual keyboard space when it appears */}
+        <div
+          className="shrink-0 bg-purple-500"
+          style={{ height: `${bounds.height}px` }}
+        />
       </Tabs>
     </form>
   )
