@@ -5,8 +5,6 @@ export const useVirtualKeyboardBounds = () => {
 
   useEffect(() => {
     if ('virtualKeyboard' in navigator) {
-      console.log('useVirtualKeyboardBounds: has VirtualKeyboard API')
-
       // Make the virtual keyboard overlay the page content
       navigator.virtualKeyboard.overlaysContent = true
 
@@ -24,7 +22,6 @@ export const useVirtualKeyboardBounds = () => {
       )
 
       return () => {
-        console.log('useVirtualKeyboardBounds: cleanup')
         navigator.virtualKeyboard.overlaysContent = false
         navigator.virtualKeyboard.removeEventListener(
           'geometrychange',
@@ -32,8 +29,6 @@ export const useVirtualKeyboardBounds = () => {
         )
       }
     }
-
-    console.log('useVirtualKeyboardBounds: no VirtualKeyboard API')
   }, [])
 
   return bounds

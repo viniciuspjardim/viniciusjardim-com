@@ -9,9 +9,6 @@ import { useRouter } from 'next/navigation'
 export function ColorBeans() {
   const router = useRouter()
 
-  // TODO: better understand how to create a component that has one general link
-  // in the hole component area, and other links inside it, like they YouTube video cards.
-
   return (
     <button
       className="mt-16 mb-6 flex w-full items-center justify-center gap-4 rounded-full border px-12 py-4 text-left transition-all hover:bg-neutral-950 sm:w-auto"
