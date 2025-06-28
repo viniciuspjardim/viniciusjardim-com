@@ -3,7 +3,7 @@
 import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm, type SubmitHandler } from 'react-hook-form'
@@ -60,15 +60,21 @@ export interface PostFormProps {
   userImageUrl?: string
 }
 
+type SelectedTab = 'meta' | 'editor' | 'preview'
+
 export function PostForm({
   initialPostData,
   userName,
   userImageUrl,
 }: PostFormProps) {
-  const postIdParam = useSearchParams().get('postId')
+  const searchParams = useSearchParams()
+
+  const postIdParam = searchParams.get('postId')
   const postId = postIdParam ? parseInt(postIdParam, 10) : undefined
-  const [categoriesData] = api.categories.getAll.useSuspenseQuery()
+  const selectedTab = (searchParams.get('tab') ?? 'meta') as SelectedTab
+
   const [postPreview, setPostPreview] = useState<PostObject | null>(null)
+  const [categoriesData] = api.categories.getAll.useSuspenseQuery()
 
   // Create post mutation
   const { mutateAsync: createPost, isPending: isCreatePostLoading } =
@@ -93,6 +99,7 @@ export function PostForm({
   const isPosting = postId ? isEditPostLoading : isCreatePostLoading
   const onSubmit = postId ? handleEditPost : handleCreatePost
 
+  // Form data
   const {
     register,
     handleSubmit,
@@ -146,13 +153,35 @@ export function PostForm({
     }
   }
 
+  const handleTabChange = (value: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set('tab', value)
+    window.history.replaceState(null, '', `?${params.toString()}`)
+  }
+
+  // Generate post preview when selected tab is 'preview'
+  useEffect(() => {
+    if (selectedTab === 'preview') {
+      // Get the form data and content from the editor to build the post preview
+      void handleSubmit((formData) => {
+        const content = editor?.getJSON() ?? {}
+        const post = createPostObject(postId, formData, content)
+        setPostPreview(post)
+      })()
+    }
+  }, [selectedTab, handleSubmit, editor, postId])
+
   return (
     <form
       className="h-[calc(100dvh-var(--spacing-nav))] space-y-3"
       onSubmit={handleSubmit(handleFormSubmit)}
       name="post-form"
     >
-      <Tabs className="flex h-full flex-col gap-0" defaultValue="meta">
+      <Tabs
+        className="flex h-full flex-col gap-0"
+        value={selectedTab}
+        onValueChange={handleTabChange}
+      >
         <div className="shrink-0 border-b">
           <WidthContainer className="flex items-center justify-between">
             <Link href="/admin">
@@ -166,15 +195,7 @@ export function PostForm({
               <TabsTrigger className="border-2 text-base" value="editor">
                 Editor
               </TabsTrigger>
-              <TabsTrigger
-                className="border-2 text-base"
-                value="preview"
-                onClick={handleSubmit((formData) => {
-                  const content = editor?.getJSON() ?? {}
-                  const post = createPostObject(postId, formData, content)
-                  setPostPreview(post)
-                })}
-              >
+              <TabsTrigger className="border-2 text-base" value="preview">
                 Preview
               </TabsTrigger>
             </TabsList>
