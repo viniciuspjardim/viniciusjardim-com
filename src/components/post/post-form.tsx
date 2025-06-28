@@ -221,7 +221,7 @@ export function PostForm({
         </div>
 
         {/* Content */}
-        <WidthContainer className="w-full flex-grow overflow-y-auto py-6">
+        <WidthContainer className="w-full flex-grow overflow-y-auto">
           {/* Post metadata form */}
           <TabsContent value="meta">
             <PostFormMeta

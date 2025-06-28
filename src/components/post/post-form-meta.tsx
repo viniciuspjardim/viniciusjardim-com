@@ -39,7 +39,7 @@ export function PostFormMeta({
   userImageUrl,
 }: PostFormMetaProps) {
   return (
-    <>
+    <div className="space-y-4 py-6">
       <div className="flex space-x-3">
         {userImageUrl && (
           <Image
@@ -94,7 +94,7 @@ export function PostFormMeta({
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Rank */}
         <div className="space-y-2">
           <Label htmlFor="rank">Rank</Label>
@@ -186,6 +186,6 @@ export function PostFormMeta({
           <span>Published</span>
         </label>
       </div>
-    </>
+    </div>
   )
 }

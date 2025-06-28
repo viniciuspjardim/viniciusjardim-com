@@ -9,12 +9,13 @@ import { PublishDetails } from './publish-details'
 import { GoToTopButton } from './go-to-top-button'
 
 type PostProps = {
+  className?: string
   post: s.Post
   userName: string
   userImageUrl?: string | null
 }
 
-export function Post({ post, userName, userImageUrl }: PostProps) {
+export function Post({ className, post, userName, userImageUrl }: PostProps) {
   const audioUrl = findPostNode(post.content, 'speech')?.attrs?.src as
     | string
     | undefined
@@ -23,7 +24,7 @@ export function Post({ post, userName, userImageUrl }: PostProps) {
   const showPostNav = headings.length >= 3
 
   return (
-    <div className="flex w-full gap-8">
+    <div className={cn('flex w-full gap-8', className)}>
       {/* Post navigation */}
       {showPostNav && (
         <nav className="order-last -mt-6 hidden w-64 shrink-0 lg:block">

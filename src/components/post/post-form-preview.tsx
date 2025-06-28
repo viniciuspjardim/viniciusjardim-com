@@ -39,6 +39,7 @@ export function PostFormPreview({
 
   return (
     <Post
+      className="py-16"
       post={{
         ...postPreview,
         id: postPreview.id ?? 1,
