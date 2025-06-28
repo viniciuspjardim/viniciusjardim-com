@@ -21,3 +21,9 @@ export function formatAuthorName(author?: Author, fallback = authorFallback) {
 
   return fallback
 }
+
+export function formatName(name?: string, fallback = authorFallback) {
+  if (!name) return fallback
+
+  return name
+}

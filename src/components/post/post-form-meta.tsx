@@ -18,7 +18,6 @@ import {
   SelectItem,
 } from '~/components/ui/select'
 import { Textarea } from '~/components/ui/textarea'
-import { WidthContainer } from '../width-container'
 
 export interface PostFormMetaProps {
   register: UseFormRegister<PostFormInputs>
@@ -40,7 +39,7 @@ export function PostFormMeta({
   userImageUrl,
 }: PostFormMetaProps) {
   return (
-    <WidthContainer className="space-y-4">
+    <>
       <div className="flex space-x-3">
         {userImageUrl && (
           <Image
@@ -187,6 +186,6 @@ export function PostFormMeta({
           <span>Published</span>
         </label>
       </div>
-    </WidthContainer>
+    </>
   )
 }

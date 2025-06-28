@@ -4,7 +4,7 @@ import type { JSONContent } from '@tiptap/core'
 import type { s } from '~/db'
 import { parseISO } from 'date-fns'
 import { Post } from '~/components/post/post'
-import { WidthContainer } from '../width-container'
+import { formatName } from '~/helpers/format-author-name'
 
 type PostObject = {
   id: number | undefined
@@ -38,23 +38,21 @@ export function PostFormPreview({
   }
 
   return (
-    <WidthContainer>
-      <Post
-        post={{
-          ...postPreview,
-          id: postPreview.id ?? 1,
-          description: postPreview.description ?? '',
-          keywords: postPreview.keywords ?? '',
-          rank: postPreview.rank ?? 0,
-          lang: postPreview.lang ?? 'en-US',
-          writtenAt: postPreview.writtenAt ?? parseISO('2025-01-01'),
-          authorId: initialPostData?.authorId ?? '1',
-          createdAt: initialPostData?.createdAt ?? parseISO('2025-01-01'),
-          updatedAt: initialPostData?.updatedAt ?? parseISO('2025-01-01'),
-        }}
-        userName={userName ?? 'Abc'}
-        userImageUrl={userImageUrl}
-      />
-    </WidthContainer>
+    <Post
+      post={{
+        ...postPreview,
+        id: postPreview.id ?? 1,
+        description: postPreview.description ?? '',
+        keywords: postPreview.keywords ?? '',
+        rank: postPreview.rank ?? 0,
+        lang: postPreview.lang ?? 'en-US',
+        writtenAt: postPreview.writtenAt ?? parseISO('2025-01-01'),
+        authorId: initialPostData?.authorId ?? '1',
+        createdAt: initialPostData?.createdAt ?? parseISO('2025-01-01'),
+        updatedAt: initialPostData?.updatedAt ?? parseISO('2025-01-01'),
+      }}
+      userName={formatName(userName)}
+      userImageUrl={userImageUrl}
+    />
   )
 }

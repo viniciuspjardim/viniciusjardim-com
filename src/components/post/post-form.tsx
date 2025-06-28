@@ -173,7 +173,7 @@ export function PostForm({
 
   return (
     <form
-      className="h-[calc(100dvh-var(--spacing-nav))] space-y-3"
+      className="bg-background fixed top-0 left-0 z-20 h-dvh w-full"
       onSubmit={handleSubmit(handleFormSubmit)}
       name="post-form"
     >
@@ -182,6 +182,7 @@ export function PostForm({
         value={selectedTab}
         onValueChange={handleTabChange}
       >
+        {/* Header and toolbars */}
         <div className="shrink-0 border-b">
           <WidthContainer className="flex items-center justify-between">
             <Link href="/admin">
@@ -207,33 +208,36 @@ export function PostForm({
           </WidthContainer>
         </div>
 
-        {/* Form - post meta data */}
-        <TabsContent className="h-full py-6" value="meta">
-          <PostFormMeta
-            register={register}
-            control={control}
-            isPosting={isPosting}
-            slug={slug}
-            categoriesData={categoriesData}
-            userName={userName}
-            userImageUrl={userImageUrl}
-          />
-        </TabsContent>
+        {/* Content */}
+        <WidthContainer className="w-full flex-grow overflow-y-auto">
+          {/* Post metadata form */}
+          <TabsContent value="meta">
+            <PostFormMeta
+              register={register}
+              control={control}
+              isPosting={isPosting}
+              slug={slug}
+              categoriesData={categoriesData}
+              userName={userName}
+              userImageUrl={userImageUrl}
+            />
+          </TabsContent>
 
-        {/* Editor */}
-        <TabsContent className="max-h-full overflow-y-auto" value="editor">
-          <PostFormEditor editor={editor} />
-        </TabsContent>
+          {/* Text editor */}
+          <TabsContent value="editor">
+            <PostFormEditor editor={editor} />
+          </TabsContent>
 
-        {/* Preview */}
-        <TabsContent className="py-16" value="preview">
-          <PostFormPreview
-            postPreview={postPreview}
-            userName={userName}
-            userImageUrl={userImageUrl}
-            initialPostData={initialPostData}
-          />
-        </TabsContent>
+          {/* Post preview */}
+          <TabsContent value="preview">
+            <PostFormPreview
+              postPreview={postPreview}
+              userName={userName}
+              userImageUrl={userImageUrl}
+              initialPostData={initialPostData}
+            />
+          </TabsContent>
+        </WidthContainer>
       </Tabs>
     </form>
   )
