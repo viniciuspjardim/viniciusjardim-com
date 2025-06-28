@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback } from 'react'
-import { EditorContent } from '@tiptap/react'
 import {
   PilcrowIcon,
   VideoIcon,
@@ -22,13 +21,12 @@ import { EditorButton } from '~/components/post/editor-button'
 import { ImageDialog } from '~/components/post/image-dialog'
 import { CodeBlockDialog } from '~/components/post/code-block-dialog'
 import type { Editor } from '~/hooks/use-editor'
-import { WidthContainer } from '../width-container'
 
-interface EditorToolbarProps {
+interface PostFormEditorToolbarProps {
   editor: Editor
 }
 
-function EditorToolbar({ editor }: EditorToolbarProps) {
+export function PostFormEditorToolbar({ editor }: PostFormEditorToolbarProps) {
   const addVideo = useCallback(() => {
     const url = window.prompt('URL')
 
@@ -54,7 +52,7 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
   }, [editor])
 
   return (
-    <WidthContainer className="flex items-center gap-x-1.5 gap-y-1 overflow-x-auto px-1 py-2 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
+    <>
       <EditorButton
         title="Paragraph"
         isActive={editor?.isActive('paragraph')}
@@ -205,22 +203,6 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
       >
         CN
       </EditorButton>
-    </WidthContainer>
-  )
-}
-
-export interface PostFormEditorProps {
-  editor: Editor
-}
-
-export function PostFormEditor({ editor }: PostFormEditorProps) {
-  return (
-    <>
-      {/* Editor toolbar */}
-      <EditorToolbar editor={editor} />
-
-      {/* Content of the post in the editor */}
-      {editor && <EditorContent editor={editor} />}
     </>
   )
 }

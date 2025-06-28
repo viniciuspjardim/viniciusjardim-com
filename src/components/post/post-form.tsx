@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm, type SubmitHandler } from 'react-hook-form'
+import { EditorContent } from '@tiptap/react'
 import { ChevronLeftIcon, SaveIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { api } from '~/trpc/react'
@@ -14,7 +15,7 @@ import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { useEditor } from '~/hooks/use-editor'
-import { PostFormEditor } from './post-form-editor'
+import { PostFormEditorToolbar } from './post-form-editor-toolbar'
 import { PostFormMeta } from './post-form-meta'
 import { PostFormPreview } from './post-form-preview'
 import { WidthContainer } from '../width-container'
@@ -206,10 +207,19 @@ export function PostForm({
               <span>Save</span>
             </Button>
           </WidthContainer>
+
+          {/* Text editor toolbar */}
+          {selectedTab === 'editor' && (
+            <div className="border-t">
+              <WidthContainer className="flex items-center gap-x-1.5 gap-y-1 overflow-x-auto px-1 py-2 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
+                <PostFormEditorToolbar editor={editor} />
+              </WidthContainer>
+            </div>
+          )}
         </div>
 
         {/* Content */}
-        <WidthContainer className="w-full flex-grow overflow-y-auto">
+        <WidthContainer className="w-full flex-grow overflow-y-auto py-6">
           {/* Post metadata form */}
           <TabsContent value="meta">
             <PostFormMeta
@@ -223,9 +233,9 @@ export function PostForm({
             />
           </TabsContent>
 
-          {/* Text editor */}
+          {/* Text editor content */}
           <TabsContent value="editor">
-            <PostFormEditor editor={editor} />
+            {editor && <EditorContent editor={editor} />}
           </TabsContent>
 
           {/* Post preview */}
