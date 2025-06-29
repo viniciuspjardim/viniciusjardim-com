@@ -69,7 +69,7 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
           <BracesIcon className="size-5" />
         </EditorButton>
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-0 rounded-md p-0">
+      <DialogContent className="flex flex-col gap-0 p-0">
         <DialogHeader className="border-b px-6 py-5">
           <DialogTitle>Code block properties</DialogTitle>
           <DialogDescription>
