@@ -267,7 +267,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
           </div>
         </DialogBody>
 
-        <DialogFooter className="border-t px-6 py-5">
+        <DialogFooter aboveVirtualKeyboard>
           <Button type="button" disabled={isDisabled} onClick={addImage}>
             Ok
           </Button>

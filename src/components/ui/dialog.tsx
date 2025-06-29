@@ -92,16 +92,29 @@ function DialogBody({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
-function DialogFooter({ className, ...props }: React.ComponentProps<'div'>) {
+function DialogFooter({
+  className,
+  aboveVirtualKeyboard = false,
+  children,
+  ...props
+}: React.ComponentProps<'div'> & { aboveVirtualKeyboard?: boolean }) {
   return (
-    <div
-      data-slot="dialog-footer"
-      className={cn(
-        'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
-        className
+    <div data-slot="dialog-footer">
+      <div
+        className={cn(
+          'flex flex-col-reverse gap-2 border-t px-6 py-5 sm:flex-row sm:justify-end',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+
+      {/* Virtual keyboard placeholder, it will grow to take virtual keyboard space when it appears */}
+      {aboveVirtualKeyboard && (
+        <div className="h-[env(keyboard-inset-height,0)] w-full transition-all duration-300 md:hidden" />
       )}
-      {...props}
-    />
+    </div>
   )
 }
 
