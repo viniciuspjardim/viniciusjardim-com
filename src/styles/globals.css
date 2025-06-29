@@ -3,6 +3,7 @@
 
 /* Tailwind CSS theme customization */
 @theme {
+  --blur-2xs: 2px;
   --default-transition-duration: 200ms;
   --animate-move-right-100: move-right-100 2s linear infinite;
   --spacing-nav: 3rem;
