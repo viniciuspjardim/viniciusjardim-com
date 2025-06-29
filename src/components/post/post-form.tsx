@@ -252,10 +252,7 @@ export function PostForm({
         </WidthContainer>
 
         {/* Virtual keyboard placeholder, it will grow to take virtual keyboard space when it appears */}
-        <div
-          className="shrink-0 bg-purple-500"
-          style={{ height: `${bounds.height}px` }}
-        />
+        <div className="shrink-0" style={{ height: `${bounds.height}px` }} />
       </Tabs>
     </form>
   )
