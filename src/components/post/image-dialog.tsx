@@ -100,7 +100,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
       </DialogTrigger>
 
       <DialogContent className="flex flex-col gap-0 p-0">
-        <DialogHeader className="border-b px-6 py-5">
+        <DialogHeader>
           <DialogTitle>Image properties</DialogTitle>
           <DialogDescription className="hidden md:block">
             Configure your code block properties.

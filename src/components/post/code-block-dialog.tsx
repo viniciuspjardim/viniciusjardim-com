@@ -72,7 +72,7 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
       </DialogTrigger>
 
       <DialogContent className="flex flex-col gap-0 p-0">
-        <DialogHeader className="border-b px-6 py-5">
+        <DialogHeader>
           <DialogTitle>Code block properties</DialogTitle>
           <DialogDescription>
             Configure your code block properties.

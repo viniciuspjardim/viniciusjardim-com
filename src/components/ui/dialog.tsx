@@ -57,13 +57,13 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          'bg-card data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed bottom-0 z-50 grid max-h-[calc(100dvh-3rem)] w-full gap-4 rounded-md border-t p-6 shadow-lg duration-200 md:top-[50%] md:bottom-auto md:left-[50%] md:max-h-[90dvh] md:max-w-2xl md:translate-x-[-50%] md:translate-y-[-50%] md:border',
+          'bg-card data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed bottom-0 z-50 grid max-h-[calc(100dvh-1.5rem)] w-full gap-4 rounded-md border-t p-6 shadow-lg duration-200 md:top-[50%] md:bottom-auto md:left-[50%] md:max-h-[90dvh] md:max-w-2xl md:translate-x-[-50%] md:translate-y-[-50%] md:border',
           className
         )}
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
+        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-6 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none md:top-5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5">
           <XIcon />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
@@ -76,7 +76,10 @@ function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn('flex flex-col gap-2 text-center sm:text-left', className)}
+      className={cn(
+        'flex flex-col gap-2 border-b px-6 py-4 text-center md:py-5 md:text-left',
+        className
+      )}
       {...props}
     />
   )
@@ -102,7 +105,7 @@ function DialogFooter({
     <div data-slot="dialog-footer">
       <div
         className={cn(
-          'flex flex-col-reverse gap-2 border-t px-6 py-5 sm:flex-row sm:justify-end',
+          'flex flex-col-reverse gap-2 border-t px-6 py-2 md:flex-row md:justify-end md:py-5',
           className
         )}
         {...props}
