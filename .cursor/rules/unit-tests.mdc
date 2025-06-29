@@ -1,0 +1,55 @@
+---
+description: How to run and write unit tests
+globs: 
+alwaysApply: false
+---
+# Unit tests
+
+This project uses `bun` as a test runner.
+
+## How to run unit tests
+
+* `bun run test <path>` - run a test file or test within a folder
+* `bun run test` - run all the test suite
+* `bun run check` - run linting, typecheck, and tests
+
+Avoid running all the tests. Do it only if specifically asked.
+
+## How to write unit tests
+
+This project uses `bun` as a test runner. 
+
+See the examples below.
+
+File name `my-function.test.ts`:
+
+```typescript
+import { describe, expect, it, /* other imports from bun:test */ } from 'bun:test'
+import { myFunction } from './my-function.ts
+
+describe('myFunction', () => {
+  it('should <test description>', () => {
+    // The test code goes here
+  })
+
+  // More tests...
+})
+
+// Another `describe` block when there are more exported functions to test.
+```
+
+A component example with file name `my-component.test.ts`:
+
+```typescript
+import { describe, expect, it } from 'bun:test'
+import { screen, render } from '@testing-library/react'
+import { MyComponent } from 'my-component.ts'
+
+describe('MyComponent', () => {
+  it('should <test description>', () => {
+    render(<MyComponent /* props */ />)
+
+    // The test code goes here
+  })
+})
+```

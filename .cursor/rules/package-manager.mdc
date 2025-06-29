@@ -1,0 +1,17 @@
+---
+description: How to manage dependencies, and run scripts in the project
+globs: 
+alwaysApply: false
+---
+# Managing dependencies and running scripts
+
+The project uses `bun` as a package manager. Here are how we manage the dependencies:
+
+* `bun add <package>` - add a new package
+* `bun remove <package>` - remove an installed package
+* `bun update <package>` - update a installed package
+* `bun add -D <package>` - install package as development dependency
+* `bun run <script>` - run a script from `package.json`
+* `bunx --bun <package>` - directly run a package fom `npm`
+
+Always use `bun`. Do not use `npm`, `npx`, `yarn`, `pnpm` or other package managers.
