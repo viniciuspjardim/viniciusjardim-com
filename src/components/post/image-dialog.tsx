@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { ImageIcon } from 'lucide-react'
 import {
   Dialog,
+  DialogTrigger,
   DialogContent,
-  DialogFooter,
   DialogHeader,
+  DialogBody,
   DialogTitle,
   DialogDescription,
-  DialogTrigger,
+  DialogFooter,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -97,6 +98,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
           <ImageIcon className="size-5" />
         </EditorButton>
       </DialogTrigger>
+
       <DialogContent className="flex flex-col gap-0 p-0">
         <DialogHeader className="border-b px-6 py-5">
           <DialogTitle>Image properties</DialogTitle>
@@ -104,7 +106,8 @@ export function ImageDialog({ editor }: ImageDialogProps) {
             Configure your code block properties.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 overflow-y-auto px-6 py-5">
+
+        <DialogBody className="grid gap-4">
           <div className="dark:bg-input/30 relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border">
             {imageSrc ? (
               <>
@@ -262,7 +265,8 @@ export function ImageDialog({ editor }: ImageDialogProps) {
               }}
             />
           </div>
-        </div>
+        </DialogBody>
+
         <DialogFooter className="border-t px-6 py-5">
           <Button type="button" disabled={isDisabled} onClick={addImage}>
             Ok

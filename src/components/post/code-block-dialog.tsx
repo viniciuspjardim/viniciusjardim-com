@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { BracesIcon } from 'lucide-react'
 import {
   Dialog,
+  DialogTrigger,
   DialogContent,
-  DialogFooter,
   DialogHeader,
+  DialogBody,
   DialogTitle,
   DialogDescription,
-  DialogTrigger,
+  DialogFooter,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
@@ -69,6 +70,7 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
           <BracesIcon className="size-5" />
         </EditorButton>
       </DialogTrigger>
+
       <DialogContent className="flex flex-col gap-0 p-0">
         <DialogHeader className="border-b px-6 py-5">
           <DialogTitle>Code block properties</DialogTitle>
@@ -76,7 +78,8 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
             Configure your code block properties.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 overflow-y-auto px-6 py-5">
+
+        <DialogBody className="grid gap-4">
           <div className="space-y-2">
             <Label htmlFor="codeLanguage">Language:</Label>
             <Input
@@ -106,7 +109,8 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
             />
             <Label htmlFor="codeShowCopyButton">Show copy button</Label>
           </div>
-        </div>
+        </DialogBody>
+
         <DialogFooter className="border-t px-6 py-5">
           <Button type="button" disabled={isDisabled} onClick={addCodeBlock}>
             Ok
