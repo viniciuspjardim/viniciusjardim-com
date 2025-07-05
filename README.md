@@ -33,6 +33,10 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Display image on the post
   - [x] Display videos on the post
   - [x] Display post side nav with headings and scroll to the top link
+  - [ ] Fix code font size inside headings
+  - [ ] Make a better player for the audio with fixed position and progress bar
+  - [ ] Add share button with social media options and copy button
+  - [ ] Add a summary generated with AI
 - [x] Blog text editor
   - [x] Create post JSON parser as a recursive component
   - [x] Add buttons to control Tiptap editor functions (eg. bold, italic, H3, code, etc.)
@@ -48,7 +52,7 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
     - [x] Move the scroll area to the tab content section
     - [x] Move editor toolbar to the header with the tabs
     - [x] Detect virtual keyboard and reserve space to it
-    - [ ] Reserve space to virtual keyboard on editor modals
+    - [x] Reserve space to virtual keyboard on editor modals
 - [x] Text to speech (TTS)
   - [x] Integrate with OpenAI TTS model
   - [x] Generate post audio and store the MP3 file on UploadThing
