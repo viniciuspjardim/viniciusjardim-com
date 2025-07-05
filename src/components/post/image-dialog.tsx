@@ -108,7 +108,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
         </DialogHeader>
 
         <DialogBody className="grid gap-4">
-          <div className="dark:bg-input/30 relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border">
+          <div className="dark:bg-input/30 border-input relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border">
             {imageSrc ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

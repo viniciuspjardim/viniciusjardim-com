@@ -31,19 +31,19 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
           {/* Headings */}
           <div className="sticky top-0 max-h-svh overflow-y-auto py-6">
             <div>
-              <span className="block text-2xl font-semibold text-neutral-300">
+              <span className="block text-2xl text-neutral-300">
                 In this article
               </span>
               <ol className="space-y-3 pt-4 text-lg leading-6">
                 {headings.map((heading) => (
                   <li
                     className={cn({
-                      'ml-4 text-base leading-5': heading.level >= 4,
+                      'ml-3': heading.level >= 4,
                     })}
                     key={heading.slug}
                   >
                     <Link
-                      className="font-medium text-neutral-400 transition-colors hover:text-white"
+                      className="font-light text-neutral-300 transition-colors hover:text-white"
                       href={`#${heading.slug}`}
                     >
                       {heading.text}
@@ -66,14 +66,12 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
 
       <article className="min-w-0 grow space-y-6" lang={post.lang}>
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold text-balance text-neutral-300 md:text-5xl">
+          <h1 className="text-4xl font-medium text-balance text-neutral-200 md:text-5xl md:font-light">
             {post.title}
           </h1>
 
           {post.description && (
-            <h2 className="text-xl text-neutral-400 md:text-2xl">
-              {post.description}
-            </h2>
+            <h2 className="text-xl text-neutral-400">{post.description}</h2>
           )}
         </div>
 

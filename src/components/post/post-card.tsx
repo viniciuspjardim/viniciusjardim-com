@@ -35,7 +35,7 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
         />
       )}
       <div className="shrink space-y-2">
-        <h2 className="text-3xl font-bold text-balance text-neutral-300 transition-colors group-hover:text-neutral-200">
+        <h2 className="text-3xl text-balance text-neutral-300 transition-colors group-hover:text-neutral-200">
           {post.title}
         </h2>
         {post.description && (
