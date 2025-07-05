@@ -9,9 +9,9 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   const [isPaused, setIsPaused] = useState(true)
 
   const buttonClasses = cn(
-    'flex h-9 items-center space-x-2 rounded-full border px-3.5 text-neutral-500 transition hover:bg-neutral-900 hover:text-neutral-400',
+    'hover:bg-card/50 flex h-9 items-center space-x-2 rounded-full border px-3.5 text-neutral-500 transition hover:text-neutral-400',
     {
-      'border-neutral-600 bg-neutral-900 text-neutral-300 hover:text-neutral-300':
+      'bg-card/50 border-neutral-700 text-neutral-300 hover:text-neutral-300':
         !isPaused,
     }
   )

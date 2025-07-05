@@ -175,7 +175,7 @@ export function JsonParser(node: JSONContent) {
       return (
         <div className="space-y-2 py-2">
           <Image
-            className="rounded-md bg-neutral-950"
+            className="bg-card rounded-md"
             src={node.attrs?.src as string}
             alt={node.attrs?.alt as string}
             priority={(node.attrs?.isPriority as boolean) ?? false}
@@ -194,7 +194,7 @@ export function JsonParser(node: JSONContent) {
       return (
         <div className="py-2">
           <video
-            className="rounded-md bg-neutral-950"
+            className="bg-card rounded-md"
             src={node.attrs?.src as string}
             controls
             width={768}

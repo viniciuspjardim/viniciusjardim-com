@@ -13,7 +13,7 @@ export default async function HomePage() {
     <WidthContainer className="flex w-full flex-col items-center">
       <ColorBeans />
 
-      <div className="mb-6 divide-y divide-dashed divide-neutral-800">
+      <div className="mb-6 divide-y divide-dashed">
         {posts?.map((post) => (
           <PostCard
             key={post.id}

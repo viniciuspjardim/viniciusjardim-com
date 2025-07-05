@@ -57,7 +57,7 @@ const PublishDetails = ({
       <div className="flex gap-3">
         {userImageUrl && (
           <Image
-            className="mt-1 h-10 w-10 rounded-full bg-neutral-950"
+            className="bg-card mt-1 h-10 w-10 rounded-full"
             src={userImageUrl}
             alt={userName}
             width={40}

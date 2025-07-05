@@ -38,7 +38,7 @@ function PostWithActions({ post }: PostWithActionsProps) {
     api.posts.generateSpeech.useMutation()
 
   return (
-    <div className="flex w-full justify-between gap-3 px-4 py-2 transition-colors hover:bg-neutral-950">
+    <div className="hover:bg-card/50 flex w-full justify-between gap-3 px-4 py-2 transition-colors">
       {post.published ? (
         <span
           className="mt-2 mr-1 size-2.5 shrink-0 rounded-full bg-green-400"
@@ -144,7 +144,7 @@ export function EditPostList() {
   }
 
   return (
-    <div className="divide-y divide-neutral-800 overflow-hidden rounded-lg border">
+    <div className="divide-y overflow-hidden rounded-lg border">
       {posts.map((post) => (
         <PostWithActions key={post.id} post={post} />
       ))}

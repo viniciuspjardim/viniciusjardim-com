@@ -26,7 +26,7 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
       {imageSrc && (
         <Image
           // Aspect ratio 16:9 - 768x432 or 320x180
-          className="aspect-video w-full shrink-0 rounded-md bg-neutral-950 object-cover md:w-80"
+          className="bg-card aspect-video w-full shrink-0 rounded-md object-cover md:w-80"
           src={imageSrc}
           alt={imageAlt ?? ''}
           width={768}

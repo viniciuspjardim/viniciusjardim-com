@@ -43,7 +43,7 @@ export function PostFormMeta({
       <div className="flex space-x-3">
         {userImageUrl && (
           <Image
-            className="h-12 w-12 rounded-full bg-neutral-950"
+            className="bg-card h-12 w-12 rounded-full"
             src={userImageUrl}
             alt={userName ?? 'User avatar'}
             width={48}

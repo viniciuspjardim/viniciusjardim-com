@@ -33,7 +33,7 @@ export async function Navbar() {
         <div className="flex items-center justify-center gap-4">
           <Button className="h-8 py-0" variant="ghost" asChild>
             <a
-              className="flex items-center gap-1 rounded-md px-2 py-0 text-sm font-medium transition-all hover:bg-neutral-800 hover:text-white"
+              className="hover:bg-card flex items-center gap-1 rounded-md px-2 py-0 text-sm font-medium transition-all hover:text-white"
               href="https://github.com/viniciuspjardim"
               target="_blank"
               aria-label="GitHub"
