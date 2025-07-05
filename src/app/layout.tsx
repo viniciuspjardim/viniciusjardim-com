@@ -20,7 +20,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${roboto.className} dark`}>
+    <html lang="en" className={`${roboto.className} dark bg-background`}>
       <body>
         <PosthogProvider>{children}</PosthogProvider>
         <Analytics />
