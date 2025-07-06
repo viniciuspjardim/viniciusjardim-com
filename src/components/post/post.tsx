@@ -27,9 +27,9 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
     <div className={cn('flex w-full gap-8', className)}>
       {/* Post navigation */}
       {showPostNav && (
-        <nav className="order-last -mt-6 hidden w-64 shrink-0 lg:block">
+        <nav className="order-last -mt-18 hidden w-64 shrink-0 lg:block">
           {/* Headings */}
-          <div className="sticky top-0 max-h-svh overflow-y-auto py-6">
+          <div className="sticky top-0 max-h-svh overflow-y-auto pt-18 pb-6">
             <div>
               <span className="block text-2xl text-neutral-300">
                 In this article
@@ -54,7 +54,7 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
             </div>
 
             {/* Separator */}
-            <div className="mt-4 mb-3 border-b" />
+            <div className="mt-4 mb-3 border-b border-dashed" />
 
             {/* Go to top button */}
             <div>

@@ -14,7 +14,7 @@ export async function Navbar() {
   const categories = await api.categories.getAll()
 
   return (
-    <nav className="h-nav border-b">
+    <nav className="h-nav bg-background/90 sticky top-0 z-5 w-full border-b shadow-lg shadow-black/50 backdrop-blur-md">
       <WidthContainer className="flex h-full items-center justify-between gap-4">
         <Link
           className="flex items-center gap-4 rounded-md transition-all hover:brightness-125"
