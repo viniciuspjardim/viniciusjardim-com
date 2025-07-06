@@ -10,9 +10,15 @@ type PostCardProps = {
   post: s.Post
   userName: string
   userImageUrl?: string | null
+  isPriorityImage?: boolean
 }
 
-export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
+export function PostCard({
+  post,
+  userName,
+  userImageUrl,
+  isPriorityImage = false,
+}: PostCardProps) {
   const imageNode = findPostNode(post.content, 'image')
   const imageSrc = imageNode?.attrs?.src as string | undefined
   const imageAlt = imageNode?.attrs?.alt as string | undefined
@@ -29,9 +35,10 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
           className="bg-card aspect-video w-full shrink-0 rounded-md object-cover md:w-80"
           src={imageSrc}
           alt={imageAlt ?? ''}
+          priority={isPriorityImage}
           width={768}
           height={432}
-          quality={90}
+          quality={80}
         />
       )}
       <div className="shrink space-y-2">
@@ -48,6 +55,7 @@ export function PostCard({ post, userName, userImageUrl }: PostCardProps) {
           writtenAt={post.writtenAt}
           userName={userName}
           userImageUrl={userImageUrl}
+          isPriorityImage={isPriorityImage}
         />
       </div>
     </Link>

@@ -15,12 +15,13 @@ export default async function CategoryPage({
 
   return (
     <>
-      {posts.map((post) => (
+      {posts.map((post, index) => (
         <PostCard
           key={post.id}
           post={post}
           userName={formatAuthorName(post.author)}
           userImageUrl={post.author?.userImageUrl}
+          isPriorityImage={index < 2}
         />
       ))}
 

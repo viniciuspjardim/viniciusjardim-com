@@ -181,7 +181,7 @@ export function JsonParser(node: JSONContent) {
             priority={(node.attrs?.isPriority as boolean) ?? false}
             width={(node.attrs?.width as `${number}`) ?? '768'}
             height={(node.attrs?.height as `${number}`) ?? '432'}
-            quality={90}
+            quality={80}
           />
           {node.attrs?.description && (
             <p className="text-muted-foreground text-lg font-medium">

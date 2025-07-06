@@ -28,6 +28,7 @@ export interface PublishDetailsProps
   userName: string
   userImageUrl?: string | null
   audioUrl?: string
+  isPriorityImage?: boolean
 }
 
 const renderFlag = (lang: string) => {
@@ -49,6 +50,7 @@ const PublishDetails = ({
   userName,
   userImageUrl,
   audioUrl,
+  isPriorityImage = false,
 }: PublishDetailsProps) => {
   const hasUserName = userName !== authorFallback
 
@@ -60,9 +62,10 @@ const PublishDetails = ({
             className="bg-card mt-1 h-10 w-10 rounded-full"
             src={userImageUrl}
             alt={userName}
+            priority={isPriorityImage}
             width={40}
             height={40}
-            quality={100}
+            quality={90}
           />
         )}
 

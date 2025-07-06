@@ -55,6 +55,7 @@ export async function generateMetadata({
       alt: '',
       width: 1200,
       height: 630,
+      quality: 80,
     }).props
   }
 

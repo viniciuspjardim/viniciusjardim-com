@@ -14,12 +14,13 @@ export default async function HomePage() {
       <ColorBeans />
 
       <div className="mb-6 divide-y divide-dashed">
-        {posts?.map((post) => (
+        {posts?.map((post, index) => (
           <PostCard
             key={post.id}
             post={post}
             userName={formatAuthorName(post.author)}
             userImageUrl={post.author?.userImageUrl}
+            isPriorityImage={index < 2}
           />
         ))}
       </div>

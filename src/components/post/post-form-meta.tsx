@@ -48,7 +48,7 @@ export function PostFormMeta({
             alt={userName ?? 'User avatar'}
             width={48}
             height={48}
-            quality={100}
+            quality={90}
           />
         )}
 

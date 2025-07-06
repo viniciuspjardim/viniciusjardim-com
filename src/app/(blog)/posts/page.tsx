@@ -11,12 +11,13 @@ export default async function PostsPage() {
   return (
     <WidthContainer className="flex w-full flex-col items-center">
       <div className="my-6 divide-y divide-dashed">
-        {posts?.map((post) => (
+        {posts?.map((post, index) => (
           <PostCard
             key={post.id}
             post={post}
             userName={formatAuthorName(post.author)}
             userImageUrl={post.author?.userImageUrl}
+            isPriorityImage={index < 2}
           />
         ))}
       </div>
