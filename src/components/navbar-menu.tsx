@@ -19,9 +19,12 @@ export function NavbarMenu({ categories }: NavbarMenuProps) {
   const showAdmin = true
 
   return (
-    <DropdownMenuContent className="mt-6 w-64" align="end">
+    <DropdownMenuContent
+      className="mt-4 w-64 p-0 shadow-lg shadow-black/50"
+      align="end"
+    >
       <DropdownMenuGroup>
-        <DropdownMenuLabel className="text-sm text-neutral-400">
+        <DropdownMenuLabel className="text-muted-foreground flex items-center gap-2 font-light">
           Categories
         </DropdownMenuLabel>
         <DropdownMenuItem asChild>

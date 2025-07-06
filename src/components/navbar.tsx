@@ -45,7 +45,7 @@ export async function Navbar() {
 
           <AuthButton className="hidden md:block" />
 
-          <DropdownMenu modal={false}>
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 className="group px-1"
