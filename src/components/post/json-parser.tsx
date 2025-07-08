@@ -1,6 +1,5 @@
 import type { JSONContent } from '@tiptap/core'
 
-import React from 'react'
 import Image from 'next/image'
 import { FileIcon, TerminalIcon } from 'lucide-react'
 

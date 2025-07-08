@@ -5,7 +5,7 @@ import { AudioLinesIcon, PlayIcon, PauseIcon, XIcon } from 'lucide-react'
 import { cn } from '~/lib/utils'
 import { Slider } from '~/components/ui/slider'
 
-export function AudioIcon({ isPaused }: { isPaused: boolean }) {
+export function AnimatedAudioIcon({ isPaused }: { isPaused: boolean }) {
   const iconClasses = cn(
     'animate-move-right-100 flex size-6 shrink-0 text-rose-800',
     {
@@ -97,8 +97,9 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
         onPlaying={() => setIsPaused(false)}
         onPause={() => setIsPaused(true)}
       />
+
       <button className={buttonClasses} type="button" onClick={handlePlayPause}>
-        <AudioIcon isPaused={isPaused} />
+        <AnimatedAudioIcon isPaused={isPaused} />
         <span className="min-w-12">{isPaused ? 'Listen' : 'Pause'}</span>
       </button>
 
