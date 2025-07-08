@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { AudioLinesIcon, PlayIcon, PauseIcon, XIcon } from 'lucide-react'
 import { cn } from '~/lib/utils'
-import { Progress } from '~/components/ui/progress'
+import { Slider } from '~/components/ui/slider'
 
 export function AudioIcon({ isPaused }: { isPaused: boolean }) {
   const iconClasses = cn(
@@ -51,18 +51,12 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
       setDuration(audio.duration)
     }
 
-    const handleEnded = () => {
-      setIsFloatingPlayerOpen(false)
-    }
-
     audio.addEventListener('timeupdate', handleTimeUpdate)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
-    audio.addEventListener('ended', handleEnded)
 
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate)
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
-      audio.removeEventListener('ended', handleEnded)
     }
   }, [])
 
@@ -75,6 +69,16 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
     } else {
       audioRef.current.pause()
     }
+  }
+
+  const handleSeek = (value: number[]) => {
+    if (!audioRef.current || duration === 0 || !value.length || !value[0]) {
+      return
+    }
+
+    const newTime = (value[0] / 100) * duration
+    audioRef.current.currentTime = newTime
+    setCurrentTime(newTime)
   }
 
   const formatTime = (time: number) => {
@@ -101,7 +105,6 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
       {/* Floating player */}
       {isFloatingPlayerOpen && (
         <div className="bg-card fixed bottom-6 left-1/2 z-50 flex w-80 -translate-x-1/2 flex-col space-y-2 rounded-full px-4 py-2 shadow-md shadow-white/10">
-          {/* Progress bar */}
           <div className="flex items-center space-x-2">
             <button
               type="button"
@@ -123,7 +126,15 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
             <span className="text-sm text-neutral-400">
               {formatTime(currentTime)}
             </span>
-            <Progress value={progressValue} className="flex-1" />
+            <div className="flex-1 px-2">
+              <Slider
+                className="cursor-pointer"
+                value={[progressValue]}
+                onValueChange={handleSeek}
+                max={100}
+                step={0.1}
+              />
+            </div>
             <span className="text-sm text-neutral-400">
               {formatTime(duration)}
             </span>

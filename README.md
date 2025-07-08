@@ -34,7 +34,7 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Display videos on the post
   - [x] Display post side nav with headings and scroll to the top link
   - [ ] Fix code font size inside headings
-  - [ ] Make a better player for the audio with fixed position and progress bar
+  - [x] Make a better player for the audio with fixed position and slider
   - [ ] Add share button with social media options and copy button
   - [ ] Add a summary generated with AI
 - [x] Blog text editor
