@@ -33,6 +33,7 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Display image on the post
   - [x] Display videos on the post
   - [x] Display post side nav with headings and scroll to the top link
+  - [ ] Fix side nav links - the heading is below the nav bar on scroll
   - [ ] Fix code font size inside headings
   - [x] Make a better player for the audio with fixed position and slider
   - [ ] Add share button with social media options and copy button
@@ -53,6 +54,7 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
     - [x] Move editor toolbar to the header with the tabs
     - [x] Detect virtual keyboard and reserve space to it
     - [x] Reserve space to virtual keyboard on editor modals
+  - [ ] Fix losing current editor tab when saving post for the first time
 - [x] Text to speech (TTS)
   - [x] Integrate with OpenAI TTS model
   - [x] Generate post audio and store the MP3 file on UploadThing
