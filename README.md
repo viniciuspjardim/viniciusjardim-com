@@ -33,7 +33,7 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Display image on the post
   - [x] Display videos on the post
   - [x] Display post side nav with headings and scroll to the top link
-  - [ ] Fix side nav links - the heading is below the nav bar on scroll
+  - [x] Fix side nav links - the heading is below the navbar on scroll
   - [ ] Fix code font size inside headings
   - [x] Make a better player for the audio with fixed position and slider
   - [ ] Add share button with social media options and copy button

@@ -169,6 +169,16 @@
     @apply pointer-events-none float-left h-0 text-white/50;
   }
 
+  /* Offset scroll position for anchor links to account for sticky navbar */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    scroll-margin-top: calc(var(--spacing-nav) + 1rem);
+  }
+
   h1 {
     @apply mb-4 text-2xl line-through;
   }
