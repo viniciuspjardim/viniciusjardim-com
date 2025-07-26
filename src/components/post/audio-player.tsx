@@ -43,6 +43,10 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
       return
     }
 
+    if (audio.duration && !isNaN(audio.duration)) {
+      setDuration(audio.duration)
+    }
+
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime)
     }
