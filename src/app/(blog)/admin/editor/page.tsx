@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { currentUser } from '@clerk/nextjs/server'
 import { RedirectToSignIn } from '@clerk/nextjs'
 
-import { PostForm } from '~/components/post/post-form'
+import { Editor } from '~/components/editor'
 import { env } from '~/env'
 import { api, HydrateClient } from '~/trpc/server'
 
@@ -27,7 +27,7 @@ export default async function EditorPage({
 
   return (
     <HydrateClient>
-      <PostForm
+      <Editor
         initialPostData={post}
         userName={user.fullName || 'Anonymous'}
         userImageUrl={user.imageUrl}

@@ -1,5 +1,7 @@
 'use client'
 
+import type { TipTapEditor } from './use-tiptap-editor'
+
 import { useCallback } from 'react'
 import {
   PilcrowIcon,
@@ -17,26 +19,27 @@ import {
   UnlinkIcon,
   FlipVerticalIcon,
 } from 'lucide-react'
-import { EditorButton } from '~/components/post/editor-button'
-import { ImageDialog } from '~/components/post/image-dialog'
-import { CodeBlockDialog } from '~/components/post/code-block-dialog'
-import type { Editor } from '~/hooks/use-editor'
+import { EditorButton } from './editor-button'
+import { ImageDialog } from './image-dialog'
+import { CodeBlockDialog } from './code-block-dialog'
 
-interface PostFormEditorToolbarProps {
-  editor: Editor
+interface EditorToolbarProps {
+  tipTapEditor: TipTapEditor
 }
 
-export function PostFormEditorToolbar({ editor }: PostFormEditorToolbarProps) {
+export function EditorToolbar({ tipTapEditor }: EditorToolbarProps) {
   const addVideo = useCallback(() => {
     const url = window.prompt('URL')
 
     if (url) {
-      editor?.chain().focus().setVideo(url).run()
+      tipTapEditor?.chain().focus().setVideo(url).run()
     }
-  }, [editor])
+  }, [tipTapEditor])
 
   const setLink = useCallback(() => {
-    const previousUrl = editor?.getAttributes('link').href as string | undefined
+    const previousUrl = tipTapEditor?.getAttributes('link').href as
+      | string
+      | undefined
     const url = window.prompt('URL', previousUrl)
 
     if (url === null) {
@@ -44,50 +47,55 @@ export function PostFormEditorToolbar({ editor }: PostFormEditorToolbarProps) {
     }
 
     if (url === '') {
-      editor?.chain().focus().extendMarkRange('link').unsetLink().run()
+      tipTapEditor?.chain().focus().extendMarkRange('link').unsetLink().run()
       return
     }
 
-    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
-  }, [editor])
+    tipTapEditor
+      ?.chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({ href: url })
+      .run()
+  }, [tipTapEditor])
 
   return (
     <>
       <EditorButton
         title="Paragraph"
-        isActive={editor?.isActive('paragraph')}
-        onClick={() => editor?.chain().focus().setParagraph().run()}
+        isActive={tipTapEditor?.isActive('paragraph')}
+        onClick={() => tipTapEditor?.chain().focus().setParagraph().run()}
       >
         <PilcrowIcon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Heading 3"
-        isActive={editor?.isActive('heading', { level: 3 })}
+        isActive={tipTapEditor?.isActive('heading', { level: 3 })}
         onClick={() =>
-          editor?.chain().focus().toggleHeading({ level: 3 }).run()
+          tipTapEditor?.chain().focus().toggleHeading({ level: 3 }).run()
         }
       >
         <Heading3Icon className="size-5" />
       </EditorButton>
-      <ImageDialog editor={editor} />
+      <ImageDialog tipTapEditor={tipTapEditor} />
       <EditorButton
         title="Code"
-        isActive={editor?.isActive('code')}
-        onClick={() => editor?.chain().focus().toggleCode().run()}
+        isActive={tipTapEditor?.isActive('code')}
+        onClick={() => tipTapEditor?.chain().focus().toggleCode().run()}
       >
         <CodeIcon className="size-5" />
       </EditorButton>
-      <CodeBlockDialog editor={editor} />
+      <CodeBlockDialog tipTapEditor={tipTapEditor} />
       <EditorButton
         title="Link"
-        isActive={editor?.isActive('link')}
+        isActive={tipTapEditor?.isActive('link')}
         onClick={setLink}
       >
         <LinkIcon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Line break"
-        onClick={() => editor?.chain().focus().setHardBreak().run()}
+        onClick={() => tipTapEditor?.chain().focus().setHardBreak().run()}
       >
         br
       </EditorButton>
@@ -97,109 +105,109 @@ export function PostFormEditorToolbar({ editor }: PostFormEditorToolbarProps) {
       <EditorButton
         className="text-semibold"
         title="Bold"
-        isActive={editor?.isActive('bold')}
-        onClick={() => editor?.chain().focus().toggleBold().run()}
+        isActive={tipTapEditor?.isActive('bold')}
+        onClick={() => tipTapEditor?.chain().focus().toggleBold().run()}
       >
         B
       </EditorButton>
       <EditorButton
         className="font-serif italic"
         title="Italic"
-        isActive={editor?.isActive('italic')}
-        onClick={() => editor?.chain().focus().toggleItalic().run()}
+        isActive={tipTapEditor?.isActive('italic')}
+        onClick={() => tipTapEditor?.chain().focus().toggleItalic().run()}
       >
         I
       </EditorButton>
       <EditorButton
         className="line-through"
         title="Strike"
-        isActive={editor?.isActive('strike')}
-        onClick={() => editor?.chain().focus().toggleStrike().run()}
+        isActive={tipTapEditor?.isActive('strike')}
+        onClick={() => tipTapEditor?.chain().focus().toggleStrike().run()}
       >
         S
       </EditorButton>
       <EditorButton
         title="Heading 4"
-        isActive={editor?.isActive('heading', { level: 4 })}
+        isActive={tipTapEditor?.isActive('heading', { level: 4 })}
         onClick={() =>
-          editor?.chain().focus().toggleHeading({ level: 4 }).run()
+          tipTapEditor?.chain().focus().toggleHeading({ level: 4 }).run()
         }
       >
         <Heading4Icon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Heading 5"
-        isActive={editor?.isActive('heading', { level: 5 })}
+        isActive={tipTapEditor?.isActive('heading', { level: 5 })}
         onClick={() =>
-          editor?.chain().focus().toggleHeading({ level: 5 }).run()
+          tipTapEditor?.chain().focus().toggleHeading({ level: 5 }).run()
         }
       >
         <Heading5Icon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Heading 6"
-        isActive={editor?.isActive('heading', { level: 6 })}
+        isActive={tipTapEditor?.isActive('heading', { level: 6 })}
         onClick={() =>
-          editor?.chain().focus().toggleHeading({ level: 6 }).run()
+          tipTapEditor?.chain().focus().toggleHeading({ level: 6 }).run()
         }
       >
         <Heading6Icon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Unordered list"
-        isActive={editor?.isActive('bulletList')}
-        onClick={() => editor?.chain().focus().toggleBulletList().run()}
+        isActive={tipTapEditor?.isActive('bulletList')}
+        onClick={() => tipTapEditor?.chain().focus().toggleBulletList().run()}
       >
         <ListIcon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Ordered list"
-        isActive={editor?.isActive('orderedList')}
-        onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+        isActive={tipTapEditor?.isActive('orderedList')}
+        onClick={() => tipTapEditor?.chain().focus().toggleOrderedList().run()}
       >
         <ListOrderedIcon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Quote"
-        isActive={editor?.isActive('blockquote')}
-        onClick={() => editor?.chain().focus().toggleBlockquote().run()}
+        isActive={tipTapEditor?.isActive('blockquote')}
+        onClick={() => tipTapEditor?.chain().focus().toggleBlockquote().run()}
       >
         {'"'}
       </EditorButton>
       <EditorButton
         title="Horizontal rule"
-        onClick={() => editor?.chain().focus().setHorizontalRule().run()}
+        onClick={() => tipTapEditor?.chain().focus().setHorizontalRule().run()}
       >
         <FlipVerticalIcon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Undo"
-        onClick={() => editor?.chain().focus().undo().run()}
+        onClick={() => tipTapEditor?.chain().focus().undo().run()}
       >
         <Undo2Icon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Redo"
-        onClick={() => editor?.chain().focus().redo().run()}
+        onClick={() => tipTapEditor?.chain().focus().redo().run()}
       >
         <Redo2Icon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Remove link"
-        onClick={() => editor?.chain().focus().unsetLink().run()}
-        disabled={!editor?.isActive('link')}
+        onClick={() => tipTapEditor?.chain().focus().unsetLink().run()}
+        disabled={!tipTapEditor?.isActive('link')}
       >
         <UnlinkIcon className="size-5" />
       </EditorButton>
       <EditorButton
         title="Clear formatting"
-        onClick={() => editor?.chain().focus().unsetAllMarks().run()}
+        onClick={() => tipTapEditor?.chain().focus().unsetAllMarks().run()}
       >
         CF
       </EditorButton>
       <EditorButton
         title="Clear nodes"
-        onClick={() => editor?.chain().focus().clearNodes().run()}
+        onClick={() => tipTapEditor?.chain().focus().clearNodes().run()}
       >
         CN
       </EditorButton>

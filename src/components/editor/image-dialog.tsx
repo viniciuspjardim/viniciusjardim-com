@@ -14,19 +14,20 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Textarea } from '~/components/ui/textarea'
-import { EditorButton } from '~/components/post/editor-button'
 import { UploadButton } from '~/utils/uploadthing'
 import {
   getSelectedImageAttributes,
   type ImageAttributes,
 } from '~/helpers/tiptap-image'
-import { type Editor } from '~/hooks/use-editor'
+
+import { EditorButton } from './editor-button'
+import { type TipTapEditor } from './use-tiptap-editor'
 
 type ImageDialogProps = {
-  editor: Editor
+  tipTapEditor: TipTapEditor
 }
 
-export function ImageDialog({ editor }: ImageDialogProps) {
+export function ImageDialog({ tipTapEditor }: ImageDialogProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [sourceImageHeight, setSourceImageHeight] = useState(0)
   const [sourceImageWidth, setSourceImageWidth] = useState(0)
@@ -53,7 +54,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
     setImageHeight('')
   }
 
-  const isDisabled = !editor || !imageSrc
+  const isDisabled = !tipTapEditor || !imageSrc
   const imgAspect =
     sourceImageWidth && sourceImageHeight
       ? sourceImageWidth / sourceImageHeight
@@ -76,7 +77,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
       height: imageHeight || undefined,
     }
 
-    editor.chain().focus().setImage(attributes).run()
+    tipTapEditor.chain().focus().setImage(attributes).run()
     resetState()
   }
 
@@ -86,7 +87,7 @@ export function ImageDialog({ editor }: ImageDialogProps) {
         <EditorButton
           title="Image"
           onClick={() => {
-            const attributes = getSelectedImageAttributes(editor)
+            const attributes = getSelectedImageAttributes(tipTapEditor)
             setImageSrc(attributes?.src || '')
             setImageDescription(attributes?.description || '')
             setImageAlt(attributes?.alt || '')

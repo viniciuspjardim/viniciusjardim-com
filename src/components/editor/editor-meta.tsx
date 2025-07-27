@@ -2,7 +2,7 @@
 
 import type { Control, UseFormRegister } from 'react-hook-form'
 import type { s } from '~/db'
-import type { PostFormInputs } from './post-form'
+import type { PostFormInputs } from '.'
 
 import Image from 'next/image'
 import { Controller } from 'react-hook-form'
@@ -19,7 +19,7 @@ import {
 } from '~/components/ui/select'
 import { Textarea } from '~/components/ui/textarea'
 
-export interface PostFormMetaProps {
+export interface EditorMetaProps {
   register: UseFormRegister<PostFormInputs>
   control: Control<PostFormInputs>
   isPosting: boolean
@@ -29,7 +29,7 @@ export interface PostFormMetaProps {
   userImageUrl?: string
 }
 
-export function PostFormMeta({
+export function EditorMeta({
   register,
   control,
   isPosting,
@@ -37,7 +37,7 @@ export function PostFormMeta({
   categoriesData,
   userName,
   userImageUrl,
-}: PostFormMetaProps) {
+}: EditorMetaProps) {
   return (
     <div className="space-y-4 py-6">
       <div className="flex space-x-3">

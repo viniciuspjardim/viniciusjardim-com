@@ -10,17 +10,17 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { parseISO } from 'date-fns'
 import { ChevronLeftIcon, SaveIcon } from 'lucide-react'
 import { toast } from 'sonner'
-import { EditorContent } from '@tiptap/react'
 import { api } from '~/trpc/react'
 import { asSlug } from '~/helpers/as-slug'
 import { Button } from '~/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
-import { useEditor } from '~/hooks/use-editor'
 import { useVirtualKeyboardBounds } from '~/hooks/use-virtual-keyboard-bounds'
-import { PostFormEditorToolbar } from './post-form-editor-toolbar'
-import { PostFormMeta } from './post-form-meta'
-import { PostFormPreview } from './post-form-preview'
-import { WidthContainer } from '../width-container'
+import { WidthContainer } from '~/components/width-container'
+
+import { EditorMeta } from './editor-meta'
+import { EditorPreview } from './editor-preview'
+import { EditorToolbar } from './editor-toolbar'
+import { useTipTapEditor } from './use-tiptap-editor'
 
 function createPostObject<T>(
   postId: T,
@@ -56,7 +56,7 @@ export interface PostFormInputs {
   published: boolean
 }
 
-export interface PostFormProps {
+export interface EditorProps {
   initialPostData?: s.Post
   userName?: string
   userImageUrl?: string
@@ -64,11 +64,11 @@ export interface PostFormProps {
 
 type SelectedTab = 'meta' | 'editor' | 'preview'
 
-export function PostForm({
+export function Editor({
   initialPostData,
   userName,
   userImageUrl,
-}: PostFormProps) {
+}: EditorProps) {
   const searchParams = useSearchParams()
   const bounds = useVirtualKeyboardBounds()
 
@@ -127,13 +127,15 @@ export function PostForm({
     },
   })
 
-  const { editor } = useEditor(initialPostData?.content)
+  const { TipTapEditorContent, tipTapEditor } = useTipTapEditor(
+    initialPostData?.content
+  )
 
   const slug = asSlug(watch('title') ?? '')
-  const isValid = isFormValid && !editor?.isEmpty
+  const isValid = isFormValid && !tipTapEditor?.isEmpty
 
   const handleFormSubmit: SubmitHandler<PostFormInputs> = async (formData) => {
-    const content = editor?.getJSON() ?? {}
+    const content = tipTapEditor?.getJSON() ?? {}
 
     try {
       const post = await onSubmit(formData, content)
@@ -167,12 +169,12 @@ export function PostForm({
     if (selectedTab === 'preview') {
       // Get the form data and content from the editor to build the post preview
       void handleSubmit((formData) => {
-        const content = editor?.getJSON() ?? {}
+        const content = tipTapEditor?.getJSON() ?? {}
         const post = createPostObject(postId, formData, content)
         setPostPreview(post)
       })()
     }
-  }, [selectedTab, handleSubmit, editor, postId])
+  }, [selectedTab, handleSubmit, tipTapEditor, postId])
 
   return (
     <form
@@ -214,7 +216,7 @@ export function PostForm({
           {selectedTab === 'editor' && (
             <div className="border-t">
               <WidthContainer className="flex items-center gap-x-1.5 gap-y-1 overflow-x-auto px-1 py-2 [scrollbar-width:none] md:flex-wrap md:overflow-visible">
-                <PostFormEditorToolbar editor={editor} />
+                <EditorToolbar tipTapEditor={tipTapEditor} />
               </WidthContainer>
             </div>
           )}
@@ -224,7 +226,7 @@ export function PostForm({
         <WidthContainer className="w-full flex-grow overflow-y-auto">
           {/* Post metadata form */}
           <TabsContent value="meta">
-            <PostFormMeta
+            <EditorMeta
               register={register}
               control={control}
               isPosting={isPosting}
@@ -237,12 +239,12 @@ export function PostForm({
 
           {/* Text editor content */}
           <TabsContent value="editor">
-            {editor && <EditorContent editor={editor} />}
+            {tipTapEditor && <TipTapEditorContent editor={tipTapEditor} />}
           </TabsContent>
 
           {/* Post preview */}
           <TabsContent value="preview">
-            <PostFormPreview
+            <EditorPreview
               postPreview={postPreview}
               userName={userName}
               userImageUrl={userImageUrl}

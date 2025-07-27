@@ -13,18 +13,19 @@ import {
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { EditorButton } from '~/components/post/editor-button'
 import {
   getSelectedCodeBlockAttributes,
   type CodeBlockAttributes,
 } from '~/helpers/tiptap-code-block'
-import { type Editor } from '~/hooks/use-editor'
+
+import { type TipTapEditor } from './use-tiptap-editor'
+import { EditorButton } from './editor-button'
 
 type CodeBlockDialogProps = {
-  editor: Editor
+  tipTapEditor: TipTapEditor
 }
 
-export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
+export function CodeBlockDialog({ tipTapEditor }: CodeBlockDialogProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const [codeLanguage, setCodeLanguage] = useState('')
@@ -38,7 +39,7 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
     setCodeShowCopyButton(false)
   }
 
-  const isDisabled = !editor
+  const isDisabled = !tipTapEditor
 
   const addCodeBlock = () => {
     if (isDisabled) {
@@ -51,7 +52,7 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
       showCopyButton: codeShowCopyButton,
     }
 
-    editor.chain().focus().setCodeBlock(attributes).run()
+    tipTapEditor.chain().focus().setCodeBlock(attributes).run()
     resetState()
   }
 
@@ -61,7 +62,7 @@ export function CodeBlockDialog({ editor }: CodeBlockDialogProps) {
         <EditorButton
           title="Code block"
           onClick={() => {
-            const attributes = getSelectedCodeBlockAttributes(editor)
+            const attributes = getSelectedCodeBlockAttributes(tipTapEditor)
             setCodeLanguage(attributes?.language || '')
             setCodeFileName(attributes?.fileName || '')
             setCodeShowCopyButton(attributes?.showCopyButton || false)

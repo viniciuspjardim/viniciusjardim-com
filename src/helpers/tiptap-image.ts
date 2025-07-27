@@ -1,4 +1,4 @@
-import { type Editor } from '~/hooks/use-editor'
+import { type TipTapEditor } from '~/components/editor/use-tiptap-editor'
 
 import Image from '@tiptap/extension-image'
 import { NodeSelection } from 'prosemirror-state'
@@ -41,12 +41,12 @@ export const TipTapImage = Image.extend({
   },
 })
 
-export function getSelectedImageAttributes(editor: Editor) {
-  if (!editor) {
+export function getSelectedImageAttributes(tipTapEditor: TipTapEditor) {
+  if (!tipTapEditor) {
     return null
   }
 
-  const { selection } = editor.state
+  const { selection } = tipTapEditor.state
 
   if (selection instanceof NodeSelection) {
     const node = selection.node

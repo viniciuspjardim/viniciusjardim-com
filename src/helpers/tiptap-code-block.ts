@@ -1,4 +1,4 @@
-import { type Editor } from '~/hooks/use-editor'
+import { type TipTapEditor } from '~/components/editor/use-tiptap-editor'
 
 import CodeBlock from '@tiptap/extension-code-block'
 
@@ -24,8 +24,8 @@ export const TipTapCodeBlock = CodeBlock.extend({
   },
 })
 
-export function getSelectedCodeBlockAttributes(editor: Editor) {
-  const $from = editor?.state.selection.$from
+export function getSelectedCodeBlockAttributes(tipTapEditor: TipTapEditor) {
+  const $from = tipTapEditor?.state.selection.$from
 
   if (!$from) {
     return null

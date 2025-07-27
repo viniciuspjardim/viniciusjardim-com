@@ -20,19 +20,19 @@ type PostObject = {
   published: boolean
 }
 
-export interface PostFormPreviewProps {
+export interface EditorPreviewProps {
   postPreview: PostObject | null
   userName?: string
   userImageUrl?: string
   initialPostData?: s.Post
 }
 
-export function PostFormPreview({
+export function EditorPreview({
   postPreview,
   userName,
   userImageUrl,
   initialPostData,
-}: PostFormPreviewProps) {
+}: EditorPreviewProps) {
   if (!postPreview) {
     return null
   }

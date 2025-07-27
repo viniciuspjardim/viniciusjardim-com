@@ -1,6 +1,9 @@
 import type { JSONContent } from '@tiptap/core'
 
-import { useEditor as useInitEditor, EditorContent } from '@tiptap/react'
+import {
+  useEditor as useInitEditor,
+  EditorContent as TipTapEditorContent,
+} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
@@ -9,8 +12,8 @@ import { TipTapCodeBlock } from '~/helpers/tiptap-code-block'
 import { Speech } from '~/helpers/tiptap-speech'
 import { Video } from '~/helpers/tiptap-video'
 
-export function useEditor(content?: JSONContent) {
-  const editor = useInitEditor({
+export function useTipTapEditor(content?: JSONContent) {
+  const tipTapEditor = useInitEditor({
     immediatelyRender: false,
     editorProps: {
       attributes: {
@@ -37,7 +40,7 @@ export function useEditor(content?: JSONContent) {
     content,
   })
 
-  return { EditorContent, editor }
+  return { TipTapEditorContent, tipTapEditor }
 }
 
-export type Editor = ReturnType<typeof useEditor>['editor']
+export type TipTapEditor = ReturnType<typeof useTipTapEditor>['tipTapEditor']
