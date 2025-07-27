@@ -143,7 +143,7 @@ export function Editor({
 
       // After creating the post add the postId query param without reloading the page
       if (!postId) {
-        const params = new URLSearchParams()
+        const params = new URLSearchParams(searchParams)
         params.set('postId', post.id.toString())
         window.history.replaceState(null, '', `?${params.toString()}`)
       }
