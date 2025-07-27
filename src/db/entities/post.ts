@@ -18,14 +18,14 @@ const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
   z
     .object({
       type: z.string().optional(),
-      attrs: z.record(z.any()).optional(),
+      attrs: z.record(z.string(), z.any()).optional(),
       content: z.array(JSONContentSchema).optional(),
       marks: z
         .array(
           z
             .object({
               type: z.string(),
-              attrs: z.record(z.any()).optional(),
+              attrs: z.record(z.string(), z.any()).optional(),
             })
             .catchall(z.any())
         )

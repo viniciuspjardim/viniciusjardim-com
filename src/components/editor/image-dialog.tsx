@@ -73,8 +73,8 @@ export function ImageDialog({ tipTapEditor }: ImageDialogProps) {
       description: imageDescription || undefined,
       alt: imageAlt || undefined,
       isPriority: imageIsPriority || undefined,
-      width: imageWidth || undefined,
-      height: imageHeight || undefined,
+      width: imageWidth ? parseInt(imageWidth, 10) : undefined,
+      height: imageHeight ? parseInt(imageHeight, 10) : undefined,
     }
 
     tipTapEditor.chain().focus().setImage(attributes).run()
@@ -92,8 +92,8 @@ export function ImageDialog({ tipTapEditor }: ImageDialogProps) {
             setImageDescription(attributes?.description || '')
             setImageAlt(attributes?.alt || '')
             setImageIsPriority(attributes?.isPriority || false)
-            setImageWidth(attributes?.width || '')
-            setImageHeight(attributes?.height || '')
+            setImageWidth(attributes?.width?.toString() || '')
+            setImageHeight(attributes?.height?.toString() || '')
           }}
         >
           <ImageIcon className="size-5" />
@@ -227,7 +227,19 @@ export function ImageDialog({ tipTapEditor }: ImageDialogProps) {
                   id="ratio"
                   name="ratio"
                   checked={keepAspect}
-                  onChange={(event) => setKeepAspect(event.target.checked)}
+                  onChange={(event) => {
+                    setKeepAspect(event.target.checked)
+
+                    if (imageWidth && event.target.checked && imgAspect) {
+                      setImageHeight(
+                        Math.round(
+                          parseInt(imageWidth, 10) / imgAspect
+                        ).toString()
+                      )
+                    } else if (event.target.checked) {
+                      setImageHeight('')
+                    }
+                  }}
                 />
                 <Label htmlFor="ratio">Keep ratio</Label>
               </div>
@@ -244,6 +256,8 @@ export function ImageDialog({ tipTapEditor }: ImageDialogProps) {
                   setImageHeight(
                     Math.round(parseInt(width, 10) / imgAspect).toString()
                   )
+                } else if (keepAspect) {
+                  setImageHeight('')
                 }
               }}
             />
@@ -262,6 +276,8 @@ export function ImageDialog({ tipTapEditor }: ImageDialogProps) {
                   setImageWidth(
                     Math.round(parseInt(height, 10) * imgAspect).toString()
                   )
+                } else if (keepAspect) {
+                  setImageWidth('')
                 }
               }}
             />

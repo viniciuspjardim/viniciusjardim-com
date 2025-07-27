@@ -9,8 +9,8 @@ export type ImageAttributes = {
   alt?: string
   title?: string
   isPriority?: boolean
-  width?: string
-  height?: string
+  width?: number
+  height?: number
 }
 
 export const TipTapImage = Image.extend({
