@@ -21,7 +21,7 @@ export function useTipTapEditor(content?: JSONContent) {
       },
     },
     extensions: [
-      StarterKit.configure({ codeBlock: false }),
+      StarterKit.configure({ codeBlock: false, link: false }),
       Placeholder.configure({ placeholder: 'Write your post here...' }),
       Link.configure({
         openOnClick: false,
