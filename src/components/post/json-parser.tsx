@@ -2,6 +2,7 @@ import type { JSONContent } from '@tiptap/core'
 
 import Image from 'next/image'
 import { FileIcon, TerminalIcon } from 'lucide-react'
+import { GitHubLogoIcon } from '@radix-ui/react-icons'
 
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
@@ -73,6 +74,7 @@ type CodeBlockProps = {
   contentText?: string
   fileName?: string
   showCopyButton?: boolean
+  gitHubUrl?: string
 }
 
 function CodeBlock({
@@ -80,9 +82,11 @@ function CodeBlock({
   language = 'plaintext',
   fileName,
   showCopyButton,
+  gitHubUrl,
 }: CodeBlockProps) {
   const gramar = Prism.languages?.[language]
-  const headerState = fileName || showCopyButton ? 'visible' : 'hidden'
+  const headerState =
+    fileName || showCopyButton || gitHubUrl ? 'visible' : 'hidden'
 
   const codeContent = gramar ? (
     <code
@@ -116,7 +120,22 @@ function CodeBlock({
         ) : (
           <span />
         )}
-        {showCopyButton && <CopyButton textToCopy={contentText} />}
+
+        {(gitHubUrl || showCopyButton) && (
+          <div className="flex items-center gap-4">
+            {gitHubUrl && (
+              <a
+                className="!text-muted-foreground hover:!text-white"
+                href={gitHubUrl}
+                target="_blank"
+                aria-label="View on GitHub"
+              >
+                <GitHubLogoIcon className="size-5" />
+              </a>
+            )}
+            {showCopyButton && <CopyButton textToCopy={contentText} />}
+          </div>
+        )}
       </div>
       <pre>{codeContent}</pre>
     </div>
@@ -168,6 +187,7 @@ export function JsonParser(node: JSONContent) {
           language={node.attrs?.language as string}
           fileName={node.attrs?.fileName as string}
           showCopyButton={node.attrs?.showCopyButton as boolean}
+          gitHubUrl={node.attrs?.gitHubUrl as string}
         />
       )
     case 'image':

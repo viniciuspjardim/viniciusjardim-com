@@ -11,6 +11,7 @@ import {
   DialogFooter,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
+import { Checkbox } from '~/components/ui/checkbox'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import {
@@ -31,6 +32,7 @@ export function CodeBlockDialog({ tipTapEditor }: CodeBlockDialogProps) {
   const [codeLanguage, setCodeLanguage] = useState('')
   const [codeFileName, setCodeFileName] = useState('')
   const [codeShowCopyButton, setCodeShowCopyButton] = useState(false)
+  const [codeGitHubUrl, setCodeGitHubUrl] = useState('')
 
   const resetState = () => {
     setIsOpen(false)
@@ -50,6 +52,7 @@ export function CodeBlockDialog({ tipTapEditor }: CodeBlockDialogProps) {
       language: codeLanguage,
       fileName: codeFileName,
       showCopyButton: codeShowCopyButton,
+      gitHubUrl: codeGitHubUrl,
     }
 
     tipTapEditor.chain().focus().setCodeBlock(attributes).run()
@@ -66,6 +69,7 @@ export function CodeBlockDialog({ tipTapEditor }: CodeBlockDialogProps) {
             setCodeLanguage(attributes?.language || '')
             setCodeFileName(attributes?.fileName || '')
             setCodeShowCopyButton(attributes?.showCopyButton || false)
+            setCodeGitHubUrl(attributes?.gitHubUrl || '')
           }}
         >
           <BracesIcon className="size-5" />
@@ -100,15 +104,26 @@ export function CodeBlockDialog({ tipTapEditor }: CodeBlockDialogProps) {
             />
           </div>
           <div className="flex gap-2">
-            <input
+            <Checkbox
               className="size-4"
-              type="checkbox"
               id="codeShowCopyButton"
-              name="codeShowCopyButton"
               checked={codeShowCopyButton}
-              onChange={(event) => setCodeShowCopyButton(event.target.checked)}
+              onCheckedChange={(checked) =>
+                setCodeShowCopyButton(
+                  checked === 'indeterminate' ? false : checked
+                )
+              }
             />
             <Label htmlFor="codeShowCopyButton">Show copy button</Label>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="codeGitHubUrl">GitHub URL:</Label>
+            <Input
+              id="codeGitHubUrl"
+              type="text"
+              value={codeGitHubUrl}
+              onChange={(event) => setCodeGitHubUrl(event.target.value)}
+            />
           </div>
         </DialogBody>
 

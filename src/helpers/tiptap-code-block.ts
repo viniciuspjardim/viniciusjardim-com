@@ -6,6 +6,7 @@ export type CodeBlockAttributes = {
   language: string
   fileName?: string
   showCopyButton?: boolean
+  gitHubUrl?: string
 }
 
 export const TipTapCodeBlock = CodeBlock.extend({
@@ -18,6 +19,9 @@ export const TipTapCodeBlock = CodeBlock.extend({
         default: undefined,
       },
       showCopyButton: {
+        default: undefined,
+      },
+      gitHubUrl: {
         default: undefined,
       },
     }
