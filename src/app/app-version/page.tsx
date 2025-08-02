@@ -34,6 +34,10 @@ export default function AppVersionPage() {
           <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}</Value>
         </div>
         <div>
+          <Label>Commit message:</Label>
+          <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_MESSAGE}</Value>
+        </div>
+        <div>
           <Label>Commit hash:</Label>
           <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}</Value>
         </div>
