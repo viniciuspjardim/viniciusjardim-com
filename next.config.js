@@ -16,6 +16,7 @@ const config = {
   },
   experimental: {
     useCache: true,
+    reactCompiler: true,
   },
 }
 
