@@ -10,17 +10,15 @@ This project uses `bun` as a test runner.
 
 ## How to run unit tests
 
-- `bun run test <path>` - run a test file or test within a folder
-- `bun run test` - run all the test suite
-- `bun run check` - run linting, typecheck, and tests
+- `bun run test <path>` - run a test file or test within a folder.
+- `bun run test` - run all the test suite.
+- `bun run check` - run linting, typecheck, and tests.
 
 Avoid running all the tests. Do it only if specifically asked.
 
 ## How to write unit tests
 
-This project uses `bun` as a test runner.
-
-See the examples below.
+Use [bun:test](https://bun.sh/reference/bun/test) APIs to write the unit tests. See the examples below.
 
 File name `my-function.test.ts`:
 
