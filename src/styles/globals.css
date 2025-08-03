@@ -305,7 +305,19 @@
     cursor: help;
   }
 
-  .token.deleted {
-    color: red;
+  .token.deleted-sign.deleted {
+    @apply bg-destructive/10 block;
+  }
+
+  .token.prefix.deleted {
+    @apply text-destructive/80;
+  }
+
+  .token.inserted-sign.inserted {
+    @apply block bg-emerald-500/14;
+  }
+
+  .token.prefix.inserted {
+    @apply text-emerald-300/80;
   }
 }

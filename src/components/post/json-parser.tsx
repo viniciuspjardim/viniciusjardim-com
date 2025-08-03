@@ -18,6 +18,8 @@ import 'prismjs/components/prism-cpp'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-zig'
+import 'prismjs/components/prism-diff'
+import 'prismjs/plugins/diff-highlight/prism-diff-highlight'
 
 import { CopyButton } from '~/components/post/copy-button'
 import { sanitizeHtml } from '~/helpers/sanitize-html'
@@ -70,27 +72,28 @@ function Heading({ level = 1, id, children }: HeadingProps) {
 }
 
 type CodeBlockProps = {
-  language?: string
-  contentText?: string
+  language: string
+  contentText: string
   fileName?: string
   showCopyButton?: boolean
   gitHubUrl?: string
 }
 
 function CodeBlock({
-  contentText = '',
-  language = 'plaintext',
+  language,
+  contentText,
   fileName,
   showCopyButton,
   gitHubUrl,
 }: CodeBlockProps) {
-  const gramar = Prism.languages?.[language]
+  const isDiff = language.startsWith('diff-')
+  const gramar = isDiff ? Prism.languages.diff : Prism.languages?.[language]
   const headerState =
     fileName || showCopyButton || gitHubUrl ? 'visible' : 'hidden'
 
   const codeContent = gramar ? (
     <code
-      className={`language-${language}`}
+      className={`language-${language} ${isDiff ? 'diff-highlight' : ''}`}
       dangerouslySetInnerHTML={{
         __html: sanitizeHtml(Prism.highlight(contentText, gramar, language)),
       }}
@@ -183,8 +186,8 @@ export function JsonParser(node: JSONContent) {
     case 'codeBlock':
       return (
         <CodeBlock
-          contentText={node.content?.[0]?.text}
-          language={node.attrs?.language as string}
+          language={(node.attrs?.language as string | null) ?? 'plaintext'}
+          contentText={node.content?.[0]?.text ?? ''}
           fileName={node.attrs?.fileName as string}
           showCopyButton={node.attrs?.showCopyButton as boolean}
           gitHubUrl={node.attrs?.gitHubUrl as string}
