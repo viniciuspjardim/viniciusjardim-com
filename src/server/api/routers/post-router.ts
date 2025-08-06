@@ -11,8 +11,8 @@ import {
   publicProcedure,
   ownerProcedure,
 } from '~/server/api/trpc'
-import { upload } from '~/server/uploadthing'
-import { createSpeech as generateSpeech } from '~/helpers/open-ai'
+import { uploadSpeech } from '~/server/uploadthing'
+import { generateSpeech } from '~/helpers/open-ai'
 import { addOrReplaceSpeechNode, getPostText } from '~/helpers/tiptap-utils'
 
 const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
@@ -167,8 +167,8 @@ export const postRouter = createTRPCRouter({
         })
 
         const content = z.string().min(1).parse(postText)
-        const speechBuffer = await generateSpeech(content)
-        const [utFile] = await upload(speechBuffer, input.slug)
+        const speechBuffer = await generateSpeech(content, post.lang)
+        const [utFile] = await uploadSpeech(speechBuffer, input.slug)
 
         const speechFileUrl = utFile?.data?.ufsUrl
 

@@ -1,3 +1,4 @@
+import 'server-only'
 import OpenAI from 'openai'
 import { env } from '~/env'
 
@@ -36,13 +37,27 @@ function concatenateMp3Buffers(buffers: Buffer[]) {
   return Buffer.concat(buffers)
 }
 
-export async function createSpeech(input: string) {
+export async function generateSpeech(input: string, language: string) {
   const chunks = splitTextIntoChunks(input)
+
+  let instructions
+
+  if (language === 'en-US') {
+    instructions = `Please speak in US English with a neutral tone.`
+  } else if (language === 'pt-BR') {
+    instructions = `Por favor, fale em português do Brasil com um tom neutro.`
+  }
+
+  const params = {
+    model: 'gpt-4o-mini-tts',
+    voice: 'nova',
+    speed: 1.1,
+    instructions,
+  }
 
   if (chunks.length === 1) {
     const mp3 = await openAi.audio.speech.create({
-      model: 'gpt-4o-mini-tts',
-      voice: 'nova',
+      ...params,
       input: chunks[0]!,
     })
 
@@ -51,8 +66,7 @@ export async function createSpeech(input: string) {
 
   const speechPromises = chunks.map(async (chunk) => {
     const mp3 = await openAi.audio.speech.create({
-      model: 'gpt-4o-mini-tts',
-      voice: 'nova',
+      ...params,
       input: chunk,
     })
 
