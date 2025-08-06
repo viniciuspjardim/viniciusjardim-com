@@ -48,6 +48,12 @@ export async function generateSpeech(input: string, language: string) {
     instructions = `Por favor, fale em português do Brasil com um tom neutro.`
   }
 
+  console.log('openai.generateSpeech', {
+    language,
+    instructions,
+    chunksCount: chunks.length,
+  })
+
   const params = {
     model: 'gpt-4o-mini-tts',
     voice: 'nova',
