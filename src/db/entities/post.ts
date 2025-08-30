@@ -5,10 +5,11 @@ import {
 
 import type { JSONContent } from '@tiptap/core'
 
-import { clerkClient } from '@clerk/nextjs/server'
+import { createClerkClient } from '@clerk/nextjs/server'
 import { sql, eq, desc } from 'drizzle-orm'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { env } from '~/env'
 import { idb, s } from '~/db/drizzle'
 import { filterUserFields } from '~/helpers/user'
 
@@ -37,7 +38,7 @@ const JSONContentSchema: z.ZodType<JSONContent> = z.lazy(() =>
 
 async function postWithAuthor(post: s.Post) {
   try {
-    const clerk = await clerkClient()
+    const clerk = createClerkClient({ secretKey: env.CLERK_SECRET_KEY })
     const user = await clerk.users.getUser(post.authorId)
 
     return { ...post, author: filterUserFields(user) }
@@ -56,7 +57,7 @@ async function postWithAuthor(post: s.Post) {
 }
 
 async function postsWithAuthor(posts: s.Post[]) {
-  const clerk = await clerkClient()
+  const clerk = createClerkClient({ secretKey: env.CLERK_SECRET_KEY })
   const userList = await clerk.users.getUserList({
     userId: posts.map((post) => post.authorId),
   })
