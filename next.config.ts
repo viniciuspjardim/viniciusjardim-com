@@ -1,13 +1,11 @@
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds.
- */
 import './src/env.js'
+import type { NextConfig } from 'next'
 
-/** @type {import("next").NextConfig} */
-const config = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
+  reactCompiler: true,
   images: {
+    qualities: [80, 90],
     remotePatterns: [
       new URL('https://oyd5i68yhz.ufs.sh/f/**'),
       new URL('https://images.clerk.dev/**'),
@@ -16,8 +14,7 @@ const config = {
   },
   experimental: {
     useCache: true,
-    reactCompiler: true,
   },
 }
 
-export default config
+export default nextConfig

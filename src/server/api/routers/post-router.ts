@@ -101,7 +101,7 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...post, logType: 'CREATE' })
 
-        revalidateTag(db.post.baseTag)
+        revalidateTag(db.post.baseTag, 'max')
 
         return post
       })
@@ -137,7 +137,7 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...post, logType: 'UPDATE' })
 
-        revalidateTag(db.post.baseTag)
+        revalidateTag(db.post.baseTag, 'max')
 
         return post
       })
@@ -194,7 +194,7 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...updatedPost, logType: 'UPDATE' })
 
-        revalidateTag(db.post.baseTag)
+        revalidateTag(db.post.baseTag, 'max')
 
         return { success: true }
       })
@@ -215,7 +215,7 @@ export const postRouter = createTRPCRouter({
 
         await tx.insert(s.postLog).values({ ...post, logType: 'DELETE' })
 
-        revalidateTag(db.post.baseTag)
+        revalidateTag(db.post.baseTag, 'max')
 
         return post
       })
@@ -224,7 +224,7 @@ export const postRouter = createTRPCRouter({
   revalidateCacheTag: ownerProcedure.mutation(async () => {
     console.log('trpc.postRouter.revalidateCacheTag')
 
-    revalidateTag(db.post.baseTag)
+    revalidateTag(db.post.baseTag, 'max')
     return { success: true }
   }),
 })

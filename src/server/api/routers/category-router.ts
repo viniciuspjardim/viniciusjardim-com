@@ -26,7 +26,7 @@ export const categoryRouter = createTRPCRouter({
   revalidateCacheTag: ownerProcedure.mutation(async () => {
     console.log('trpc.categoryRouter.revalidateCacheTag')
 
-    revalidateTag(db.category.baseTag)
+    revalidateTag(db.category.baseTag, 'max')
     return { success: true }
   }),
 })

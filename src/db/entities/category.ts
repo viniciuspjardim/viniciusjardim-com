@@ -1,7 +1,4 @@
-import {
-  unstable_cacheLife as cacheLife,
-  unstable_cacheTag as cacheTag,
-} from 'next/cache'
+import { cacheLife, cacheTag } from 'next/cache'
 
 import { eq, asc, desc } from 'drizzle-orm'
 import { idb, s } from '~/db/drizzle'
