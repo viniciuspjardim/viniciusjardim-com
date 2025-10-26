@@ -4,6 +4,9 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 // @ts-expect-error - no types for this plugin
 import nextTs from 'eslint-config-next/typescript'
 
+// TODO: configure and test `eslint-plugin-drizzle``
+// TODO: check if the React Compiler ESLint rules are working
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
