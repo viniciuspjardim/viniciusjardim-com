@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "test": "bun test",
-    "lint": "eslint . && tsc --noEmit",
-    "check": "eslint . && tsc --noEmit && bun test",
+    "lint": "bunx next typegen && eslint . && tsc --noEmit",
+    "check": "bunx next typegen && eslint . && tsc --noEmit && bun test",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push"
   },
