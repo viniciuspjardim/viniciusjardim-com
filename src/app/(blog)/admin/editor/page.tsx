@@ -6,12 +6,8 @@ import { Editor } from '~/components/editor'
 import { env } from '~/env'
 import { api, HydrateClient } from '~/trpc/server'
 
-export default async function EditorPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | undefined>>
-}) {
-  const postId = (await searchParams).postId
+export default async function EditorPage(props: PageProps<'/admin/editor'>) {
+  const query = await props.searchParams
   const user = await currentUser()
 
   if (!user) {
@@ -20,9 +16,10 @@ export default async function EditorPage({
     return redirect('/')
   }
 
-  const post = postId
-    ? await api.posts.getOneById({ id: parseInt(postId, 10) })
+  const post = query.postId
+    ? await api.posts.getOneById({ id: parseInt(query.postId as string, 10) })
     : undefined
+
   void api.categories.getAll.prefetch()
 
   return (

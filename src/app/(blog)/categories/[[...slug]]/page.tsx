@@ -5,12 +5,10 @@ import { PostCard } from '~/components/post/post-card'
 import { api } from '~/trpc/server'
 import { formatAuthorName } from '~/helpers/format-author-name'
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const categorySlug = (await params).slug?.[0]
+export default async function CategoryPage(
+  props: PageProps<'/categories/[[...slug]]'>
+) {
+  const categorySlug = (await props.params).slug?.[0]
   const posts = await api.posts.getAllByCategorySlug({ categorySlug })
 
   return (

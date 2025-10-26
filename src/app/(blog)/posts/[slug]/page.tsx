@@ -11,12 +11,8 @@ import { findPostNode } from '~/helpers/tiptap-utils'
 import { formatAuthorName } from '~/helpers/format-author-name'
 import { PostBreadcrumb } from '~/components/ui/breadcrumb'
 
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export default async function PostPage(props: PageProps<'/posts/[slug]'>) {
+  const { slug } = await props.params
   const [categories, post] = await Promise.all([
     api.categories.getAll(),
     api.posts.getOneBySlug({ slug }),

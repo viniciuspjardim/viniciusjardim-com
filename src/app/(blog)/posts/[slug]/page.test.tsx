@@ -11,8 +11,7 @@ import { screen, render } from '@testing-library/react'
 import { type JSONContent } from '@tiptap/react'
 import PostPage from './page'
 
-// Simple mock data
-const mockPost = {
+const mockedPost = {
   id: 1,
   slug: 'example-post',
   title: 'My Test Post',
@@ -34,16 +33,16 @@ const mockPost = {
   },
 }
 
-const mockCategories = [{ id: 1, name: 'Technology', slug: 'technology' }]
+const mockedCategories = [{ id: 1, name: 'Technology', slug: 'technology' }]
 
 // Mock the API
 void mock.module('~/trpc/server', () => ({
   api: {
     categories: {
-      getAll: () => Promise.resolve(mockCategories),
+      getAll: () => Promise.resolve(mockedCategories),
     },
     posts: {
-      getOneBySlug: () => Promise.resolve(mockPost),
+      getOneBySlug: () => Promise.resolve(mockedPost),
     },
   },
 }))
@@ -54,7 +53,7 @@ void mock.module('~/components/ui/breadcrumb', () => ({
 }))
 
 void mock.module('~/components/post/post', () => ({
-  Post: ({ post }: { post: typeof mockPost }) => (
+  Post: ({ post }: { post: typeof mockedPost }) => (
     <article data-testid="post">
       <h1>{post.title}</h1>
       <p>{post.description}</p>
@@ -74,6 +73,7 @@ describe('PostPage', () => {
   it('should render post page with correct content', async () => {
     const component = await PostPage({
       params: Promise.resolve({ slug: 'example-post' }),
+      searchParams: Promise.resolve({}),
     })
 
     render(component)
