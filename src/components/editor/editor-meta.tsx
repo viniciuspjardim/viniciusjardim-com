@@ -5,7 +5,7 @@ import type { s } from '~/db'
 import type { PostFormInputs } from '.'
 
 import Image from 'next/image'
-import { Controller } from 'react-hook-form'
+import { Controller, useWatch } from 'react-hook-form'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import {
@@ -19,11 +19,23 @@ import {
 } from '~/components/ui/select'
 import { Textarea } from '~/components/ui/textarea'
 
+/** Extract slug to a separate component to avoid re-rendering the entire component when the title changes */
+function SlugWatcher({ control }: { control: Control<PostFormInputs> }) {
+  const slug = useWatch({
+    control,
+    name: 'title',
+    defaultValue: '',
+  })
+
+  return (
+    <span className="text-muted-foreground text-sm">{slug || 'Post Slug'}</span>
+  )
+}
+
 export interface EditorMetaProps {
   register: UseFormRegister<PostFormInputs>
   control: Control<PostFormInputs>
   isPosting: boolean
-  slug: string
   categoriesData: s.Category[]
   userName?: string
   userImageUrl?: string
@@ -33,7 +45,6 @@ export function EditorMeta({
   register,
   control,
   isPosting,
-  slug,
   categoriesData,
   userName,
   userImageUrl,
@@ -64,9 +75,7 @@ export function EditorMeta({
           />
 
           <div className="flex justify-between">
-            <span className="text-muted-foreground text-sm">
-              {slug || 'Post Slug'}
-            </span>
+            <SlugWatcher control={control} />
           </div>
         </div>
       </div>

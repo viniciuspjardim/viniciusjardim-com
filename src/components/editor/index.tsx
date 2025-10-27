@@ -107,7 +107,6 @@ export function Editor({
     register,
     handleSubmit,
     control,
-    watch,
     formState: { isValid: isFormValid },
   } = useForm<PostFormInputs>({
     defaultValues: {
@@ -131,7 +130,6 @@ export function Editor({
     initialPostData?.content
   )
 
-  const slug = asSlug(watch('title') ?? '')
   const isValid = isFormValid && !tipTapEditor?.isEmpty
 
   const handleFormSubmit: SubmitHandler<PostFormInputs> = async (formData) => {
@@ -230,7 +228,6 @@ export function Editor({
               register={register}
               control={control}
               isPosting={isPosting}
-              slug={slug}
               categoriesData={categoriesData}
               userName={userName}
               userImageUrl={userImageUrl}
