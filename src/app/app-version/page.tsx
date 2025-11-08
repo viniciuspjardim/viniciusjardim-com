@@ -30,6 +30,10 @@ export default function AppVersionPage() {
           <Value>{new Date().toISOString()}</Value>
         </div>
         <div>
+          <Label>Bun version:</Label>
+          <Value>{Bun.version}</Value>
+        </div>
+        <div>
           <Label>Deploy branch:</Label>
           <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}</Value>
         </div>
