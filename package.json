@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun --bun run next dev --experimental-https",
-    "build": "bun --bun run next build",
-    "start": "bun --bun run next start",
+    "build": "next build",
+    "start": "next start",
     "test": "bun test",
     "lint": "bunx next typegen && eslint . && tsc --noEmit",
     "check": "bunx next typegen && eslint . && tsc --noEmit && bun test",
