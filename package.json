@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "bun --bun run next dev --experimental-https",
-    "build": "next build",
-    "start": "next start",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start",
     "test": "bun test",
     "lint": "bunx next typegen && eslint . && tsc --noEmit",
     "check": "bunx next typegen && eslint . && tsc --noEmit && bun test",
-    "db:studio": "drizzle-kit studio",
-    "db:push": "drizzle-kit push"
+    "db:studio": "bun --bun drizzle-kit studio",
+    "db:push": "bun --bun drizzle-kit push"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.35.4",
