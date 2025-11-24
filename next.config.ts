@@ -2,6 +2,7 @@ import './src/env.js'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  cacheComponents: true,
   reactStrictMode: true,
   reactCompiler: true,
   images: {
@@ -11,9 +12,6 @@ const nextConfig: NextConfig = {
       new URL('https://images.clerk.dev/**'),
       new URL('https://img.clerk.com/**'),
     ],
-  },
-  experimental: {
-    useCache: true,
   },
 }
 

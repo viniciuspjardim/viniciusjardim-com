@@ -1,5 +1,6 @@
 import 'server-only'
 
+import { cacheLife } from 'next/cache'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -15,22 +16,25 @@ function Value({ children }: { children: React.ReactNode }) {
 }
 
 async function SystemInfo() {
-  const baseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+  'use cache'
+  cacheLife('seconds')
 
-  const response = await fetch(`${baseUrl}/api/system-info`, {
-    cache: 'no-store',
-  })
-  const data = (await response.json()) as { date: string; bunVersion: string }
+  const baseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+  const response = await fetch(`${baseUrl}/api/system-info`)
+  const { date, bunVersion } = (await response.json()) as {
+    date: string
+    bunVersion: string
+  }
 
   return (
     <>
       <div>
         <Label>Server date:</Label>
-        <Value>{data.date}</Value>
+        <Value>{date}</Value>
       </div>
       <div>
         <Label>Bun version:</Label>
-        <Value>{data.bunVersion}</Value>
+        <Value>{bunVersion}</Value>
       </div>
     </>
   )
@@ -72,7 +76,7 @@ export default function AppVersionPage() {
           <Label>Environment:</Label>
           <Value>{env.NEXT_PUBLIC_VERCEL_ENV}</Value>
         </div>
-        <Suspense fallback="Loading system info...">
+        <Suspense fallback="Loading...">
           <SystemInfo />
         </Suspense>
       </div>

@@ -1,5 +1,3 @@
-import { cacheLife, cacheTag } from 'next/cache'
-
 import type { JSONContent } from '@tiptap/core'
 
 import { createClerkClient } from '@clerk/nextjs/server'
@@ -82,9 +80,6 @@ export async function getOneById(id: number) {
 
 /** Get one post by slug */
 export async function getOneBySlug(slug: string) {
-  'use cache'
-  cacheLife('weeks')
-  cacheTag(baseTag)
   console.log('db.post.getOneBySlug')
 
   const [post] = await idb.select().from(s.post).where(eq(s.post.slug, slug))
@@ -98,9 +93,6 @@ export async function getOneBySlug(slug: string) {
 
 /** Get all posts */
 export async function getAll(showUnpublished = false) {
-  'use cache'
-  cacheLife('weeks')
-  cacheTag(baseTag)
   console.log('db.post.getAll')
 
   const posts = await idb
@@ -112,6 +104,8 @@ export async function getAll(showUnpublished = false) {
   return await postsWithAuthor(posts)
 }
 
+export type GetAllPostsResponse = ReturnType<typeof getAll>
+
 /**
  * Get all posts from a category, including posts from subcategories
  *
@@ -121,9 +115,6 @@ export async function getAll(showUnpublished = false) {
  * @returns An array of posts.
  */
 export async function getAllByCategorySlug(categorySlug?: string) {
-  'use cache'
-  cacheLife('weeks')
-  cacheTag(baseTag)
   console.log('db.post.getAllByCategorySlug')
 
   const slug = categorySlug ?? '<all>'

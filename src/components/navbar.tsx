@@ -9,10 +9,16 @@ import { WidthContainer } from '~/components/width-container'
 import { Button } from '~/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { api } from '~/trpc/server'
+import { Suspense } from 'react'
 
-export async function Navbar() {
+async function NavbarMenuContent() {
+  // TODO: move from TRPC to API routes and cache the result
   const categories = await api.categories.getAll()
 
+  return <NavbarMenu categories={categories} />
+}
+
+export function Navbar() {
   return (
     <nav className="h-nav bg-background/90 sticky top-0 z-5 w-full border-b shadow-lg shadow-black/50 backdrop-blur-md">
       <WidthContainer className="flex h-full items-center justify-between gap-4">
@@ -58,7 +64,9 @@ export async function Navbar() {
               </Button>
             </DropdownMenuTrigger>
 
-            <NavbarMenu categories={categories} />
+            <Suspense fallback="Loading...">
+              <NavbarMenuContent />
+            </Suspense>
           </DropdownMenu>
         </div>
       </WidthContainer>

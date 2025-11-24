@@ -1,5 +1,3 @@
-import { cacheLife, cacheTag } from 'next/cache'
-
 import { eq, asc, desc } from 'drizzle-orm'
 import { idb, s } from '~/db/drizzle'
 import { TRPCError } from '@trpc/server'
@@ -8,9 +6,6 @@ export const baseTag = 'category'
 
 /** Get one category by slug */
 export async function getOneBySlug(slug: string) {
-  'use cache'
-  cacheLife('weeks')
-  cacheTag(baseTag)
   console.log('db.category.getOneBySlug')
 
   const [category] = await idb
@@ -27,9 +22,6 @@ export async function getOneBySlug(slug: string) {
 
 /** Get all categories */
 export async function getAll() {
-  'use cache'
-  cacheLife('weeks')
-  cacheTag(baseTag)
   console.log('db.category.getAll')
 
   const categories = await idb
