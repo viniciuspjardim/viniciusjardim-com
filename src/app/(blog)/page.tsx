@@ -1,14 +1,14 @@
 import 'server-only'
 
+import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
+import type { GetAllPostsResponse } from '~/db/entities/post'
+import { env } from '~/env'
 import { PostCard } from '~/components/post/post-card'
 import { WidthContainer } from '~/components/width-container'
 import { ColorBeans } from '~/components/projects/color-beans'
 import { formatAuthorName } from '~/helpers/format-author-name'
-import { env } from '~/env'
-import type { GetAllPostsResponse } from '~/db/entities/post'
-import { Suspense } from 'react'
 import { PostCardSkeleton } from '~/components/post/post-card'
 
 async function PostCardList() {
