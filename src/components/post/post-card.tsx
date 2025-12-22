@@ -66,7 +66,7 @@ export function PostCardSkeleton() {
   return (
     <div className="flex w-full flex-col items-start gap-x-8 gap-y-3 py-10 md:flex-row">
       <Skeleton className="aspect-video w-full shrink-0 md:w-80" />
-      <div className="w-full grow-1 space-y-4">
+      <div className="w-full grow space-y-4">
         <Skeleton className="h-8 w-8/12 rounded-full lg:w-6/12" />
         <Skeleton className="h-5 w-10/12 rounded-full lg:w-10/12" />
         <div className="flex gap-3">
@@ -78,5 +78,15 @@ export function PostCardSkeleton() {
         </div>
       </div>
     </div>
+  )
+}
+
+export function PostCardListSkeleton() {
+  return (
+    <>
+      <PostCardSkeleton />
+      <PostCardSkeleton />
+      <PostCardSkeleton />
+    </>
   )
 }
