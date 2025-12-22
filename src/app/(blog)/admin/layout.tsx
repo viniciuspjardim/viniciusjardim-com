@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { Toaster } from '~/components/ui/sonner'
 
 export default function AdminLayout({
@@ -7,7 +8,7 @@ export default function AdminLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      {children}
+      <Suspense fallback="Loading...">{children}</Suspense>
       <Toaster />
     </>
   )

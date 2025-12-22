@@ -14,8 +14,6 @@ void mock.module('~/env', () => ({
     UPLOADTHING_TOKEN: 'test',
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'test',
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: 'test',
-    NEXT_PUBLIC_POSTHOG_HOST: 'test',
-    NEXT_PUBLIC_POSTHOG_KEY: 'test',
     NEXT_PUBLIC_VERCEL_ENV: 'test',
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF: 'test',
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA: 'test',

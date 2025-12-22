@@ -16,8 +16,6 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string(),
-    NEXT_PUBLIC_POSTHOG_HOST: z.string(),
-    NEXT_PUBLIC_POSTHOG_KEY: z.string(),
     NEXT_PUBLIC_VERCEL_ENV: z.string(),
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF: z.string(),
     NEXT_PUBLIC_VERCEL_GIT_COMMIT_MESSAGE: z.string(),
@@ -43,8 +41,6 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
-    NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-    NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
 
     // Public variables from Vercel
     // (see https://vercel.com/docs/environment-variables/system-environment-variables)

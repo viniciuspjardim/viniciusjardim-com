@@ -31,3 +31,5 @@ export async function getAll() {
 
   return categories
 }
+
+export type GetAllCategoriesResponse = ReturnType<typeof getAll>

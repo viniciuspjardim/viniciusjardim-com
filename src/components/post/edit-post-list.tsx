@@ -4,7 +4,6 @@ import type { s } from '~/db'
 
 import Link from 'next/link'
 import { Edit3Icon, TrashIcon } from 'lucide-react'
-import posthog from 'posthog-js'
 import { toast } from 'sonner'
 
 import { api } from '~/trpc/react'
@@ -65,9 +64,6 @@ function PostWithActions({ post }: PostWithActionsProps) {
               className="px-2"
               variant="destructive"
               disabled={isRemovingPost}
-              onClick={() => {
-                posthog.capture('delete-post-dialog-open', { slug: post.slug })
-              }}
             >
               <TrashIcon className="size-5" />
             </Button>
@@ -90,13 +86,8 @@ function PostWithActions({ post }: PostWithActionsProps) {
                 onClick={async () => {
                   try {
                     await remove({ id: post.id })
-                    posthog.capture('delete-post-success', { slug: post.slug })
                     toast('Your post has been deleted.')
-                  } catch (error) {
-                    posthog.capture('delete-post-error', {
-                      slug: post.slug,
-                      error,
-                    })
+                  } catch (_error) {
                     toast('An error occurred while deleting your post.')
                   }
                 }}

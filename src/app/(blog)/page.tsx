@@ -11,7 +11,7 @@ import { ColorBeans } from '~/components/projects/color-beans'
 import { formatAuthorName } from '~/helpers/format-author-name'
 import { PostCardListSkeleton } from '~/components/post/post-card'
 
-async function PostCardList() {
+async function HomePostsList() {
   'use cache'
   cacheLife('max')
   cacheTag('home-page')
@@ -39,7 +39,7 @@ export default function HomePage() {
 
       <div className="mb-6 w-full divide-y divide-dashed">
         <Suspense fallback={<PostCardListSkeleton />}>
-          <PostCardList />
+          <HomePostsList />
         </Suspense>
       </div>
     </WidthContainer>
