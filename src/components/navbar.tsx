@@ -2,17 +2,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MenuIcon, XIcon } from 'lucide-react'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { cacheLife, cacheTag } from 'next/cache'
 
-import { AuthButton } from '~/components/auth-button'
 import { NavbarMenu } from '~/components/navbar-menu'
 import { WidthContainer } from '~/components/width-container'
 import { Button } from '~/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu'
-import { api } from '~/trpc/server'
+import { db } from '~/db'
+import { Suspense } from 'react'
 
-export async function Navbar() {
-  const categories = await api.categories.getAll()
+async function NavbarMenuContent() {
+  'use cache'
+  cacheLife('max')
+  cacheTag('navbar-categories')
 
+  const categories = await db.category.getAll()
+
+  return <NavbarMenu categories={categories} />
+}
+
+export function Navbar() {
   return (
     <nav className="h-nav bg-background/90 sticky top-0 z-5 w-full border-b shadow-lg shadow-black/50 backdrop-blur-md">
       <WidthContainer className="flex h-full items-center justify-between gap-4">
@@ -43,8 +52,6 @@ export async function Navbar() {
             </a>
           </Button>
 
-          <AuthButton className="hidden md:block" />
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -58,7 +65,9 @@ export async function Navbar() {
               </Button>
             </DropdownMenuTrigger>
 
-            <NavbarMenu categories={categories} />
+            <Suspense fallback="Loading...">
+              <NavbarMenuContent />
+            </Suspense>
           </DropdownMenu>
         </div>
       </WidthContainer>

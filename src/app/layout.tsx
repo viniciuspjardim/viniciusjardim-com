@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { PosthogProvider } from '~/components/posthog-provider'
 
 export const metadata: Metadata = {
   title: 'Vinícius Jardim',
@@ -22,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${roboto.className} dark bg-background`}>
       <body>
-        <PosthogProvider>{children}</PosthogProvider>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,8 +1,6 @@
 import 'server-only'
 
 import Link from 'next/link'
-import { Suspense } from 'react'
-
 import { env } from '~/env'
 import { WidthContainer } from '~/components/width-container'
 
@@ -12,28 +10,6 @@ function Label({ children }: { children: React.ReactNode }) {
 
 function Value({ children }: { children: React.ReactNode }) {
   return <span className="block font-semibold">{children}</span>
-}
-
-async function SystemInfo() {
-  const baseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-
-  const response = await fetch(`${baseUrl}/api/system-info`, {
-    cache: 'no-store',
-  })
-  const data = (await response.json()) as { date: string; bunVersion: string }
-
-  return (
-    <>
-      <div>
-        <Label>Server date:</Label>
-        <Value>{data.date}</Value>
-      </div>
-      <div>
-        <Label>Bun version:</Label>
-        <Value>{data.bunVersion}</Value>
-      </div>
-    </>
-  )
 }
 
 export default function AppVersionPage() {
@@ -48,10 +24,6 @@ export default function AppVersionPage() {
             Home
           </Link>
         </nav>
-        <div>
-          <Label>Build at:</Label>
-          <Value>{new Date().toISOString()}</Value>
-        </div>
         <div>
           <Label>Deploy branch:</Label>
           <Value>{env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}</Value>
@@ -72,9 +44,10 @@ export default function AppVersionPage() {
           <Label>Environment:</Label>
           <Value>{env.NEXT_PUBLIC_VERCEL_ENV}</Value>
         </div>
-        <Suspense fallback="Loading system info...">
-          <SystemInfo />
-        </Suspense>
+        <div>
+          <Label>Bun version:</Label>
+          <Value>{Bun.version}</Value>
+        </div>
       </div>
     </WidthContainer>
   )
