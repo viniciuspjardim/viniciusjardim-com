@@ -107,8 +107,9 @@ export async function generateMetadata({
 
   const { slug } = await params
   const post = await db.post.getOneBySlug(slug)
-  const apiBaseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-  const baseUrl = new URL(apiBaseUrl)
+  const baseUrl = new URL(
+    env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+  ).toString()
 
   const imageNode = findPostNode(post.content, 'image')
   const imageSrc = imageNode?.attrs?.src as string | undefined

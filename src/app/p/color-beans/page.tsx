@@ -14,7 +14,9 @@ export default function ColorBeansPage() {
 
 const title = 'Color Beans'
 const description = `Color Beans is a Tetris like game, actually it's a clone of a SEGA game called Puyo Puyo. Link the colors, make combos and defeat the opponents!`
-const baseUrl = new URL(env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL)
+const baseUrl = new URL(
+  env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+).toString()
 
 export const metadata: Metadata = {
   title,
