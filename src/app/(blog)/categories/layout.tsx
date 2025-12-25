@@ -6,7 +6,7 @@ import { db } from '~/db'
 import { WidthContainer } from '~/components/width-container'
 import { CategoryPill } from '~/components/category/category-pill'
 
-export async function CategoriesList() {
+async function CategoriesList() {
   'use cache'
   cacheLife('max')
   cacheTag('category-page')
