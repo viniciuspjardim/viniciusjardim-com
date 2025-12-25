@@ -2,8 +2,7 @@ import 'server-only'
 
 import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
-import { env } from '~/env'
-import type { GetAllCategoriesResponse } from '~/db/entities/category'
+import { db } from '~/db'
 import { WidthContainer } from '~/components/width-container'
 import { CategoryPill } from '~/components/category/category-pill'
 
@@ -12,10 +11,7 @@ export async function CategoriesList() {
   cacheLife('max')
   cacheTag('category-page')
 
-  const baseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-  const categories = await fetch(`${baseUrl}/api/categories/get-all`).then(
-    (res) => res.json() as GetAllCategoriesResponse
-  )
+  const categories = await db.category.getAll()
 
   return (
     <div className="flex w-full gap-2 overflow-x-auto pt-16 [scrollbar-width:none]">
@@ -39,7 +35,9 @@ export default async function CategoriesLayout({
       <Suspense fallback={<div className="pt-[106px]" />}>
         <CategoriesList />
       </Suspense>
-      <div className="my-6 w-full divide-y divide-dashed">{children}</div>
+      <div className="my-6 w-full divide-y divide-dashed">
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+      </div>
     </WidthContainer>
   )
 }

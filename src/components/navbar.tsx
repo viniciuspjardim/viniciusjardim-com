@@ -2,18 +2,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MenuIcon, XIcon } from 'lucide-react'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { cacheLife, cacheTag } from 'next/cache'
 
-import { AuthButton } from '~/components/auth-button'
 import { NavbarMenu } from '~/components/navbar-menu'
 import { WidthContainer } from '~/components/width-container'
 import { Button } from '~/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu'
-import { api } from '~/trpc/server'
+import { db } from '~/db'
 import { Suspense } from 'react'
 
 async function NavbarMenuContent() {
-  // TODO: move from TRPC to API routes and cache the result
-  const categories = await api.categories.getAll()
+  'use cache'
+  cacheLife('max')
+  cacheTag('navbar-categories')
+
+  const categories = await db.category.getAll()
 
   return <NavbarMenu categories={categories} />
 }
@@ -48,8 +51,6 @@ export function Navbar() {
               <span className="hidden md:block">GitHub</span>
             </a>
           </Button>
-
-          <AuthButton className="hidden md:block" />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

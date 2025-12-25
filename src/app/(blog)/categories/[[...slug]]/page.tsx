@@ -4,24 +4,23 @@ import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 import { InfoIcon } from 'lucide-react'
 
-import type { GetAllPostsResponse } from '~/db/entities/post'
-import { env } from '~/env'
+import { db } from '~/db'
 import { PostCard, PostCardListSkeleton } from '~/components/post/post-card'
 import { formatAuthorName } from '~/helpers/format-author-name'
 
-async function CategoryPostsList({ categorySlug }: { categorySlug?: string }) {
+async function CategoryPostsList({
+  paramsPromise,
+}: {
+  paramsPromise: Promise<{ slug?: string[] }>
+}) {
   'use cache'
   cacheLife('max')
   cacheTag('category-page')
 
-  const baseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-  const url = categorySlug
-    ? `${baseUrl}/api/posts/get-all-by-category-slug/${categorySlug}`
-    : `${baseUrl}/api/posts/get-all-by-category-slug`
+  const params = await paramsPromise
+  const categorySlug = params.slug?.[0]
 
-  const posts = await fetch(url).then(
-    (res) => res.json() as GetAllPostsResponse
-  )
+  const posts = await db.post.getAllByCategorySlug(categorySlug)
 
   if (!posts || posts.length === 0) {
     return (
@@ -52,14 +51,28 @@ async function CategoryPostsList({ categorySlug }: { categorySlug?: string }) {
   )
 }
 
-export default async function CategoryPage(
+export async function generateStaticParams() {
+  'use cache'
+  cacheLife('max')
+  cacheTag('category-static-params')
+
+  const categories = await db.category.getAll()
+
+  // Return an array with the default (all categories) and each category slug
+  return [
+    { slug: undefined }, // For the default route without slug
+    ...categories.map((category) => ({
+      slug: [category.slug],
+    })),
+  ]
+}
+
+export default function CategoryPage(
   props: PageProps<'/categories/[[...slug]]'>
 ) {
-  const categorySlug = (await props.params).slug?.[0]
-
   return (
     <Suspense fallback={<PostCardListSkeleton />}>
-      <CategoryPostsList categorySlug={categorySlug} />
+      <CategoryPostsList paramsPromise={props.params} />
     </Suspense>
   )
 }

@@ -3,8 +3,7 @@ import 'server-only'
 import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 
-import type { GetAllPostsResponse } from '~/db/entities/post'
-import { env } from '~/env'
+import { db } from '~/db'
 import { PostCard } from '~/components/post/post-card'
 import { WidthContainer } from '~/components/width-container'
 import { ColorBeans } from '~/components/projects/color-beans'
@@ -16,10 +15,7 @@ async function HomePostsList() {
   cacheLife('max')
   cacheTag('home-page')
 
-  const baseUrl = env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-  const posts = await fetch(`${baseUrl}/api/posts/get-all`).then(
-    (res) => res.json() as GetAllPostsResponse
-  )
+  const posts = await db.post.getAll()
 
   return posts?.map((post, index) => (
     <PostCard

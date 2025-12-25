@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 
-import { AuthButton } from '~/components/auth-button'
 import {
   DropdownMenuContent,
   DropdownMenuLabel,
@@ -47,9 +46,6 @@ export function NavbarMenu({ categories }: NavbarMenuProps) {
       )}
 
       <DropdownMenuSeparator className="md:hidden" />
-      <DropdownMenuItem className="md:hidden">
-        <AuthButton className="w-full" />
-      </DropdownMenuItem>
     </DropdownMenuContent>
   )
 }

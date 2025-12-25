@@ -1,15 +1,18 @@
 'use client'
 
-import { Suspense } from 'react'
+import ClerkProvider from '~/components/clerk-provider'
 import { Toaster } from '~/components/ui/sonner'
+import { TRPCReactProvider } from '~/trpc/react'
 
 export default function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
-      <Suspense fallback="Loading...">{children}</Suspense>
-      <Toaster />
-    </>
+    <ClerkProvider>
+      <TRPCReactProvider>
+        {children}
+        <Toaster />
+      </TRPCReactProvider>
+    </ClerkProvider>
   )
 }
