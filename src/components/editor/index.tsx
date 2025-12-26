@@ -221,7 +221,7 @@ export function Editor({
         </div>
 
         {/* Content */}
-        <WidthContainer className="w-full flex-grow overflow-y-auto">
+        <WidthContainer className="w-full grow overflow-y-auto">
           {/* Post metadata form */}
           <TabsContent value="meta">
             <EditorMeta
