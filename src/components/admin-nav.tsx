@@ -1,27 +1,28 @@
 'use client'
 
+import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { RefreshCcwIcon, PlusIcon } from 'lucide-react'
 import { toast } from 'sonner'
-import { api } from '~/trpc/react'
 import { Button } from '~/components/ui/button'
 import Link from 'next/link'
+import { updateCacheTag } from '~/server/api/actions/cache-actions'
 
 export function AdminNav() {
   const router = useRouter()
-  const ctx = api.useUtils()
+  const [isPending, startTransition] = useTransition()
 
-  const { mutate: revalidateCacheTag, isPending: isRevalidating } =
-    api.cache.revalidateCacheTag.useMutation({
-      onSuccess: async () => {
-        await ctx.posts.invalidate()
+  const handleRevalidate = async (tag: 'posts-list' | 'categories-list') => {
+    try {
+      startTransition(async () => {
+        await updateCacheTag(tag)
         router.refresh()
-        toast('Cache revalidated.')
-      },
-      onError: () => {
-        toast.error('Sorry, an error occurred while revalidating the cache.')
-      },
-    })
+        toast('Cache updated')
+      })
+    } catch {
+      toast.error('Sorry, an error occurred while updating the cache.')
+    }
+  }
 
   return (
     <nav className="w-full space-y-2">
@@ -32,8 +33,8 @@ export function AdminNav() {
           <Button
             variant="outline"
             title="Revalidate posts"
-            disabled={isRevalidating}
-            onClick={() => revalidateCacheTag({ tag: 'posts-list' })}
+            disabled={isPending}
+            onClick={() => handleRevalidate('posts-list')}
           >
             <RefreshCcwIcon className="size-4" />
             <span>Posts</span>
@@ -41,8 +42,8 @@ export function AdminNav() {
           <Button
             variant="outline"
             title="Revalidate categories"
-            disabled={isRevalidating}
-            onClick={() => revalidateCacheTag({ tag: 'categories-list' })}
+            disabled={isPending}
+            onClick={() => handleRevalidate('categories-list')}
           >
             <RefreshCcwIcon className="size-4" />
             <span>Categories</span>
