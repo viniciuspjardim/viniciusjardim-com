@@ -14,7 +14,7 @@ import { Suspense } from 'react'
 async function NavbarMenuContent() {
   'use cache'
   cacheLife('max')
-  cacheTag('navbar-categories')
+  cacheTag('categories-list')
 
   const categories = await db.category.getAll()
 

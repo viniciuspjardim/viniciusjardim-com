@@ -16,7 +16,7 @@ import { PostBreadcrumb } from '~/components/ui/breadcrumb'
 export default async function PostPage(props: PageProps<'/posts/[slug]'>) {
   'use cache'
   cacheLife('max')
-  cacheTag('post-page')
+  cacheTag('posts-list')
 
   const { slug } = await props.params
 
@@ -40,7 +40,7 @@ export default async function PostPage(props: PageProps<'/posts/[slug]'>) {
 export async function generateStaticParams() {
   'use cache'
   cacheLife('max')
-  cacheTag('post-static-params')
+  cacheTag('posts-list')
 
   const posts = await db.post.getAll()
 
@@ -56,7 +56,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   'use cache'
   cacheLife('max')
-  cacheTag('post-metadata')
+  cacheTag('posts-list')
 
   const { slug } = await params
   const post = await db.post.getOneBySlug(slug)

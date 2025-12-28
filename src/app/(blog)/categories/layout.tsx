@@ -10,7 +10,7 @@ export default async function CategoriesLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   'use cache'
   cacheLife('max')
-  cacheTag('category-page')
+  cacheTag('categories-list')
 
   const categories = await db.category.getAll()
 

@@ -11,7 +11,7 @@ import { formatAuthorName } from '~/helpers/format-author-name'
 export default async function HomePage() {
   'use cache'
   cacheLife('max')
-  cacheTag('home-page')
+  cacheTag('posts-list')
 
   const posts = await db.post.getAll()
 

@@ -11,31 +11,17 @@ export function AdminNav() {
   const router = useRouter()
   const ctx = api.useUtils()
 
-  const { mutate: revalidatePosts, isPending: isRevalidatePostsLoading } =
-    api.posts.revalidateCacheTag.useMutation({
+  const { mutate: revalidateCacheTag, isPending: isRevalidating } =
+    api.cache.revalidateCacheTag.useMutation({
       onSuccess: async () => {
         await ctx.posts.invalidate()
         router.refresh()
-        toast('Posts revalidated.')
+        toast('Cache revalidated.')
       },
       onError: () => {
-        toast.error('Sorry, an error occurred while revalidating the posts.')
+        toast.error('Sorry, an error occurred while revalidating the cache.')
       },
     })
-
-  const {
-    mutate: revalidateCategories,
-    isPending: isRevalidateCategoriesLoading,
-  } = api.categories.revalidateCacheTag.useMutation({
-    onSuccess: async () => {
-      await ctx.categories.invalidate()
-      router.refresh()
-      toast('Categories revalidated.')
-    },
-    onError: () => {
-      toast.error('Sorry, an error occurred while revalidating the categories.')
-    },
-  })
 
   return (
     <nav className="w-full space-y-2">
@@ -46,8 +32,8 @@ export function AdminNav() {
           <Button
             variant="outline"
             title="Revalidate posts"
-            disabled={isRevalidatePostsLoading}
-            onClick={() => revalidatePosts()}
+            disabled={isRevalidating}
+            onClick={() => revalidateCacheTag({ tag: 'posts-list' })}
           >
             <RefreshCcwIcon className="size-4" />
             <span>Posts</span>
@@ -55,8 +41,8 @@ export function AdminNav() {
           <Button
             variant="outline"
             title="Revalidate categories"
-            disabled={isRevalidateCategoriesLoading}
-            onClick={() => revalidateCategories()}
+            disabled={isRevalidating}
+            onClick={() => revalidateCacheTag({ tag: 'categories-list' })}
           >
             <RefreshCcwIcon className="size-4" />
             <span>Categories</span>

@@ -15,7 +15,7 @@ async function CategoryPostsList({
 }) {
   'use cache'
   cacheLife('max')
-  cacheTag('category-page')
+  cacheTag('posts-list')
 
   const params = await paramsPromise
   const categorySlug = params.slug?.[0]
@@ -54,7 +54,7 @@ async function CategoryPostsList({
 export async function generateStaticParams() {
   'use cache'
   cacheLife('max')
-  cacheTag('category-static-params')
+  cacheTag('categories-list')
 
   const categories = await db.category.getAll()
 
