@@ -1,23 +1,20 @@
 import 'server-only'
 
-import { Suspense } from 'react'
 import { cacheLife, cacheTag } from 'next/cache'
 import { InfoIcon } from 'lucide-react'
 
 import { db } from '~/db'
-import { PostCard, PostCardListSkeleton } from '~/components/post/post-card'
+import { PostCard } from '~/components/post/post-card'
 import { formatAuthorName } from '~/helpers/format-author-name'
 
-async function CategoryPostsList({
-  paramsPromise,
-}: {
-  paramsPromise: Promise<{ slug?: string[] }>
-}) {
+export default async function CategoryPage(
+  props: PageProps<'/categories/[[...slug]]'>
+) {
   'use cache'
   cacheLife('max')
   cacheTag('posts-list')
 
-  const params = await paramsPromise
+  const params = await props.params
   const categorySlug = params.slug?.[0]
 
   const posts = await db.post.getAllByCategorySlug(categorySlug)
@@ -36,19 +33,15 @@ async function CategoryPostsList({
     )
   }
 
-  return (
-    <>
-      {posts.map((post, index) => (
-        <PostCard
-          key={post.id}
-          post={post}
-          userName={formatAuthorName(post.author)}
-          userImageUrl={post.author?.userImageUrl}
-          isPriorityImage={index < 2}
-        />
-      ))}
-    </>
-  )
+  return posts.map((post, index) => (
+    <PostCard
+      key={post.id}
+      post={post}
+      userName={formatAuthorName(post.author)}
+      userImageUrl={post.author?.userImageUrl}
+      isPriorityImage={index < 2}
+    />
+  ))
 }
 
 export async function generateStaticParams() {
@@ -65,14 +58,4 @@ export async function generateStaticParams() {
       slug: [category.slug],
     })),
   ]
-}
-
-export default function CategoryPage(
-  props: PageProps<'/categories/[[...slug]]'>
-) {
-  return (
-    <Suspense fallback={<PostCardListSkeleton />}>
-      <CategoryPostsList paramsPromise={props.params} />
-    </Suspense>
-  )
 }

@@ -37,18 +37,6 @@ export default async function PostPage(props: PageProps<'/posts/[slug]'>) {
   )
 }
 
-export async function generateStaticParams() {
-  'use cache'
-  cacheLife('max')
-  cacheTag('posts-list')
-
-  const posts = await db.post.getAll()
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -102,4 +90,16 @@ export async function generateMetadata({
       images: typeof imageProps?.src === 'string' ? imageProps.src : undefined,
     },
   }
+}
+
+export async function generateStaticParams() {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts-list')
+
+  const posts = await db.post.getAll()
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
 }
