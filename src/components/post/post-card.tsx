@@ -35,7 +35,9 @@ export function PostCard({
           className="bg-card aspect-video w-full shrink-0 rounded-md object-cover md:w-80"
           src={imageSrc}
           alt={imageAlt ?? ''}
-          priority={isPriorityImage}
+          preload={isPriorityImage}
+          loading={isPriorityImage ? 'eager' : 'lazy'}
+          fetchPriority={isPriorityImage ? 'high' : 'low'}
           width={768}
           height={432}
           quality={80}

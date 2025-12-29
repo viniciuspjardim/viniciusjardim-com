@@ -200,7 +200,9 @@ export function JsonParser(node: JSONContent) {
             className="bg-card rounded-md"
             src={node.attrs?.src as string}
             alt={node.attrs?.alt as string}
-            priority={(node.attrs?.isPriority as boolean) ?? false}
+            preload={!!node.attrs?.isPriority}
+            loading={node.attrs?.isPriority ? 'eager' : 'lazy'}
+            fetchPriority={node.attrs?.isPriority ? 'high' : 'low'}
             width={(node.attrs?.width as `${number}`) ?? '768'}
             height={(node.attrs?.height as `${number}`) ?? '432'}
             quality={80}

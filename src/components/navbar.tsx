@@ -33,7 +33,8 @@ export function Navbar() {
             className="h-9 w-27 md:h-10 md:w-30"
             src="/logo.svg"
             alt="Vinícius Jardim home"
-            priority
+            loading="eager"
+            fetchPriority="low"
             width={120}
             height={40}
           />

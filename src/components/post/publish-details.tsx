@@ -20,8 +20,9 @@ const publishDetailsVariants = cva('flex items-center justify-between gap-3', {
   },
 })
 
-export interface PublishDetailsProps
-  extends VariantProps<typeof publishDetailsVariants> {
+export interface PublishDetailsProps extends VariantProps<
+  typeof publishDetailsVariants
+> {
   className?: string
   lang: string
   writtenAt: Date
@@ -62,7 +63,8 @@ const PublishDetails = ({
             className="bg-card mt-1 h-10 w-10 rounded-full"
             src={userImageUrl}
             alt={userName}
-            priority={isPriorityImage}
+            loading={isPriorityImage ? 'eager' : 'lazy'}
+            fetchPriority={isPriorityImage ? 'high' : 'low'}
             width={40}
             height={40}
             quality={90}

@@ -19,7 +19,8 @@ export function ColorBeans() {
           className="pb-1"
           src="/color-beans-2-icon.png"
           alt="Color Beans logo"
-          priority
+          loading="eager"
+          fetchPriority="low"
           width={48}
           height={48}
         />
