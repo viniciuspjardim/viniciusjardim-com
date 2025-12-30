@@ -8,9 +8,7 @@ import { Slider } from '~/components/ui/slider'
 export function AnimatedAudioIcon({ isPaused }: { isPaused: boolean }) {
   const iconClasses = cn(
     'animate-move-right-100 flex size-6 shrink-0 text-rose-800',
-    {
-      '[animation-play-state:paused]': isPaused,
-    }
+    { paused: isPaused }
   )
 
   return (
