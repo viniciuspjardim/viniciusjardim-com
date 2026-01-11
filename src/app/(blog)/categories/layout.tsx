@@ -16,7 +16,7 @@ export default async function CategoriesLayout({
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">
-      <div className="flex w-full gap-2 overflow-x-auto px-5 pt-16 [scrollbar-width:none] md:px-10">
+      <div className="flex w-full gap-2 overflow-x-auto px-4 pt-16 [scrollbar-width:none] md:px-10">
         <CategoryPill title="All" />
         {categories.map((category) => (
           <CategoryPill

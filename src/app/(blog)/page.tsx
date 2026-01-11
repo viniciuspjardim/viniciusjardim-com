@@ -17,7 +17,7 @@ export default async function HomePage() {
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">
-      <div className="mt-16 mb-6 px-5 md:px-10">
+      <div className="mt-16 mb-6 px-4 md:px-10">
         <ColorBeans />
       </div>
 

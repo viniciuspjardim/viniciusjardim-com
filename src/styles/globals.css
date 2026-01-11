@@ -177,7 +177,7 @@
   h5,
   h6 {
     scroll-margin-top: calc(var(--spacing-nav) + 1rem);
-    @apply px-5 md:px-10;
+    @apply px-4 md:px-10;
   }
 
   h1 {
@@ -197,7 +197,7 @@
   }
 
   p {
-    @apply mb-2.5 px-5 md:px-10;
+    @apply mb-2.5 px-4 md:px-10;
   }
 
   a {
@@ -214,7 +214,7 @@
   }
 
   ul {
-    @apply mx-5 list-disc pl-5 marker:text-rose-800 md:mx-10;
+    @apply mx-4 list-disc pl-4 marker:text-rose-800 md:mx-10;
 
     li {
       @apply mb-0 pl-1;
@@ -230,7 +230,7 @@
   }
 
   pre {
-    @apply overflow-y-auto px-5 py-2;
+    @apply overflow-y-auto px-4 py-2;
 
     code {
       @apply font-mono text-base;

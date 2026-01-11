@@ -112,7 +112,7 @@ function CodeBlock({
   return (
     <div className="overflow-clip border-y bg-neutral-900/75 md:border">
       <div
-        className="flex min-h-8 items-center justify-between border-b px-5 data-[state=hidden]:hidden"
+        className="flex min-h-8 items-center justify-between border-b px-4 data-[state=hidden]:hidden"
         data-state={headerState}
       >
         {fileName ? (

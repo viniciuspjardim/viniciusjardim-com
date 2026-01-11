@@ -22,7 +22,7 @@ export default async function AdminPage() {
 
   return (
     <HydrateClient>
-      <WidthContainer className="space-y-8 px-5 py-16 md:px-10">
+      <WidthContainer className="space-y-8 px-4 py-16 md:px-10">
         <AdminNav />
         <EditPostList />
       </WidthContainer>

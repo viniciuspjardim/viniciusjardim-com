@@ -65,7 +65,7 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
       )}
 
       <article className="min-w-0 grow space-y-6" lang={post.lang}>
-        <div className="space-y-2 px-5 md:px-10">
+        <div className="space-y-2 px-4 md:px-10">
           <h1 className="text-4xl font-medium text-balance text-neutral-200 md:text-5xl md:font-light">
             {post.title}
           </h1>

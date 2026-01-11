@@ -43,7 +43,7 @@ export function PostCard({
           quality={80}
         />
       )}
-      <div className="shrink space-y-2 px-5 md:px-0">
+      <div className="shrink space-y-2 px-4 md:px-0">
         <h2 className="text-3xl text-balance text-neutral-300 transition-colors group-hover:text-neutral-200">
           {post.title}
         </h2>

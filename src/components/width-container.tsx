@@ -18,7 +18,7 @@ export function WidthContainer({
       className={cn(
         'mx-auto md:max-w-6xl',
         {
-          'px-5': paddingX,
+          'px-4': paddingX,
           'md:px-10': mdPaddingX,
         },
         className
