@@ -12,7 +12,7 @@ const publishDetailsVariants = cva('flex items-center justify-between gap-3', {
   variants: {
     variant: {
       default: '',
-      outline: 'border-y border-dashed py-2',
+      outline: 'border-y px-5 py-2 md:px-0',
     },
   },
   defaultVariants: {

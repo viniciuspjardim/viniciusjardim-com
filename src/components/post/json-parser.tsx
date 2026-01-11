@@ -110,9 +110,9 @@ function CodeBlock({
     )
 
   return (
-    <div className="overflow-clip rounded-md border">
+    <div className="overflow-clip border-y bg-neutral-900/75 md:border">
       <div
-        className="flex min-h-10 items-center justify-between border-b px-4 py-1 data-[state=hidden]:hidden"
+        className="flex min-h-8 items-center justify-between border-b px-5 data-[state=hidden]:hidden"
         data-state={headerState}
       >
         {fileName ? (
@@ -128,7 +128,7 @@ function CodeBlock({
           <div className="flex items-center gap-4">
             {gitHubUrl && (
               <a
-                className="!text-muted-foreground hover:!text-white"
+                className="text-muted-foreground! hover:text-white!"
                 href={gitHubUrl}
                 target="_blank"
                 aria-label="View on GitHub"
@@ -140,7 +140,9 @@ function CodeBlock({
           </div>
         )}
       </div>
-      <pre>{codeContent}</pre>
+      <pre className="[scrollbar-width:none] md:[scrollbar-width:thin]">
+        {codeContent}
+      </pre>
     </div>
   )
 }
@@ -185,19 +187,21 @@ export function JsonParser(node: JSONContent) {
 
     case 'codeBlock':
       return (
-        <CodeBlock
-          language={(node.attrs?.language as string | null) ?? 'plaintext'}
-          contentText={node.content?.[0]?.text ?? ''}
-          fileName={node.attrs?.fileName as string}
-          showCopyButton={node.attrs?.showCopyButton as boolean}
-          gitHubUrl={node.attrs?.gitHubUrl as string}
-        />
+        <div className="md:px-10">
+          <CodeBlock
+            language={(node.attrs?.language as string | null) ?? 'plaintext'}
+            contentText={node.content?.[0]?.text ?? ''}
+            fileName={node.attrs?.fileName as string}
+            showCopyButton={node.attrs?.showCopyButton as boolean}
+            gitHubUrl={node.attrs?.gitHubUrl as string}
+          />
+        </div>
       )
     case 'image':
       return (
-        <div className="space-y-2 py-2">
+        <div className="space-y-2 py-2 md:px-10">
           <Image
-            className="bg-card rounded-md"
+            className="bg-card md:rounded-md"
             src={node.attrs?.src as string}
             alt={node.attrs?.alt as string}
             preload={!!node.attrs?.isPriority}
@@ -216,9 +220,9 @@ export function JsonParser(node: JSONContent) {
       )
     case 'video':
       return (
-        <div className="py-2">
+        <div className="py-2 md:px-10">
           <video
-            className="bg-card rounded-md"
+            className="bg-card md:rounded-md"
             src={node.attrs?.src as string}
             controls
             width={768}

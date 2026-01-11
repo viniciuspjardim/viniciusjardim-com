@@ -112,7 +112,7 @@ function PostBreadcrumb({ categories, categoryId }: PostBreadcrumbProps) {
   const breadcrumbs = getCategoriesBreadcrumbs(categories, categoryId)
 
   return (
-    <Breadcrumb className="mb-6">
+    <Breadcrumb className="mb-6 px-5 md:px-10">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>

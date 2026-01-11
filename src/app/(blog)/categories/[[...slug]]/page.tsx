@@ -21,27 +21,33 @@ export default async function CategoryPage(
 
   if (!posts || posts.length === 0) {
     return (
-      <div className="mt-10 w-full rounded-md border px-6 py-40 text-center">
-        <InfoIcon className="mx-auto size-8 text-rose-800" />
-        <span className="mx-auto mt-2 block max-w-lg text-lg font-semibold text-balance text-neutral-300">
-          Oops, no posts around here yet...
-        </span>
-        <span className="mx-auto block max-w-lg text-lg text-balance text-neutral-400">
-          Please come back later, we might have something for you!
-        </span>
+      <div className="w-full px-5 md:px-10">
+        <div className="mt-10 w-full rounded-md border px-6 py-40 text-center">
+          <InfoIcon className="mx-auto size-8 text-rose-800" />
+          <span className="mx-auto mt-2 block max-w-lg text-lg font-semibold text-balance text-neutral-300">
+            Oops, no posts around here yet...
+          </span>
+          <span className="mx-auto block max-w-lg text-lg text-balance text-neutral-400">
+            Please come back later, we might have something for you!
+          </span>
+        </div>
       </div>
     )
   }
 
-  return posts.map((post, index) => (
-    <PostCard
-      key={post.id}
-      post={post}
-      userName={formatAuthorName(post.author)}
-      userImageUrl={post.author?.userImageUrl}
-      isPriorityImage={index < 2}
-    />
-  ))
+  return (
+    <div className="my-6 w-full md:divide-y">
+      {posts.map((post, index) => (
+        <PostCard
+          key={post.id}
+          post={post}
+          userName={formatAuthorName(post.author)}
+          userImageUrl={post.author?.userImageUrl}
+          isPriorityImage={index < 2}
+        />
+      ))}
+    </div>
+  )
 }
 
 export async function generateStaticParams() {

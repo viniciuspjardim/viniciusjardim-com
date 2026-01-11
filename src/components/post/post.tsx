@@ -54,7 +54,7 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
             </div>
 
             {/* Separator */}
-            <div className="mt-4 mb-3 border-b border-dashed" />
+            <div className="mt-4 mb-3 border-b" />
 
             {/* Go to top button */}
             <div>
@@ -65,7 +65,7 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
       )}
 
       <article className="min-w-0 grow space-y-6" lang={post.lang}>
-        <div className="space-y-2">
+        <div className="space-y-2 px-5 md:px-10">
           <h1 className="text-4xl font-medium text-balance text-neutral-200 md:text-5xl md:font-light">
             {post.title}
           </h1>
@@ -75,14 +75,16 @@ export function Post({ className, post, userName, userImageUrl }: PostProps) {
           )}
         </div>
 
-        <PublishDetails
-          variant="outline"
-          lang={post.lang}
-          writtenAt={post.writtenAt}
-          userName={userName}
-          userImageUrl={userImageUrl}
-          audioUrl={audioUrl}
-        />
+        <div className="md:px-10">
+          <PublishDetails
+            variant="outline"
+            lang={post.lang}
+            writtenAt={post.writtenAt}
+            userName={userName}
+            userImageUrl={userImageUrl}
+            audioUrl={audioUrl}
+          />
+        </div>
 
         <JsonParser {...post.content} />
       </article>

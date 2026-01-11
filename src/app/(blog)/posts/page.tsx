@@ -16,7 +16,7 @@ export default async function PostsPage() {
 
   return (
     <WidthContainer className="flex w-full flex-col items-center">
-      <div className="mb-6 w-full divide-y divide-dashed">
+      <div className="mb-6 w-full md:divide-y">
         {posts?.map((post, index) => (
           <PostCard
             key={post.id}

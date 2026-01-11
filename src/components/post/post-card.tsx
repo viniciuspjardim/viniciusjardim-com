@@ -25,14 +25,14 @@ export function PostCard({
 
   return (
     <Link
-      className="group flex w-full flex-col items-start gap-x-8 gap-y-3 py-10 md:flex-row"
+      className="group flex w-full flex-col items-start gap-5 py-6 md:flex-row md:px-8 md:py-12"
       href={`/posts/${post.slug}`}
       lang={post.lang}
     >
       {imageSrc && (
         <Image
           // Aspect ratio 16:9 - 768x432 or 320x180
-          className="bg-card aspect-video w-full shrink-0 rounded-md object-cover md:w-80"
+          className="bg-card aspect-video w-full shrink-0 object-cover md:w-80 md:rounded-md"
           src={imageSrc}
           alt={imageAlt ?? ''}
           preload={isPriorityImage}
@@ -43,7 +43,7 @@ export function PostCard({
           quality={80}
         />
       )}
-      <div className="shrink space-y-2">
+      <div className="shrink space-y-2 px-5 md:px-0">
         <h2 className="text-3xl text-balance text-neutral-300 transition-colors group-hover:text-neutral-200">
           {post.title}
         </h2>
