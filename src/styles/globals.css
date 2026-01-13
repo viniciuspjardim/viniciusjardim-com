@@ -233,7 +233,7 @@
     @apply overflow-y-auto px-4 py-2;
 
     code {
-      @apply font-mono text-base;
+      @apply font-mono text-sm;
       color: #edeef0;
     }
   }
