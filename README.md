@@ -85,15 +85,16 @@ pg_dump -v -d <non pooling db url> -f bak-YYYY-MM-DD.sql
   - [x] Remove `React.forwardRef`
   - [x] Upgrade shadcn/ui components
   - [x] Move shadcn/ui to use CSS variables
+  - [ ] Fix audio player not stopping TTS when changing routes
 - [ ] Other refactors and Improvements
   - [x] Move from PlanetScale to Vercel Postgres
   - [x] Move from Prisma to Drizzle
   - [x] Move from Vercel Postgres to Neon Postgres
   - [x] Upgrade to Next.js 15, tRPC 11 and Clerk 6
-  - [ ] Cache pages and requests when possible using Next.js cache
+  - [x] Upgrade to Next.js 16
 - [ ] Log create, update, and delete operations on log tables
   - [x] Create PostLog
   - [ ] Create CategoryLog
-- [ ] Cache
-  - [x] Cache database query results
-  - [ ] Replace the above cache by full page caches
+- [x] Cache
+  - [x] Migrate to [Next.js Cache Components](https://nextjs.org/docs/app/getting-started/cache-components)
+  - [ ] Fix editor cached on previous opened post (probably issue with Cache components and post id query param)
